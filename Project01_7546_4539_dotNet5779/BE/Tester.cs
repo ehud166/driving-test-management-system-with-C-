@@ -1,4 +1,5 @@
-﻿using System;
+﻿using static BE.Person;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,35 +7,28 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    public class Tester
+    public class Tester : Person
     {
-        int tester_id;
-        string tester_Lname;
-        string tester_Fname;
-        DateTime tester_birthday;
-        string tester_gender;
-        int tester_phone;
-        string tester_adress;
-        int tester_seniority;
-        int tester_max_tests_for_week;
-        string tester_vehicle_type;
-        bool[,] tester_scedule = new bool[5, 6];
-        double tester_max_distance;
+        //c-tor
+        public Tester(string id, string lastName, string firstName, DateTime birthday, Gender gender, string phone, Adress adress,
+            Vehicle vehicleType, int seniority, int maxTestsForWeek, double maxDistance)
+            : base(id, lastName, firstName, birthday, gender, phone, adress, vehicleType)
+        {
+            Seniority = seniority;
+            MaxTestsForWeek = maxTestsForWeek;
+            MaxDistance = maxDistance;
+            Dictionary<DayOfWeek, HoursPerDay> schedule = new Dictionary<DayOfWeek, HoursPerDay>();
+        }
+
+        //properties
+        public int Seniority { get; set; }
+        public int MaxTestsForWeek { get; set; }
+        public double MaxDistance { get; set; }
+        public Dictionary<DayOfWeek, HoursPerDay> schedule { get; set; }// at c-tor: need to fill FALSE in the place he couldn`t work
+
         public override string ToString()
         {
-            return "tester: " +
-                "\nid: " + tester_id.ToString() +
-                "\nlast name: " + tester_Lname +
-                "\nfirst name: " + tester_Fname +
-                "\ndate of birth" + tester_birthday.ToString() +
-                "\ngender: " + tester_gender +
-                "\nphone: " + tester_phone.ToString() +
-                "\nadress: " + tester_adress +
-                "\nseniority: " + tester_seniority.ToString() +
-                "\nmax tests for week: " + tester_max_tests_for_week.ToString() +
-                "\nvehicle type: " + tester_vehicle_type +
-                "\n scedule: " + tester_scedule.ToString() +//need checking
-                "\nmax distance: " + tester_max_distance.ToString();
+            return this.ToStringProperty();
         }
     }
 }

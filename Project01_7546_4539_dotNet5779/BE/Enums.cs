@@ -14,4 +14,9 @@ namespace BE
     {
         male, female
     }
+
+    public enum User
+    {
+        administrator,tester,trainee
+    }
 }

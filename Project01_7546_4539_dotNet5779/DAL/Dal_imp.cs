@@ -9,62 +9,154 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class Dal_imp : idal
+
+    public class Dal_imp : IDAL
     {
+        protected static Dal_imp instance = null;
+        public static IDAL getDal()
+        {
+             if (instance == null)
+                instance = new Dal_imp();
+             return instance;
+        }
+
+        protected Dal_imp()
+        {
+            //default c-tor
+        }
         public void AddTest(Test my_test)
         {
-           // my_test.Test_id = courent_test_id++;
+            my_test.ID = Courent_test_id.ToString().PadLeft(8 - Courent_test_id.ToString().Length, '0');
+            Courent_test_id++;
             Tests.Add(my_test);
         }
 
         public void AddTester(Tester my_tester)
         {
-            throw new NotImplementedException();
+            var v = (from item in Testers
+                where item.ID == my_tester.ID
+                select item).FirstOrDefault();
+            if (v == null)
+            {
+                Testers.Add(my_tester);
+            }
+            else
+            {
+                throw new Exception("ERROR:\n" +
+                                    "This Tester already exist\n");
+            }
         }
+
+        
 
         public void AddTrainee(Trainee my_trainee)
         {
-            throw new NotImplementedException();
+            foreach (var itemTrainee in Trainees)
+            {
+                if (my_trainee.ID == itemTrainee.ID)
+                {
+                    throw new Exception("ERROR:\n" +
+                                        "This trainee already exist\n");
+                }
+            }
+            Trainees.Add(my_trainee);
         }
 
-        public string GetTestersList()
+        public List<Tester> GetTestersList()
         {
-            throw new NotImplementedException();
+            List < Tester > copyTesters = new List<Tester>(Testers);
+            return copyTesters;
         }
 
-        public string GetTestsList()
+        public List<Test> GetTestsList()
         {
-            throw new NotImplementedException();
+            List<Test> copyTests = new List<Test>(Tests);
+            return copyTests;
         }
 
-        public string GetTraineeList()
+        public List<Trainee> GetTraineeList()
         {
-            throw new NotImplementedException();
+            List<Trainee> copyTrainees = new List<Trainee>(Trainees);
+            return copyTrainees;
         }
 
-        public void RemoveTester(Tester my_tester)
+        public void RemoveTester(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Testers.Remove((from s in Testers
+                        where s.ID == id
+                        select s
+                    ).First());
+                
+            }
+            catch
+            {
+                throw new Exception("ERROR:\n" +
+                                        "This tester does NOT exist\n");
+            }
+
         }
 
-        public void RemoveTrainee(Trainee my_trainee)
+
+        public void RemoveTrainee(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Trainees.Remove((from s in Trainees
+                        where s.ID == id
+                        select s
+                    ).First());
+
+            }
+            catch
+            {
+                throw new Exception("ERROR:\n" +
+                                    "This trainee does NOT exist\n");
+            }
         }
 
         public void UpdateTest(Test my_test)
         {
-            throw new NotImplementedException();
+            foreach (var itemTest in Tests)
+            {
+                if (my_test.ID == itemTest.ID)
+                {
+                    Tests.Remove(itemTest);
+                    Tests.Add(my_test);
+                }
+            }
+            throw new Exception("ERROR:\n" +
+                                "This test does NOT exist\n");
         }
 
         public void UpdateTester(Tester my_tester)
         {
-            throw new NotImplementedException();
+            foreach (var itemTester in Testers)
+            {
+                if (my_tester.ID == itemTester.ID)
+                {
+                    Testers.Remove(itemTester);
+                    Testers.Add(my_tester);
+                }
+            }
+            throw new Exception("ERROR:\n" +
+                                "This tester does NOT exist\n");
         }
 
         public void UpdateTrainee(Trainee my_trainee)
         {
-            throw new NotImplementedException();
+            foreach (var itemTrainee in Trainees)
+            {
+                if (my_trainee.ID == itemTrainee.ID)
+                {
+                    Trainees.Remove(itemTrainee);
+                    Trainees.Add(my_trainee);
+                }
+            }
+            throw new Exception("ERROR:\n" +
+                                "This Trainee does NOT exist\n");
         }
+
     }
 }

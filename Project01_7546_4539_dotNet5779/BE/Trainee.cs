@@ -6,20 +6,29 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    public class Trainee
+    public class Trainee : Person
     {
-        int Trainee_id;
-        string Trainee_Lname;
-        string Trainee_Fname;
-        DateTime Trainee_birthday;
-        string Trainee_gender;
-        int Trainee_phone;
-        string Trainee_adress;
-        string Trainee_vehicle_type;
-        string Trainee_gear;
-        string Trainee_driving_scool;
-        string Trainee_teacher_name;
-        int Trainee_lesson_num;
-       //ToString
+        public Trainee(string id, string lastName, string firstName, DateTime birthday, Gender gender, string phone, Adress adress, 
+                        Vehicle vehicleType, Gear gear, string drivingSchool, string teacherName, int lessonNum, int numOfTests = 0 )
+                        : base(id, lastName, firstName, birthday, gender, phone, adress, vehicleType)
+        {
+            Gear = gear;
+            DrivingSchool = drivingSchool;
+            TeacherName = teacherName;
+            LessonNum = lessonNum;
+            NumOfTests = numOfTests;
+        }
+
+        //properties
+        public Gear Gear { get; set; }
+        public string DrivingSchool { get; set; }
+        public string TeacherName { get; set; }
+        public int LessonNum { get; set; }
+        public int NumOfTests { get; set; }
+        //ToString
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

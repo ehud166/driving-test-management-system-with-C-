@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 
-namespace DAL
+namespace BL
 {
-    public interface IDAL
+    public interface IBL
     {
         //tester 
         void AddTester(Tester my_tester);
@@ -24,10 +25,8 @@ namespace DAL
         void UpdateTest(Test my_test);
 
         //string getters list
-
         List<Tester> GetTestersList();
         List<Trainee> GetTraineeList();
         List<Test> GetTestsList();
-
     }
 }

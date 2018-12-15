@@ -14,8 +14,8 @@ namespace DS
         private static List<Tester> testers;
         private static List<Trainee> trainees;
 
-        public static List<Test> Tests { get => tests; set => tests = value; }
-        public static List<Tester> Testers { get => testers; set => testers = value; }
-        public static List<Trainee> Trainees { get => trainees; set => trainees = value; }
+        public static List<Test> Tests { get => tests; private set => tests = value; }
+        public static List<Tester> Testers { get => testers; private set => testers = value; }
+        public static List<Trainee> Trainees { get => trainees; private set => trainees = value; }
     }
 }
