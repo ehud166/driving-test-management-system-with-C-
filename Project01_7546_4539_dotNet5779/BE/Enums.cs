@@ -4,7 +4,7 @@ namespace BE
 {
     public enum Vehicle
     {
-        privateCar, motorcycle, midTrailer, maxTrailer
+        privateCar = 1, motorcycle, midTrailer, maxTrailer
     }
     public enum Gear
     {
@@ -17,6 +17,6 @@ namespace BE
 
     public enum User
     {
-        administrator,tester,trainee
+        administrator = 1,tester,trainee
     }
 }

@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adress.cs" />
+    <Compile Include="Address.cs" />
     <Compile Include="GenericPrintClass.cs" />
     <Compile Include="HoursPerDay.cs" />
     <Compile Include="Person.cs" />

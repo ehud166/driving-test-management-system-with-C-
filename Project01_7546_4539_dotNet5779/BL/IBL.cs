@@ -28,5 +28,12 @@ namespace BL
         List<Tester> GetTestersList();
         List<Trainee> GetTraineeList();
         List<Test> GetTestsList();
+
+        IEnumerable<IGrouping<Vehicle, Tester>> GroupTestersByVehicle(bool toSort = false);
+        IEnumerable<IGrouping<string, Trainee>> GroupTraineesBySchool(bool toSort = false);
+        IEnumerable<IGrouping<string, Trainee>> GroupTraineesByTester(bool toSort = false);
+        IEnumerable<IGrouping<int, Trainee>> GroupTraineesByNumOfTests(bool toSort = false);
+        IEnumerable<IGrouping<bool?, Test>> GroupTestByResult(bool toSort = false);
+
     }
 }

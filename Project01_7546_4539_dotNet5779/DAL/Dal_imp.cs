@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DS;
 
 namespace DAL
 {
@@ -13,7 +14,7 @@ namespace DAL
     public class Dal_imp : IDAL
     {
         protected static Dal_imp instance = null;
-        public static IDAL getDal()
+        public static IDAL GetDal()
         {
              if (instance == null)
                 instance = new Dal_imp();
@@ -51,32 +52,37 @@ namespace DAL
 
         public void AddTrainee(Trainee my_trainee)
         {
-            foreach (var itemTrainee in Trainees)
-            {
-                if (my_trainee.ID == itemTrainee.ID)
+            if (Trainees.Where(x=>x.ID == my_trainee.ID).Count() > 0)
                 {
                     throw new Exception("ERROR:\n" +
                                         "This trainee already exist\n");
                 }
-            }
             Trainees.Add(my_trainee);
         }
 
         public List<Tester> GetTestersList()
         {
-            List < Tester > copyTesters = new List<Tester>(Testers);
+            List<Tester> copyTesters = new List<Tester>();
+            copyTesters = Testers.Select(x => new Tester(x.ID, x.LastName, x.FirstName, x.Birthday, x.Gender, x.Phone, new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.VehicleType, x.Seniority, x.MaxTestsForWeek, x.MaxDistance))
+                .ToList();
             return copyTesters;
         }
 
         public List<Test> GetTestsList()
         {
-            List<Test> copyTests = new List<Test>(Tests);
+            List<Test> copyTests = new List<Test>();
+                copyTests = Tests.Select(x => new Test(x.TraineeId, x.TestDateAndTime, new Address(x.TestAddress.StreetName, x.TestAddress.BuildingNumber, x.TestAddress.City),x.VehicleType, x.Gear, x.TestDistance,
+                x.TestReverseParking, x.TestMirrors, x.TestMerge, x.TestVinker, x.TestResult, x.TesterId, x.TestComment,
+                x.ID)).ToList();
             return copyTests;
         }
 
         public List<Trainee> GetTraineeList()
         {
-            List<Trainee> copyTrainees = new List<Trainee>(Trainees);
+            List<Trainee> copyTrainees = new List<Trainee>();
+            copyTrainees = Trainees.Select(x => new Trainee(x.ID, x.LastName, x.FirstName, x.Birthday, x.Gender, x.Phone,
+                new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.VehicleType, x.Gear,
+                x.DrivingSchool, x.TeacherName, x.LessonNum)).ToList();
             return copyTrainees;
         }
 
@@ -84,11 +90,7 @@ namespace DAL
         {
             try
             {
-                Testers.Remove((from s in Testers
-                        where s.ID == id
-                        select s
-                    ).First());
-                
+                Testers.Remove(Testers.Where(x => x.ID == id).First());
             }
             catch
             {
@@ -97,17 +99,11 @@ namespace DAL
             }
 
         }
-
-
         public void RemoveTrainee(string id)
         {
             try
             {
-                Trainees.Remove((from s in Trainees
-                        where s.ID == id
-                        select s
-                    ).First());
-
+                Trainees.Remove(Trainees.Where(x => x.ID == id).First());
             }
             catch
             {

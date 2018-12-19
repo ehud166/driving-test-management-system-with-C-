@@ -6,22 +6,24 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    public class Adress
+    public class Address
     {
-        public Adress(string street_name, int building_number, string city)
+        public Address(string streetName, int buildingNumber, string city)
         {
-            Street_name = street_name;
-            Building_number = building_number;
+            StreetName = streetName;
+            BuildingNumber = buildingNumber;
             City = city;
         }
 
         //properties
-        public string Street_name { get; set; }
-        public int Building_number { get; set; }
+        public string StreetName { get; set; }
+        public int BuildingNumber { get; set; }
         public string City { get; set; }
         public override string ToString()
         {
             return this.ToStringProperty("\t");
         }
+
+        
     }
 }

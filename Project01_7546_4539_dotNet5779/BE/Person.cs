@@ -10,7 +10,7 @@ namespace BE
     public class Person
     {
         public Person(string id, string lastName, string firstName, DateTime birthday, 
-                        Gender gender, string phone, Adress adress, Vehicle vehicleType)
+                        Gender gender, string phone, Address address, Vehicle vehicleType)
         {
             ID = id;
             LastName = lastName;
@@ -18,7 +18,7 @@ namespace BE
             Birthday = birthday;
             Gender = gender;
             Phone = phone;
-            Adress = adress;
+            Address = address;
             VehicleType = vehicleType;
         }
 
@@ -28,11 +28,17 @@ namespace BE
         public DateTime Birthday { get; set; }
         public Gender Gender { get; set; }
         public string Phone { get; set; }
-        public Adress Adress { get; set; }
+        public Address Address { get; set; }
         public Vehicle VehicleType { get; set; }
 
-        
 
+
+        public static string ToSentence(string title)
+        {
+            //var typeAsString = prsn.ToStringProperty();
+            //var typeAsString = title.GetType().ToString();
+            return string.Concat(title.Select(x => char.IsUpper(x) ? " " + char.ToLower(x) : x.ToString())).TrimStart(' ');
+        }
 
         public override string ToString()
         {
@@ -42,8 +48,8 @@ namespace BE
             //{
             //    print += ToSentence(obj) + obj.ToString();
             //}
-            return this.ToStringProperty();
-            //return string.Format("{0}: {1}\n{2}: {3}\n{4}: {5}\n{6}: {7}\n{8}: {9}\n{10}: {11}\n{12}: {13}\n{14}: {15}\n", ToSentence(ID), ID.ToString(), ToSentence(LastName), LastName, ToSentence(FirstName), FirstName, ToSentence(Birthday), Birthday.ToString(), ToSentence(Gender), Gender.ToString(), ToSentence(Phone), Phone.ToString(), ToSentence(Adress), Adress.ToString(), ToSentence(VehicleType), VehicleType.ToString());
+            //return this.ToStringProperty();
+            return string.Format("   {0}: {1}\n   {2}: {3}\n   {4}: {5}\n   {6}: {7}\n   {8}: {9}\n   {10}: {11}\n   {12}: {13}\n   {14}: {15}\n", ToSentence("Id"), ID.ToString(), ToSentence("LastName"), LastName, ToSentence("FirstName"), FirstName, ToSentence("Birthday"), Birthday.ToString(), ToSentence("Gender"), Gender.ToString(), ToSentence("Phone"), Phone.ToString(), ToSentence("Address"), Address.ToString(), ToSentence("VehicleType"), VehicleType.ToString());
         }
     }
 }

@@ -9,18 +9,18 @@ namespace BE
 {
     static class GenericPrintClass
     {
-        //public static string tosentence<t>(t type)
-        //{
-        //    var typeasstring = type.gettype().tostring();
-        //    return string.concat(type.select(x => char.isupper(x) ? " " + char.tolower(x) : x.tostring())).trimstart(' ');
-        //}
+        
 
         public static string ToStringProperty<T>(this T t, string ch = null)
         {
             string str = "";
             foreach (PropertyInfo item in t.GetType().GetProperties())
-                if(item.GetType().BaseType != t.GetType())
+                if (item.GetType().BaseType != t.GetType())
+                {
+                    //Console.WriteLine("item.GetType().BaseType");
                     str += "\n" + ch + item.Name + ": " + item.GetValue(t, null);
+                }
+
             return str;
         }
        
