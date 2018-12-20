@@ -14,6 +14,7 @@ namespace BL
 {
     public class Bl_imp : IBL
     {
+        #region singleton
         IDAL dal = Dal_imp.GetDal();
         
         protected static Bl_imp instance = null;
@@ -28,7 +29,8 @@ namespace BL
         {
             //default c-tor
         }
-
+        #endregion
+        
         public void AddTester(Tester my_tester)
         {
             try
@@ -232,7 +234,13 @@ namespace BL
             //פונקציה הבודקת אם עבר 4/5 אם כן חייב לקבל עובר ואם לא, חייב לקבל נכשל.
             //need to update the field num of test and func to check if tester fill all
             if (ResultMeetingCriteria(my_test) && TheTesterFillAll(my_test))
+            {
+                if (my_test.TestResult == true)//if trainee pass the test we can remove him from traineesList
+                {
+                    dal.RemoveTrainee(my_test.TraineeId);
+                }
                 dal.UpdateTest(my_test);
+            }
         }
 
         //string getters list

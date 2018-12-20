@@ -17,6 +17,6 @@ namespace BE
 
     public enum User
     {
-        administrator = 1,tester,trainee
+        administrator = 1,tester,trainee, exit
     }
 }

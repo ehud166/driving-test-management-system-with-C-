@@ -14,19 +14,23 @@ namespace PL
         {
             IBL bl = Bl_imp.GetBl();
 
-           
+            #region help to insert
 
 
-            Person human = new Person("314784539", "ehud", "gershony", DateTime.Parse("30/07/1956"), Gender.male, "0530010100", new Address("kolombia", 6, "jerusalem"), Vehicle.privateCar);
-            Tester checkForTester = new Tester(human.ID, human.FirstName, human.LastName, human.Birthday, human.Gender, human.Phone, human.Address, human.VehicleType, 11, 30, 100);
-            Console.WriteLine(checkForTester);
-            bl.AddTester(checkForTester);
-            Trainee checkForTrainee = new Trainee("032577546", "yishay", "badichi", DateTime.Parse("30/07/1996"), Gender.male, "053823117", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", checkForTester.FirstName + " " + checkForTester.LastName,50);
-            //Console.WriteLine(checkForTrainee);
-            bl.AddTrainee(checkForTrainee);
-            Console.WriteLine(checkForTrainee);
-            checkForTrainee = new Trainee("206026858", "hadas", "gershony", DateTime.Parse("17/03/1996"), Gender.male, "053823117", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", checkForTester.FirstName + " " + checkForTester.LastName, 50);
-            bl.AddTrainee(checkForTrainee);
+            
+
+            Tester tester1 = new Tester("314784539", "ehud", "gershony", DateTime.Parse("13/02/1970"), Gender.male, "0530010199", new Address("shakhal", 8, "jerusalem"), Vehicle.privateCar, 13, 30, 100);
+            //Console.WriteLine(tester1);
+            bl.AddTester(tester1);
+            Tester tester2 = new Tester("000002121", "dudu", "cohen", DateTime.Parse("30/07/1956"), Gender.male, "0530010100", new Address("kolombia", 6, "jerusalem"), Vehicle.privateCar, 11, 30, 100);
+            //Console.WriteLine(tester1);
+            bl.AddTester(tester2);
+
+            Trainee trainee1 = new Trainee("032577546", "yishay", "badichi", DateTime.Parse("30/07/1996"), Gender.male, "053823117", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName,50);
+            bl.AddTrainee(trainee1);
+            //Console.WriteLine(trainee1);
+            Trainee trainee2 = new Trainee("206026858", "hadas", "gershony", DateTime.Parse("17/03/1996"), Gender.male, "053823117", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
+            bl.AddTrainee(trainee2);
 
             Test checkTest = new Test("032577546", DateTime.Parse("23/12/18 9:0"), new Address("f", 4, "a"), Vehicle.privateCar, Gear.manual);
             bl.AddTest(checkTest);
@@ -47,15 +51,12 @@ namespace PL
             checkTest.TestResult = false;
             checkTest.TestComment = " ";
             bl.UpdateTest(checkTest);
+            #endregion
 
 
-            //Console.WriteLine("some person");
-            //Console.WriteLine(human);
-            //Console.WriteLine("\ndetails for tester");
-            //Console.WriteLine(checkForTester);
-            //Console.WriteLine("\ndetails for trainee");
-            //Console.WriteLine(checkForTrainee);
-            Console.WriteLine("\nwelcome to computer data bank of transport ministery");
+
+            #region decleration to input
+
             string id, lName, fName, birthday, gender, phone, drivingSchool, teacherName, streetName, city, traineeId;
             int lessonNum, seniority, maxTestsForWeek, maxDistance, building;
             Vehicle vehicleType;
@@ -63,6 +64,11 @@ namespace PL
             Gear gear;
             DateTime testDate;
             User tryUser;
+            #endregion
+
+
+            Console.WriteLine("\nwelcome to computer data bank of transport ministery");
+
             do
             {
                 try
@@ -70,7 +76,8 @@ namespace PL
                     Console.WriteLine("choose your section\n" +
                                       "1:administrator\n" +
                                       "2: tester\n" +
-                                      "3: trainee\n");
+                                      "3: trainee\n" +
+                                      "4: exit");
                     string user = Console.ReadLine();
                     
                     if (Enum.TryParse<User>(user, out tryUser))
@@ -80,33 +87,32 @@ namespace PL
                             Console.WriteLine("print:\n   1:all tests list" +
                                               "\n   2:all testers list" +
                                               "\n   3:all trainees list" +
-                                              "\n   4:list for tests in specific day" +
-                                              "\n   5:list for passed trainees" +
-                                              "\n   6:list for tests in specific vehicle" +
-                                              "\n   7:list for tests in specific tester" +
-                                              "\n   8:list for tests in specific trainee\n" +
-                                              "\n   9:group by license\n" +
-                                              "\n   8:list for tests in specific trainee\n" +
-                                              "\n   8:list for tests in specific trainee\n");
-                            switch (Convert.ToInt32(Console.ReadLine()))
+                                              "\n   4:group testers by vehicle" +
+                                              "\n   5:group trainees by school" +
+                                              "\n   6:group test by result");
+
+                        switch (Convert.ToInt32(Console.ReadLine()))
                             {
                                 case 1:
+                                    foreach (var test in bl.GetTestsList())
+                                    {
+                                        Console.WriteLine(test+ "\n");
+                                    }
                                     break;
                                 case 2:
-                                    break;
+                                    foreach (var test in bl.GetTestersList())
+                                    {
+                                        Console.WriteLine(test + "\n");
+                                    }
+                                        break;
                                 case 3:
-                                    break;
+                                    foreach (var test in bl.GetTraineeList())
+                                    {
+                                        Console.WriteLine(test + "\n");
+                                    }
+                                        break;
+                               
                                 case 4:
-                                    break;
-                                case 5:
-                                    break;
-                                case 6:
-                                    break;
-                                case 7:
-                                    break;
-                                case 8:
-                                    break;
-                                case 9:
                                     Console.WriteLine("print by vehicles\n");
                                     foreach (var courentKey in bl.GroupTestersByVehicle())
                                     {
@@ -118,7 +124,7 @@ namespace PL
                                     }
 
                                     break;
-                                case 10:
+                                case 5:
                                     Console.WriteLine("print Trainees by school");
                                     foreach (var courentKey in bl.GroupTraineesBySchool())
                                     {
@@ -130,7 +136,7 @@ namespace PL
                                     }
 
                                     break;
-                                case 11:
+                                case 6:
                                     Console.WriteLine("print tests by result");
                                     foreach (var courentKey in bl.GroupTestByResult())
                                     {
@@ -174,8 +180,7 @@ namespace PL
                                             building = Convert.ToInt32(Console.ReadLine());
                                             city = Console.ReadLine();
                                             address = new Address(streetName, building, city);
-                                            Console.WriteLine(
-                                                "1: privateCar ,2: motorcycle,3: midTrailer, 4: maxTrailer\n");
+                                            Console.WriteLine("1: privateCar ,2: motorcycle,3: midTrailer, 4: maxTrailer\n");
                                             vehicleType = (Vehicle) (Convert.ToInt32(Console.ReadLine()));
                                             seniority = Convert.ToInt32(Console.ReadLine());
                                             maxTestsForWeek = Convert.ToInt32(Console.ReadLine());
@@ -195,6 +200,7 @@ namespace PL
                                     Tester newTester = new Tester(id, lName, fName, DateTime.Parse(birthday),
                                         (Gender) (gender == "male" ? 0 : 1), phone, address, vehicleType, seniority,
                                         maxTestsForWeek, maxDistance);
+                                    //add to list
                                     bl.AddTester(newTester);
                                     break;
                                 case 2:
@@ -203,12 +209,11 @@ namespace PL
                                     switch (Convert.ToInt32(Console.ReadLine()))
                                     {
                                         case 1:
+                                                #region InputResultTest
+
                                             Console.WriteLine("put the test ID\n");
                                             string testId = Console.ReadLine();
-
-                                            #region InputResultTest
-
-                                            Test tempTest = bl.GetTestsList().Find(item => item.ID == testId);
+                                                Test tempTest = bl.GetTestsList().Find(item => item.ID == testId);
                                             Console.WriteLine(
                                                 "put v/x: distance, reverse, mirrors,vinker, merge, result,comment\n");
                                             bool distance, reverse, mirrors, vinker, merge, result;
@@ -301,6 +306,7 @@ namespace PL
                                     Trainee newTrainee = new Trainee(id, lName, fName, DateTime.Parse(birthday),
                                         (Gender) (gender == "male" ? 0 : 1), phone, address, vehicleType, gear,
                                         drivingSchool, teacherName, lessonNum);
+                                    //adding to list
                                     bl.AddTrainee(newTrainee);
 
                                     Console.WriteLine("do you want to sign up for test? Y/N");
@@ -320,19 +326,20 @@ namespace PL
                                                 out traineeId, out testDate, out Vehicle vehicle, out gear);
                                             break;
                                         case 2:
-                                            Console.WriteLine("put your ID and vehicle type\n");
+                                            Console.WriteLine("put your ID");
                                             traineeId = Console.ReadLine();
+                                            Console.WriteLine("choose vehicle type\n 1: privateCar ,2: motorcycle,3: midTrailer, 4: maxTrailer");
                                             vehicleType = (Vehicle) (Convert.ToInt32(Console.ReadLine()));
                                             Test temp = bl.GetTestsList().Where(item =>
-                                                    item.TraineeId == traineeId && item.VehicleType == vehicleType)
+                                                    item.TraineeId == traineeId && item.VehicleType == vehicleType && item.TestResult == false)
                                                 .LastOrDefault();
                                             if (temp == null)
                                             {
-                                                Console.WriteLine("passed\n");
+                                                Console.WriteLine("passed");
                                             }
                                             else
                                             {
-                                                Console.WriteLine(" NOT passed\n");
+                                                Console.WriteLine(" NOT passed");
                                             }
 
                                             //find the excepted test
@@ -361,7 +368,9 @@ namespace PL
                             }
 
                             break;
-                        default:
+                            case exit:
+                                return;
+                            default:
                             break;
                     }
                 }

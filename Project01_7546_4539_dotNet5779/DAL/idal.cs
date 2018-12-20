@@ -10,10 +10,7 @@ namespace DAL
     public interface IDAL
     {
         //tester 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="my_tester"></param>
+        
         void AddTester(Tester my_tester);
         void RemoveTester(string id);
         void UpdateTester(Tester my_tester);
