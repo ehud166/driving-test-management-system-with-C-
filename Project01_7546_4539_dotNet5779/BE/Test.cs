@@ -8,7 +8,7 @@ namespace BE
 {
     public class Test
     {
-        public Test( string traineeId, DateTime testDateAndTime, Address testAddress, Vehicle vehicleType, Gear gear ,bool? testDistance = null, bool? testReverseParking = null, bool? testMirrors = null, bool? testMerge = null, bool? testVinker = null, bool? testResult = null, string testerId = null, string testComment = null, string iD = null)
+        public Test( string traineeId, DateTime testDateAndTime, Address testAddress, Vehicle vehicleType, Gear gear , string testComment = "", bool ? testDistance = null, bool? testReverseParking = null, bool? testMirrors = null, bool? testMerge = null, bool? testVinker = null, bool? testResult = null, string testerId = null, string iD = null)
         {
             ID = iD;
             TesterId = testerId;
@@ -41,13 +41,22 @@ namespace BE
         public bool? TestMerge { get; set; }
         public bool? TestResult { get; set; }
         public string TestComment { get; set; }
+
         //ToString
+        //public override string ToString()
+        //{
+        //    return this.ToStringProperty();
+        //}
+
         public override string ToString()
         {
-            return this.ToStringProperty();
+            return string.Format("   {0}: {1}\n   {2}: {3}\n   {4}: {5}\n   {6}: {7}\n   {8}: {9}\n   {10}: {11}\n   {12}: {13}\n   {14}: {15}\n   {16}: {17}\n   {18}: {19}\n   {20}: {21}\n   {22}: {23}\n   {24}: {25}\n   {26}: {27}\n",
+         "Id", ID, "tester Id", TesterId, "trainee Id", TraineeId,  "test date and dime" , TestDateAndTime.ToString("MM/dd/yyyy hh:mm"),
+         "test address", TestAddress.ToString(), "vehicle type",  VehicleType.ToString(), "gear",   Gear.ToString(),
+         "test distance",  TestDistance.ToString(), "test reverse parking", TestReverseParking.ToString(), "test mirrors",
+         TestMirrors.ToString(), "test vinker",  TestVinker.ToString(),
+         "test merge",  TestMerge.ToString(), "test result",  TestResult.ToString(), "test comment",  TestComment.ToString());
         }
-
-
 
 
 

@@ -14,7 +14,10 @@ namespace BE
         public HoursPerDay()
         {
             HoursOfWork = new bool[6];
-            HoursOfWork.Where(x => x).Select(x => x = true);
+            for (int i = 0; i < 6; i++)
+            {
+                HoursOfWork[i] = true;
+            }
         }
 
         public bool this[int x]//indexer

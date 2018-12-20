@@ -11,13 +11,24 @@ namespace BE
     {
         //c-tor
         public Tester(string id, string lastName, string firstName, DateTime birthday, Gender gender, string phone, Address address,
-            Vehicle vehicleType, int seniority, int maxTestsForWeek, double maxDistance, List<Test> TestersTests = null)
+            Vehicle vehicleType, int seniority, int maxTestsForWeek, double maxDistance, Schedule schedule, List<Test> testerTests)
+            : base(id, lastName, firstName, birthday, gender, phone, address, vehicleType)
+        {
+            Seniority = seniority;
+            MaxTestsForWeek = maxTestsForWeek;
+            MaxDistance = maxDistance;
+            Schedule = schedule;
+            TesterTests = testerTests;
+        }
+        public Tester(string id, string lastName, string firstName, DateTime birthday, Gender gender, string phone, Address address,
+            Vehicle vehicleType, int seniority, int maxTestsForWeek, double maxDistance)
             : base(id, lastName, firstName, birthday, gender, phone, address, vehicleType)
         {
             Seniority = seniority;
             MaxTestsForWeek = maxTestsForWeek;
             MaxDistance = maxDistance;
             Schedule = new Schedule();
+            TesterTests = new List<Test>();
         }
 
         //properties
@@ -29,7 +40,27 @@ namespace BE
 
         public override string ToString()
         {
-            return base.ToString() + string.Format("{0}: {1}\n{2}: {3}\n{4}: {5}\n", ToSentence("Seniority"), Seniority.ToString(), ToSentence("MaxTestsForWeek"), MaxTestsForWeek.ToString(), ToSentence("MaxDistance"), MaxDistance.ToString());
+            string str = "          sun   mon   thu   wed   tue\n   ";
+            for (int i = 9; i < 15; i++)
+            {
+                
+                str +=i + ":00  ";
+                for (int j = 0; j < 5; j++)
+                {
+                    if (Schedule[(DayOfWeek)j][i])
+                    {
+                        str += "  v   ";
+                    }
+                    else
+                    {
+                        str += "  x   ";
+                    }
+
+                }
+                str += "\n  "  ;
+
+            }
+            return  base.ToString() + string.Format("   {0}: {1}\n   {2}: {3}\n   {4}: {5}\n   {6}:\n{7}\n ", ToSentence("Seniority"), Seniority.ToString(), ToSentence("MaxTestsForWeek"), MaxTestsForWeek.ToString(), ToSentence("MaxDistance"), MaxDistance.ToString(),"Schedule", str);
         }
     }
 }

@@ -64,28 +64,31 @@ namespace BL
         {
             try
             {
-                if (CheckIdValidation(my_test.TraineeId) && TraineeHave20Lessons(my_test) && NotExistTestIn7Days(my_test) && !PassedForThisType(my_test))
+                var q = CheckIdValidation(my_test.TraineeId) && TraineeHave20Lessons(my_test) &&
+                        NotExistTestIn7Days(my_test) && !PassedForThisType(my_test) &&
+                        !TraineeTryingToSignTwice(my_test.TraineeId, my_test.VehicleType, my_test.Gear);
+                if (q)
                 {//now the trainee past the conditions and we need to find tester (including check id for trainee but not necessary to check tester because it checked on AddTester)
                     var relevantTester = (from tester in dal.GetTestersList()
-                            let listOfRelevantTesters = GetListOfNotGetToMaxTests(GetListOfTestersAtTraineeArea(
-                                GetListByVehicleType(my_test),
-                                my_test.TestAddress)) //get a list of tester match the condition to test 
+                            let listOfRelevantTesters = GetListOfTestersAtTraineeArea(
+                                GetListByVehicleType(my_test), my_test.TestAddress) //get a list of tester match the condition to test 
                             from item in listOfRelevantTesters
-                            where FreeTester(item, my_test.TestDateAndTime) //now find free tester
-                            select item
+                            where FreeTester(item, my_test.TestDateAndTime) && FreeTesterAtThisWeek(item,my_test.TestDateAndTime) //now find free tester
+                                          select item
                         ).FirstOrDefault();
 
                     if (relevantTester != null)
                     {
                         my_test.TesterId = relevantTester.ID;
                         relevantTester.TesterTests.Add(my_test);
+                        dal.UpdateTester(relevantTester);
                         dal.AddTest(my_test);
                     }
                     else//not found free tester
                     {
                         var listOfRelevantTesters =
-                            GetListOfNotGetToMaxTests(GetListOfTestersAtTraineeArea(GetListByVehicleType(my_test),
-                                my_test.TestAddress));
+                            GetListOfTestersAtTraineeArea(GetListByVehicleType(my_test),
+                                my_test.TestAddress);
 
                         OfferFreeTesterAndTime(listOfRelevantTesters);
                         
@@ -132,41 +135,40 @@ namespace BL
         //help functions for check test condition
         public void OfferFreeTesterAndTime(List<Tester> testersCondition)
         {
-            DateTime restartDate = new DateTime();
-            restartDate = DateTime.Today;
-            restartDate.AddHours(9);
+            DateTime restartDate = DateTime.Today.AddDays(3).AddHours(9);//DateTime is a value type
             //restart hour for the next round hour
             while (restartDate.Hour < 9 || restartDate.Hour > 14 || restartDate <= DateTime.Now)
             {
-                restartDate.AddHours(1);
+                restartDate = restartDate.AddHours(1);
             }
             DateTime courrent = new DateTime();
             foreach (var tester in testersCondition)
             {
                 courrent = restartDate;
-                while (courrent.Day - DateTime.Now.Day <= 14)
+                while (courrent.Day - DateTime.Now.Day <= 14)//offer newe date for the trainee maximum two weeks from now
                 {
                     while (courrent.DayOfWeek == DayOfWeek.Friday || courrent.DayOfWeek == DayOfWeek.Saturday)
                     {
-                        courrent.AddDays(1);
+                        courrent = courrent.AddDays(1);
                     }
 
-                    if (FreeTester(tester,courrent))
+                    if (FreeTester(tester,courrent) && FreeTesterAtThisWeek(tester,courrent))
                     {
                         throw new Exception(string.Format(
                             "we didn`t find available tester at your date request, here a new date offer\n" +
-                            "day: {0}, hour:{1}", courrent.DayOfWeek, courrent.Hour));
+                            "date: {0}", courrent.ToString("MM/dd/yyyy hh:mm")));
                     }
+
+                    courrent = courrent.AddHours(1);
                 }
+                //not found tester on next 14 days
             }
-            //not found tester on next 14 days
             throw new Exception("we didn`t find any tester at your area, please change your test address request ");
         }
         public bool FreeTester(Tester optionalTester, DateTime checkDateTime)
         {
-            return optionalTester.Schedule[checkDateTime.DayOfWeek]
-                       [checkDateTime.Hour] //bool func for tree tester in specific date
-                   && optionalTester.TesterTests.Where(x => x.TestDateAndTime == checkDateTime).ToList() == null;
+            return optionalTester.Schedule[checkDateTime.DayOfWeek][checkDateTime.Hour] && !optionalTester.TesterTests.Any(x => x.TestDateAndTime == checkDateTime);
+            //bool func for tree tester in specific date
         }
 
         //--------------------------------------------------------------
@@ -283,12 +285,12 @@ namespace BL
             }
             return result;
         }
-        public IEnumerable<IGrouping<int, Trainee>> GroupTraineesByNumOfTests(bool toSort = false)
+        public IEnumerable<IGrouping<Gender, Trainee>> GroupTraineesByGender(bool toSort = false)
         {
 
-            IEnumerable<IGrouping<int, Trainee>> result =
+            IEnumerable<IGrouping<Gender, Trainee>> result =
                 from trainee in dal.GetTraineeList()
-                group trainee by trainee.NumOfTests;
+                group trainee by trainee.Gender;
             //to sort condition by school name
             if (toSort)
             {
@@ -310,31 +312,27 @@ namespace BL
             return result;
         }
 
-
-
-
-        private List<Tester> GetListOfNotGetToMaxTests(List<Tester> testers)
+        private bool DatesAreInTheSameWeek(DateTime date1, DateTime date2)
         {
-            List<Test> testList = GetTestsList();
-            foreach (var tester in testers)
-            {
-                var v = (from item in testList
-                    where item.TesterId == tester.ID
-                    select item).Count();
-                if (v >= tester.MaxTestsForWeek)
-                {
-                    testers.Remove(tester);
-                }
-            }
-            //after removing the unrelevant tester
-            return testers;
+            var cal = System.Globalization.DateTimeFormatInfo.CurrentInfo.Calendar;
+            var d1 = date1.Date.AddDays(-1 * (int)cal.GetDayOfWeek(date1));
+            var d2 = date2.Date.AddDays(-1 * (int)cal.GetDayOfWeek(date2));
+
+            return d1 == d2;
         }
+
+
+        private bool FreeTesterAtThisWeek(Tester optionalTester, DateTime t)
+        {
+            var x = (from test in optionalTester.TesterTests
+                where DatesAreInTheSameWeek(test.TestDateAndTime, t)
+                select test).Count();
+            return x < optionalTester.MaxTestsForWeek;
+        }
+
         private List<Tester> GetListOfTestersAtTraineeArea(List<Tester> copyTesters, Address myAddress)
         {
-            Random testerCoardinate = new Random(200);
-            Random traineeCoardinate = new Random(200);
-            var distance = (UInt32) (testerCoardinate.Next() - traineeCoardinate.Next());
-            return copyTesters.Where(item => distance <= item.MaxDistance).ToList();
+            return copyTesters.Where(item => Math.Abs(item.Address.TemporaryCoordinate-myAddress.TemporaryCoordinate) <= item.MaxDistance).ToList();
         }
         private List<Tester> GetListByVehicleType(Test my_test)
         {
@@ -356,7 +354,7 @@ namespace BL
         private bool NotExistTestIn7Days(Test my_test)
         {
             var v = (from item in GetTestsList()
-                    where item.TraineeId == my_test.TraineeId && (DateTime.Now - item.TestDateAndTime).Days < 7
+                    where item.TraineeId == my_test.TraineeId && (item.TestDateAndTime.AddMinutes(1) - DateTime.Now).Days < 7// adding minute to round the lossing miliseconds at running time
                     select item).FirstOrDefault();
             return v==null? true : throw new Exception("ERROR:\n" +
                                              "This Test are too early (haven't pass 7 days from this trainee last test\n");
@@ -451,7 +449,7 @@ namespace BL
                        ((test.VehicleType == Vehicle.maxTrailer || test.VehicleType == Vehicle.midTrailer) && myTest.VehicleType == Vehicle.privateCar)) //case b: he has track license and want to test for private
                        && test.TestResult == true//pass the test
                                   select test).Count();
-            return conditionCheck == 0 ? true : throw new Exception("dear trainee: you have already driver license for this type of test\n");
+            return conditionCheck == 0 ? false : throw new Exception("dear trainee: you have already driver license for this type of test\n");
         }
 
         private int NumberOfTest(Trainee myTrainee) => dal.GetTestsList().Count(item => item.TraineeId == myTrainee.ID);
@@ -464,6 +462,10 @@ namespace BL
 
         private Test GetTestById(string id) => dal.GetTestsList().Where(test => test.ID == id).FirstOrDefault();
 
+        private int GetNumOfTraineeTests(string id, Vehicle vType, Gear gType) => dal.GetTestsList()
+            .Where(x => x.TraineeId == id && x.VehicleType == vType && x.Gear == gType).Count();
+        private bool TraineeTryingToSignTwice(string id, Vehicle vType, Gear gType) => dal.GetTestsList()
+            .Where(x => x.TraineeId == id && x.VehicleType == vType && x.Gear == gType && x.TestResult == null).Count() > 0;
         private bool CheckIdValidation(string id)
         {
             char[] digits = id.PadLeft(9, '0').ToCharArray();
