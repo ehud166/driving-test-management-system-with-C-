@@ -28,10 +28,6 @@ namespace DAL
         #endregion
 
 
-
-
-
-
         //adders
         //-------------------------------------------------
         public void AddTest(Test my_test)

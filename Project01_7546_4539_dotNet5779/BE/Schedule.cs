@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BE
 {
+    /// <summary>
+    /// helper class for represent tester schedule
+    /// </summary>
     public class Schedule
     {
         public Dictionary<DayOfWeek, HoursPerDay> WeekDays { get; set; }
@@ -21,6 +24,11 @@ namespace BE
             }
         }
 
+        /// <summary>
+        /// indexer
+        /// </summary>
+        /// <param name="x">get the day of week </param>
+        /// <returns>the schedule for this day</returns>
         public HoursPerDay this[DayOfWeek index]//indexer
         {
             get {return WeekDays[index];}

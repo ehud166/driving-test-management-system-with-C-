@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs" />
-    <Compile Include="GenericPrintClass.cs" />
     <Compile Include="HoursPerDay.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Configuration.cs" />

@@ -92,7 +92,7 @@ namespace BL
                             GetListOfTestersAtTraineeArea(GetListByVehicleType(my_test),
                                 my_test.TestAddress);
 
-                        OfferFreeTesterAndTime(listOfRelevantTesters);
+                        OfferFreeDateForTest(listOfRelevantTesters);
                         
                     }
                     
@@ -106,14 +106,18 @@ namespace BL
             
         }
 
-       
+
         //--------------------------------------------------------------
-        //help functions for check tester condition
+        /// <summary>
+        /// help functions for check tester condition
+        /// </summary>
+        /// <param name="my_tester">to check age</param>
+        /// <returns>true if tester under 40 years old</returns>
         private static bool CheckTesterAge(Tester my_tester)
         {
             DateTime tempAge = new DateTime();
             tempAge = my_tester.Birthday;//to calculate the tester`s age i added 40 years and compare to Now
-            tempAge.AddYears(40);
+            tempAge = tempAge.AddYears(40);
             if (tempAge <= DateTime.Now)
                 return true;
             else
@@ -121,12 +125,20 @@ namespace BL
                                     "This Tester are too young\n");
         }
         //--------------------------------------------------------------
-        //help functions for check trainee condition
+
+
+
+        //--------------------------------------------------------------
+        /// <summary>
+        ///help functions for check trainee condition
+        /// </summary>
+        /// <param name="my_trainee">to check age</param>
+        /// <returns>true if trainee under 18 years old</returns>
         private bool CheckTraineeAge(Trainee my_trainee)
         {
             DateTime tempAge = new DateTime();
             tempAge = my_trainee.Birthday;
-            tempAge.AddYears(18);//to calculate the trainee`s age i added 18 years and compare to Now
+            tempAge = tempAge.AddYears(18);//to calculate the trainee`s age i added 18 years and compare to Now
             if (tempAge <= DateTime.Now)
                 return true;
             else
@@ -134,12 +146,25 @@ namespace BL
                                     "This Trainee are too young\n");
         }
         //--------------------------------------------------------------
-        //help functions for check test condition
-        public void OfferFreeTesterAndTime(List<Tester> testersCondition)
+
+
+
+
+
+        //--------------------------------------------------------------
+        /// <summary>
+        ///help functions to offer the trainee free date for test
+        /// </summary>
+        /// <param name="testersCondition"></param>
+        public void OfferFreeDateForTest(List<Tester> testersCondition)
         {
+            #region parameter to restart time
+
             DateTime restartDate = DateTime.Today.AddDays(3).AddHours(9);//DateTime is a value type
             //restart hour for the next round hour
-            while (restartDate.Hour < 9 || restartDate.Hour > 14 || restartDate <= DateTime.Now)
+            #endregion
+
+            while (restartDate.Hour < 9 || restartDate.Hour > 14 || restartDate <= DateTime.Now)//if the date earlier from now or not in the hour of testing
             {
                 restartDate = restartDate.AddHours(1);
             }
@@ -167,6 +192,15 @@ namespace BL
             }
             throw new Exception("we didn`t find any tester at your area, please change your test address request ");
         }
+
+
+
+        /// <summary>
+        /// checking if tester avalible at this specific date and hour
+        /// </summary>
+        /// <param name="optionalTester">optional tester to test </param>
+        /// <param name="checkDateTime">optional date</param>
+        /// <returns>true for available</returns>
         public bool FreeTester(Tester optionalTester, DateTime checkDateTime)
         {
             return optionalTester.Schedule[checkDateTime.DayOfWeek][checkDateTime.Hour] && !optionalTester.TesterTests.Any(x => x.TestDateAndTime == checkDateTime);
@@ -320,6 +354,32 @@ namespace BL
             return result;
         }
 
+
+       
+
+
+        /// <summary>
+        /// check if we still can to add test to this tester at this week 
+        /// </summary>
+        /// <param name="optionalTester"></param>
+        /// <param name="t">test date</param>
+        /// <returns>true if this tester can add test this week</returns>
+        private bool FreeTesterAtThisWeek(Tester optionalTester, DateTime t)
+        {
+            var x = (from test in optionalTester.TesterTests
+                where DatesAreInTheSameWeek(test.TestDateAndTime, t)
+                select test).Count();
+            return x < optionalTester.MaxTestsForWeek;
+        }
+
+
+
+        /// <summary>
+        /// helper funcion to check if two test are in the same week (for max tester test for week)
+        /// </summary>
+        /// <param name="date1"></param>
+        /// <param name="date2"></param>
+        /// <returns>true id at the same week</returns>
         private bool DatesAreInTheSameWeek(DateTime date1, DateTime date2)
         {
             var cal = System.Globalization.DateTimeFormatInfo.CurrentInfo.Calendar;
@@ -329,26 +389,35 @@ namespace BL
             return d1 == d2;
         }
 
-
-        private bool FreeTesterAtThisWeek(Tester optionalTester, DateTime t)
-        {
-            var x = (from test in optionalTester.TesterTests
-                where DatesAreInTheSameWeek(test.TestDateAndTime, t)
-                select test).Count();
-            return x < optionalTester.MaxTestsForWeek;
-        }
-
+        /// <summary>
+        /// list from tester at trainee area
+        /// temporary
+        /// </summary>
+        /// <param name="copyTesters"></param>
+        /// <param name="myAddress"></param>
+        /// <returns>relvant tester list</returns>
         private List<Tester> GetListOfTestersAtTraineeArea(List<Tester> copyTesters, Address myAddress)
         {
             return copyTesters.Where(item => Math.Abs(item.Address.TemporaryCoordinate-myAddress.TemporaryCoordinate) <= item.MaxDistance).ToList();
         }
+
+
+        /// <summary>
+        /// list function for delegat
+        /// </summary>
+        /// <param name="my_test"></param>
+        /// <returns>list</returns>
         private List<Tester> GetListByVehicleType(Test my_test)
         {
             return GetTestersList().Where(item => item.VehicleType == my_test.VehicleType).ToList();
         }
 
 
-
+        /// <summary>
+        /// list function for delegat
+        /// </summary>
+        /// <param name="my_test"></param>
+        /// <returns>true if trainee filling the condition</returns>
         private bool TraineeHave20Lessons(Test my_test)
         {
             var v = (from item in GetTraineeList()
@@ -359,6 +428,12 @@ namespace BL
             
         }
 
+
+        /// <summary>
+        /// check if the trainee hasn`t sign or tested in 7 days
+        /// </summary>
+        /// <param name="my_test"></param>
+        /// <returns>true if not</returns>
         private bool NotExistTestIn7Days(Test my_test)
         {
             var v = (from item in GetTestsList()
@@ -369,7 +444,11 @@ namespace BL
         }
 
 
-
+        /// <summary>
+        /// check if tester fill all the fields for update test
+        /// </summary>
+        /// <param name="my_test"></param>
+        /// <returns>true if does</returns>
         private bool TheTesterFillAll(Test my_test)
         {
             foreach (var property in my_test.GetType().GetProperties())
@@ -380,6 +459,12 @@ namespace BL
             return true;
         }
 
+
+        /// <summary>
+        /// check if tester filling 4 from 5 condition to pass
+        /// </summary>
+        /// <param name="my_test"></param>
+        /// <returns>true if test result make sense </returns>
         private bool ResultMeetingCriteria(Test my_test)
         {
             int count = 0;
@@ -407,8 +492,48 @@ namespace BL
         }
 
 
+        /// <summary>
+        /// enonymous function to check if the trainee trying to sign twice
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="vType"></param>
+        /// <param name="gType"></param>
+        /// <returns>true if he does</returns>
+        private bool TraineeTryingToSignTwice(string id, Vehicle vType, Gear gType) => dal.GetTestsList()
+                    .Any(x => x.TraineeId == id && x.VehicleType == vType && x.Gear == gType && x.TestResult == null);
 
-       
+
+        /// <summary>
+        /// calculating function to calculate the id recieving and checking if id legall
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>true for legall id</returns>
+        private bool CheckIdValidation(string id)
+        {
+            char[] digits = id.PadLeft(9, '0').ToCharArray();
+            int[] oneTwo = { 1, 2, 1, 2, 1, 2, 1, 2, 1 };
+            int[] multiply = new int[9];
+            int[] oneDigit = new int[9];
+            for (int i = 0; i < 9; i++)
+                multiply[i] = Convert.ToInt32(digits[i].ToString()) * oneTwo[i];
+            for (int i = 0; i < 9; i++)
+                oneDigit[i] = (int)(multiply[i] / 10) + multiply[i] % 10;
+            int sum = 0;
+            for (int i = 0; i < 9; i++)
+                sum += oneDigit[i];
+            if (sum % 10 != 0)
+            {
+                throw new Exception("illigal ID, try again\n");
+            }
+            return true;
+        }
+
+
+
+        #region delegates
+
+        //----------------------------------------------------
+        //bool functions that make list from test filling the condition with delegate
         private delegate bool listOfDelegate(Test myTest);
         private List<Test> MyList(listOfDelegate some)
         {
@@ -447,7 +572,6 @@ namespace BL
             }
             return false;
         }
-
         private bool PassedForThisType(Test myTest)
         {
             var conditionCheck = (from test in dal.GetTestsList()
@@ -459,40 +583,52 @@ namespace BL
                                   select test).Count();
             return conditionCheck == 0 ? false : throw new Exception("dear trainee: you have already driver license for this type of test\n");
         }
+        //---------------------------------------------------
+        #endregion
 
+
+
+        /// <summary>
+        /// enonymous function to count the num of test that the trainee did
+        /// </summary>
+        /// <param name="myTrainee"></param>
+        /// <returns>sum of trainee tests</returns>
         private int NumberOfTest(Trainee myTrainee) => dal.GetTestsList().Count(item => item.TraineeId == myTrainee.ID);
 
-        private bool DeservingToLicense(Trainee myTrainee)
-        {var  v = dal.GetTestsList().Where(item => item.TraineeId == myTrainee.ID && item.TestResult == true).FirstOrDefault();
-            return v != null? true: false;
-        }
-        // לטיפול       private List<Test> GetListForExpectedDay(DayOfWeek expectedDay) => dal.GetTestsList().Where(test => test.TestDateAndTime.Day == expectedDay).ToList();
 
-        private Test GetTestById(string id) => dal.GetTestsList().Where(test => test.ID == id).FirstOrDefault();
+        /// <summary>
+        /// enonymous function to check if this trainee deserving to license
+        /// </summary>
+        /// <param name="myTrainee"></param>
+        /// <returns>true if he does</returns>
+        private bool DeservingToLicense(Trainee myTrainee) => dal.GetTestsList().Any(item => item.TraineeId == myTrainee.ID && item.TestResult == true);
 
+
+        /// <summary>
+        /// make a list from the tests on the expected day
+        /// </summary>
+        /// <param name="expectedDay"></param>
+        /// <returns>list from all the test on this day</returns>
+        private List<Test> GetListForExpectedDay(DayOfWeek expectedDay) => dal.GetTestsList().Where(test => test.TestDateAndTime.DayOfWeek == expectedDay).ToList();
+         
+
+        /// <summary>
+        /// find the test id and get the test
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the test with this id</returns>
+        private Test GetTestById(string id) => dal.GetTestsList().Find(test => test.ID == id);
+
+
+        /// <summary>
+        /// get num of trainee test for this vehicle
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="vType"></param>
+        /// <param name="gType"></param>
+        /// <returns>sum of all this specific tests</returns>
         private int GetNumOfTraineeTests(string id, Vehicle vType, Gear gType) => dal.GetTestsList()
             .Where(x => x.TraineeId == id && x.VehicleType == vType && x.Gear == gType).Count();
-        private bool TraineeTryingToSignTwice(string id, Vehicle vType, Gear gType) => dal.GetTestsList()
-            .Where(x => x.TraineeId == id && x.VehicleType == vType && x.Gear == gType && x.TestResult == null).Count() > 0;
-        private bool CheckIdValidation(string id)
-        {
-            char[] digits = id.PadLeft(9, '0').ToCharArray();
-            int[] oneTwo = { 1, 2, 1, 2, 1, 2, 1, 2, 1 };
-            int[] multiply = new int[9];
-            int[] oneDigit = new int[9];
-            for (int i = 0; i < 9; i++)
-                multiply[i] = Convert.ToInt32(digits[i].ToString()) * oneTwo[i];
-            for (int i = 0; i < 9; i++)
-                oneDigit[i] = (int)(multiply[i] / 10) + multiply[i] % 10;
-            int sum = 0;
-            for (int i = 0; i < 9; i++)
-                sum += oneDigit[i];
-            if (sum % 10 != 0)
-            {
-                throw new Exception("illigal ID, try again\n");
-            }
-            return true;
-        }
     }
 
 }

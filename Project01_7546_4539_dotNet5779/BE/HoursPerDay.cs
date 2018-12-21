@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace BE
 {
+    /// <summary>
+    /// helper class to creaiting the dictionary for tester schedule
+    /// </summary>
     public class HoursPerDay
     {
+        //fields
         public bool[] HoursOfWork { get; set; }
         //c-tor
         public HoursPerDay()
@@ -19,8 +23,12 @@ namespace BE
                 HoursOfWork[i] = true;
             }
         }
-
-        public bool this[int x]//indexer
+        /// <summary>
+        /// indexer
+        /// </summary>
+        /// <param name="x">get integer and return </param>
+        /// <returns>the bool if the tester not/working at this hour (boolean)</returns>
+        public bool this[int x]
         {
             get
             {

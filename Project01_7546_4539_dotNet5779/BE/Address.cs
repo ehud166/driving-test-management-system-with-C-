@@ -26,9 +26,9 @@ namespace BE
 
         public override string ToString()
         {
-            return this.ToStringProperty("\t");
+            return string.Format("   {0}: {1}\n   {2}: {3}\n   {4}: {5}\n   {6}: {7}\n", "Street name", StreetName, "Building number", BuildingNumber.ToString(), "city", City, "Temporary coordinate", TemporaryCoordinate.ToString());
         }
 
-        
+
     }
 }
