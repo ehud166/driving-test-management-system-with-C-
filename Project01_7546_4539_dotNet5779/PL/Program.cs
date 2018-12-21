@@ -374,22 +374,35 @@ namespace PL
                                                 AddNewTest(bl,id,vehicleType,gear);
                                             break;
                                         case 2:
-                                            //find the excepted test
-                                            //check if trainee passed the test
-                                                Console.WriteLine("put your ID");
-                                            id = Console.ReadLine();
-                                            Console.WriteLine("choose vehicle type\n 1: privateCar ,2: motorcycle,3: midTrailer, 4: maxTrailer");
-                                            vehicleType = (Vehicle) (Convert.ToInt32(Console.ReadLine()));
-                                            foreach (var testerX in bl.GetTestersList())
+                                            try
                                             {
-                                                 var xExists = testerX.TesterTests.Exists(item =>
-                                                    item.TraineeId == id && item.VehicleType == vehicleType &&
-                                                    item.TestResult == true);
-                                                if (xExists)
-                                                    Console.WriteLine("passed");
-                                                return;
-                                            }
+
+
+                                                //find the excepted test
+                                                //check if trainee passed the test
+                                                Console.WriteLine("put your ID");
+                                                id = Console.ReadLine();
+                                                Console.WriteLine(
+                                                    "choose vehicle type\n 1: privateCar ,2: motorcycle,3: midTrailer, 4: maxTrailer");
+                                                vehicleType = (Vehicle) (Convert.ToInt32(Console.ReadLine()));
+                                                foreach (var testerX in bl.GetTestersList())
+                                                {
+                                                    var xExists = testerX.TesterTests.Exists(item =>
+                                                        item.TraineeId == id && item.VehicleType == vehicleType &&
+                                                        item.TestResult == true);
+                                                    if (xExists)
+                                                        Console.WriteLine("passed");
+                                                    return;
+                                                }
+
                                                 Console.WriteLine(" NOT passed");
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                Console.WriteLine(e);
+                                                throw;
+                                            }
+
                                             break;
                                         default:
                                             break;
