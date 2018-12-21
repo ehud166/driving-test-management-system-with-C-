@@ -8,7 +8,7 @@ namespace BE
     }
     public enum Gear
     {
-        manual, auto
+        manual = 1, auto
     }
     public enum Gender
     {

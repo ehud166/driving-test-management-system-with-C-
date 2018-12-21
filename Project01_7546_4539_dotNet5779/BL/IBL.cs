@@ -139,5 +139,31 @@ namespace BL
         /// <returns>Ienumarable for the group</returns>
         IEnumerable<IGrouping<bool?, Test>> GroupTestByResult(bool toSort = false);
 
+
+        //adding to IBL to help find existing tester/test/trainee
+        //------------------------------------------------------------------------------------
+        /// <summary>
+        /// find the test id and get the test
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the test with this id</returns>
+        Test GetTestById(string id);
+
+
+        /// <summary>
+        /// find the tester id and get the tester
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the tester with this id</returns>
+        Tester GetTesterById(string id);
+
+
+        /// <summary>
+        /// find the trainee id and get the trainee
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the trainee with this id</returns>
+        Trainee GetTraineeById(string id);
+        //------------------------------------------------------------------------------------
     }
 }

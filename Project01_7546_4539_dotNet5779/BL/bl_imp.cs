@@ -290,6 +290,7 @@ namespace BL
         {
             return dal.GetTestsList();
         }
+
         //grouping
         public IEnumerable<IGrouping<Vehicle, Tester>> GroupTestersByVehicle(bool toSort = false)
         {
@@ -354,8 +355,29 @@ namespace BL
             return result;
         }
 
+        /// <summary>
+        /// find the test id and get the test
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the test with this id</returns>
+        public Test GetTestById(string id) => dal.GetTestsList().Find(test => test.ID == id);
 
-       
+
+        /// <summary>
+        /// find the tester id and get the tester
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the tester with this id</returns>
+        public Tester GetTesterById(string id) => dal.GetTestersList().Find(tester => tester.ID == id);
+
+
+        /// <summary>
+        /// find the trainee id and get the trainee
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the trainee with this id</returns>
+        public Trainee GetTraineeById(string id) => dal.GetTraineeList().Find(trainee => trainee.ID == id);
+
 
 
         /// <summary>
@@ -424,7 +446,7 @@ namespace BL
                                   where item.ID == my_test.TraineeId && item.LessonNum >= 20 && item.VehicleType == my_test.VehicleType
                                   select item).FirstOrDefault();
             return v != null ? true: throw new Exception("ERROR:\n" +
-                                    "This trainee have not study 20 lesson yet for this vehicle type\n");
+                                    "This trainee have not study 20 lesson yet for this vehicle type or he does NOT exist\n");
             
         }
 
@@ -612,12 +634,7 @@ namespace BL
         private List<Test> GetListForExpectedDay(DayOfWeek expectedDay) => dal.GetTestsList().Where(test => test.TestDateAndTime.DayOfWeek == expectedDay).ToList();
          
 
-        /// <summary>
-        /// find the test id and get the test
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>the test with this id</returns>
-        private Test GetTestById(string id) => dal.GetTestsList().Find(test => test.ID == id);
+        
 
 
         /// <summary>
