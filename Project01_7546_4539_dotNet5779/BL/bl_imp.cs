@@ -530,7 +530,7 @@ namespace BL
         /// </summary>
         /// <param name="id"></param>
         /// <returns>true for legall id</returns>
-        private bool CheckIdValidation(string id)
+        public bool CheckIdValidation(string id)
         {
             char[] digits = id.PadLeft(9, '0').ToCharArray();
             int[] oneTwo = { 1, 2, 1, 2, 1, 2, 1, 2, 1 };

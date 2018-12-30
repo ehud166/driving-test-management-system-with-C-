@@ -20,7 +20,8 @@ namespace DS
         //Testers.Add(checkForTester);
         //Trainee checkForTrainee = new Trainee("", "yishay", "badichi", DateTime.Parse("30/07/1996"), Gender.male, "053823117", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", checkForTester.FirstName + "\n" + checkForTester.LastName, 21);
         //Trainees.Add(checkForTrainee);
-       
+
+        
     }
     
 }

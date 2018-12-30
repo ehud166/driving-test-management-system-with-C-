@@ -164,6 +164,8 @@ namespace BL
         /// <param name="id"></param>
         /// <returns>the trainee with this id</returns>
         Trainee GetTraineeById(string id);
+
+        bool CheckIdValidation(string id);
         //------------------------------------------------------------------------------------
     }
 }

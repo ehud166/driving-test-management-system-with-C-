@@ -1,0 +1,101 @@
+﻿<Window x:Class="PLWPF.AddOrUpdateTrainee" WindowStartupLocation="CenterScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLWPF"
+        mc:Ignorable="d"
+        Title="AddOrUpdateTrainee" Height="Auto" Width="1000">
+    <Window.Resources>
+        <Style x:Key="myStyle" TargetType="Control" >
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3,6,0,6"/>
+            <Setter Property="Height" Value="23"/>
+            <!--<Setter Property="HorizantalAlignment" Value="Left"/>-->
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="grid1" Margin="0,0,0.333,86.333">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid Column="0" Margin="15" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label VerticalAlignment="Center" Margin="5.667,13,0,9" HorizontalAlignment="Left" Grid.Column="5" Content="מספר זהות" RenderTransformOrigin="0.358,-0.477" Height="26" Width="95"/>
+                <TextBox x:Name="idTextBox" Width="120" Grid.Column="4" VerticalAlignment="Center" Text="{Binding ID, Mode=OneWayToSource, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Height="24" HorizontalAlignment="Left" />
+                <Label VerticalAlignment="Center" Grid.Row="1"  HorizontalAlignment="Left" Grid.Column="5" Content=":שם משפחה" Height="26" Width="95"/>
+                <TextBox x:Name="lastNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding lastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Grid.Column="4"  Height="23" HorizontalAlignment="Left" />
+                <Label VerticalAlignment="Center" Grid.Row="2"  HorizontalAlignment="Left" Grid.Column="5" Content=":שם פרטי" Height="26" Width="68" />
+                <TextBox x:Name="firstNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding firstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Grid.Column="4"  Height="23" HorizontalAlignment="Left" />
+                <Label VerticalAlignment="Center" Grid.Row="3" HorizontalAlignment="Left" Grid.Column="5" Content=":תאריך לידה" Height="26" Width="98" />
+                <DatePicker x:Name="birthdayDatePicker" VerticalAlignment="Center" SelectedDate="{Binding birthday, Mode=OneWayToSource, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="3" HorizontalAlignment="Right" Grid.Column="4"/>
+                <Label VerticalAlignment="Center" Grid.Row="0"  HorizontalAlignment="Left" Content=":מין" Height="26" Width="168" Grid.Column="3"  Grid.ColumnSpan="2"/>
+                <ComboBox x:Name="GenderComboBox" Width="120" VerticalAlignment="Center" IsEditable="True" Grid.Row="0"  Height="23" HorizontalAlignment="right" Grid.Column="2"  >
+                    <ComboBoxItem Content ="זכר"/>
+                    <ComboBoxItem Content ="נקבה"/>
+                </ComboBox>
+                <ComboBox x:Name="prefixPhoneComboBox" HorizontalAlignment="Left"  IsEditable="True" Width="50" Grid.Row="1"  VerticalAlignment="Center" Grid.Column="2" Height="23" Margin="20,12,0,12.667" >
+                    <ComboBoxItem Content="02"/>
+                    <ComboBoxItem Content="03"/>
+                    <ComboBoxItem Content="04"/>
+                    <ComboBoxItem Content="08"/>
+                    <ComboBoxItem Content="09"/>
+                    <ComboBoxItem Content="077"/>
+                    <ComboBoxItem Content="052"/>
+                    <ComboBoxItem Content="053"/>
+                    <ComboBoxItem Content="054"/>
+                    <ComboBoxItem Content="055"/>
+                    <ComboBoxItem Content="059"/>
+                    <ComboBoxItem Content="058"/>
+                </ComboBox >
+                <TextBox x:Name="phoneNumbersTextBox"  Height="23" Grid.Column="2"  Grid.Row="1" HorizontalAlignment="right"  VerticalAlignment="Center" Width="120" />
+                <Label VerticalAlignment="Center" Grid.Row="1" Content=":מס' טלפון" Height="26" Grid.Column="3" Margin="9.667,10.667,43.333,11.333" />
+                <ComboBox x:Name="AddressSuggestionsCBB" VerticalAlignment="Center" IsEditable="True" Grid.Row="2" Grid.Column="2" Height="22" Margin="1,9.333,0.333,15.333"/>
+                <Label VerticalAlignment="Center" Grid.Row="2"  HorizontalAlignment="Left" Content=":כתובת" Height="26" Width="192" Grid.Column="3" Margin="9.667,7.667,0,13" Grid.ColumnSpan="2"/>
+                <ComboBox x:Name="VehcileType" VerticalAlignment="Center" IsEditable="True" RenderTransformOrigin="1.675,7.167" Width="150"  Grid.Row="3" Grid.Column="2" Height="22" HorizontalAlignment="right"/>
+                <Label VerticalAlignment="Center" Grid.Row="3"  HorizontalAlignment="Left" Content=":סוג הרכב" Height="26" Width="192" Grid.Column="3" Margin="9.667,13,0,8.333" Grid.ColumnSpan="2"/>
+                <Label VerticalAlignment="Center" Grid.Row="0" Margin="3,2,0,7" HorizontalAlignment="Left" Grid.Column="1" Content=":גיר" Height="26" Width="68"/>
+                <Label VerticalAlignment="Center" Grid.Row="1" Margin="3,3,-38.667,8.333" HorizontalAlignment="Left" Grid.Column="1" Content=":בית הספר לנהיגה" Height="26" Width="109"/>
+                <Label VerticalAlignment="Center" Grid.Row="2" Margin="3,3.333,-13,8" HorizontalAlignment="Left" Grid.Column="1" Content=":מורה הנהיגה" Height="26" Width="86"/>
+                <Label VerticalAlignment="Center" Grid.Row="3" Margin="3,2.667,-22.667,7.333" HorizontalAlignment="Left" Grid.Column="1" Content=":מס' השיעורים" Height="26" Width="97"/>
+                <StackPanel Orientation="Horizontal" Margin="10,18" FlowDirection="RightToLeft">
+                    <RadioButton Content="ידני         "/>
+                    <RadioButton Content="אוטומטי"/>
+                </StackPanel>
+                <TextBox x:Name="SchoolTextBox" Width="120" VerticalAlignment="Center" Text="{Binding school, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3,6,0,6" Height="23" HorizontalAlignment="right" />
+                <TextBox x:Name="TeacherNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3,6,0,6" Height="23" HorizontalAlignment="right"/>
+                <TextBox x:Name="LessonNumTextBox" Width="120" VerticalAlignment="Center" Text="{Binding LessonNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" Margin="3,6,0,6" Height="23" HorizontalAlignment="right" />
+
+            </Grid>
+        </Grid>
+        <Button Content="Add"  Grid.Row="1" FontSize="25" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="50" Width="416" Height="41" Click="Button_Click" />
+
+
+
+    </Grid>
+
+
+    <!--<Image HorizontalAlignment="Left" Height="46" Margin="257,0,0,0" VerticalAlignment="Top" Width="51" Source="images/home.png" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+        <Image HorizontalAlignment="Left" Height="46" Margin="310,0,0,0" VerticalAlignment="Top" Width="51" Source="images/back_icon2.jpg" MouseLeftButtonDown="Image_MouseLeftButtonDown_1"/>-->
+
+</Window>
