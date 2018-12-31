@@ -20,7 +20,7 @@ namespace PLWPF
     /// </summary>
     public partial class TraneeMenu : Window
     {
-        private Trainee existTrainee;
+        private Trainee existTrainee = null;
         public TraneeMenu(Trainee a)
         {
             InitializeComponent();
@@ -29,21 +29,26 @@ namespace PLWPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
             AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(existTrainee);
-            addOrUpdateTrainee.Show();
+            addOrUpdateTrainee.ShowDialog();
             this.Close();
-
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show();
-            this.Close();
+            //new MainWindow().Show();
+            //this.Close();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(existTrainee.ToString());
         }
     }
 }

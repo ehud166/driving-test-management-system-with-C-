@@ -28,7 +28,7 @@
         </Grid>
         <Image Source="C:\Users\ehud1\source\repos\Project01_7546_4539_dotNet5779\Project01_7546_4539_dotNet5779\PLWPF\person_add (2).png" Stretch="None" VerticalAlignment="Center"/>
 
-        <Button x:Name="okButton"  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="top" Width="400" Height="40"  Content="אישור" IsDefault="True" Click="OkButton_Click" FontSize="36" FontWeight="Bold" BorderThickness="0,1,1,0" RenderTransformOrigin="0.5,0.5" FontFamily="Showcard Gothic">
+        <Button x:Name="okButton"  Grid.Row="2" HorizontalAlignment="Center" Padding="-10" VerticalAlignment="top" Width="400" Height="40"  Content="אישור" IsDefault="True" Click="OkButton_Click" FontSize="36" FontWeight="Bold" BorderThickness="0,1,1,0" RenderTransformOrigin="0.5,0.5" FontFamily="Showcard Gothic">
             <Button.Style>
                 <Style>
                     <Style.Triggers>

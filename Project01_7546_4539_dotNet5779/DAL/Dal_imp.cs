@@ -93,7 +93,7 @@ namespace DAL
             List<Tester> copyTesters = new List<Tester>();
             copyTesters = Testers.Select(x => new Tester(x.ID, x.LastName, x.FirstName, x.Birthday, x.Gender, x.Phone,
                     new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.VehicleType,
-                    x.Seniority, x.MaxTestsForWeek, x.MaxDistance, x.Schedule, x.TesterTests))
+                    x.Seniority, x.MaxTestsForWeek, x.MaxDistance, x.Schedule, new List<Test>(x.TesterTests)))
                 .ToList();
             return copyTesters;
         }
@@ -177,9 +177,6 @@ namespace DAL
                 if (v == null)
                     throw new Exception("ERROR:\n" +
                                         "This tester does NOT exist\n");
-                //if (v > 1)
-                //    throw new Exception("ERROR:\n" +
-                //                        "there is two tester with the same id\n");
             }
             catch (Exception e)
             {
@@ -191,13 +188,20 @@ namespace DAL
         {
             try
             {
-                var v = Trainees.Where(itemTrainee => itemTrainee.ID == my_trainee.ID).Select(itemTrainee => itemTrainee = my_trainee).Count();
-                if (v == 0)
+                var v = Trainees.Where(itemTrainee => itemTrainee.ID == my_trainee.ID).FirstOrDefault();
+                Trainees.Remove(v);
+                v = new Trainee(my_trainee.ID, my_trainee.LastName, my_trainee.FirstName, my_trainee.Birthday,
+                    my_trainee.Gender, my_trainee.Phone,
+                    new Address(my_trainee.Address.StreetName, my_trainee.Address.BuildingNumber,
+                        my_trainee.Address.City),
+                    my_trainee.VehicleType, my_trainee.Gear, my_trainee.DrivingSchool, my_trainee.TeacherName,
+                    my_trainee.LessonNum);
+                Trainees.Add(v);
+           
+                if (v == null)
                     throw new Exception("ERROR:\n" +
                                         "This Trainee does NOT exist\n");
-                if (v > 1)
-                    throw new Exception("ERROR:\n" +
-                                        "there is two trainee with the same id\n");
+               
             }
             catch (Exception e)
             {

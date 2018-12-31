@@ -37,10 +37,10 @@ namespace PLWPF
             //Console.WriteLine(tester1);
             bl.AddTester(tester2);
 
-            Trainee trainee1 = new Trainee("032577546", "yishay", "badichi", DateTime.Parse("30/07/1996"), Gender.male, "053823117", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
+            Trainee trainee1 = new Trainee("032577546", "badichi", "yishai", DateTime.Parse("30/07/1996"), Gender.male, "053823117", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
             bl.AddTrainee(trainee1);
             //Console.WriteLine(trainee1);
-            Trainee trainee2 = new Trainee("206026858", "hadas", "gershony", DateTime.Parse("17/03/1996"), Gender.male, "053823117", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
+            Trainee trainee2 = new Trainee("206026858", "gershony", "hadas", DateTime.Parse("17/03/1996"), Gender.male, "053823117", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
             bl.AddTrainee(trainee2);
 
             Test checkTest = new Test("032577546", DateTime.Parse("23/12/18 9:0"), new Address("f", 4, "a"), Vehicle.privateCar, Gear.manual);
@@ -69,10 +69,10 @@ namespace PLWPF
         
         private void Trainee_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
             LogInWindow logInWindow = new LogInWindow();
-            new LogInWindow().Show();
+            logInWindow.ShowDialog();
             this.Close();
-            
         }
 
  

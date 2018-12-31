@@ -21,35 +21,54 @@ namespace PLWPF
     /// </summary>
     public partial class AddOrUpdateTrainee : Window
     {
+        private static Trainee existTrainee;
+        static  bool flag = false;
+        private IBL bl;
 
         public AddOrUpdateTrainee(string id)
         {
             InitializeComponent();
-            IBL bl = Bl_imp.GetBl();
-
-
+            bl = Bl_imp.GetBl();
             idTextBox.Text = id;
             idTextBox.IsEnabled = false;
+            //existTrainee = new Trainee(id);
+            //this.DataContext = existTrainee;
         }
-        public AddOrUpdateTrainee(Trainee existTrainee)
+
+
+        public AddOrUpdateTrainee(Trainee newTrainee)
         {
             InitializeComponent();
-            IBL bl = Bl_imp.GetBl();
+            bl = Bl_imp.GetBl();
+            existTrainee = newTrainee;
+            flag = true;
 
 
-            idTextBox.Text = existTrainee.ID;
+            this.DataContext = existTrainee;
+            AddOrUpdateButtonClick.Content = "עדכן";
             idTextBox.IsEnabled = false;
-            lastNameTextBox.Text = existTrainee.LastName;
-            firstNameTextBox.Text = existTrainee.FirstName;
-            birthdayDatePicker.Text = existTrainee.Birthday.ToString("yy-MM-dd");
-            GenderComboBox.Text = existTrainee.Gender.ToString();
-          //prefixPhoneComboBox.Text = existTrainee.Phone.Substring(0, existTrainee.Phone.Length - 7);
-          //phoneNumbersTextBox.Text = existTrainee.Phone.Substring(existTrainee.Phone.Length - 7, existTrainee.Phone.Length);
+
+         
+            //prefixPhoneComboBox.SelectedItem = existTrainee.Phone.Substring(0, existTrainee.Phone.Length - 7);
+            //phoneNumbersTextBox.Text = existTrainee.Phone.Substring(existTrainee.Phone.Length - 7, existTrainee.Phone.Length);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+       
+
+        private void AddOrUpdateButtonClick_OnClick(object sender, RoutedEventArgs e)
         {
+            if (flag)
+            {
+                bl.UpdateTrainee(existTrainee);
+            }
+            else
+            {
+                bl.AddTrainee(existTrainee);
+            }
 
+            this.Close();
+            MessageBox.Show(existTrainee.ToString());
         }
+
     }
 }

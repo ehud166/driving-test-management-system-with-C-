@@ -45,6 +45,7 @@
             <Button Content="פרטי טסט" Grid.Row="2" Grid.Column="1"/>
             <Button Content="עדכון פרטים" Grid.Row="0" Grid.Column="0" Click="Button_Click" />
             <Button Content="מחיקה" Grid.Row="1" Grid.Column="0"/>
+            <Button Content="הפרטים שלי" Grid.Row="2" Grid.Column="0" Click="Button_Click_3"/>
         </Grid>
         
     </Grid>
