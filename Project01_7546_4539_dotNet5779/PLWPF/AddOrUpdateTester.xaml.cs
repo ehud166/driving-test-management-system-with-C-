@@ -10,21 +10,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PLWPF
 {
     /// <summary>
-    /// Interaction logic for Person.xaml
+    /// Interaction logic for AddOrUpdateTester.xaml
     /// </summary>
-    public partial class Person : UserControl
+    public partial class AddOrUpdateTester : Window
     {
-        public Person()
+        public AddOrUpdateTester()
         {
             InitializeComponent();
         }
 
         
+
+      
     }
 }

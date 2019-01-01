@@ -26,6 +26,11 @@ namespace BE
             TestComment = testComment;
         }
 
+        public Test()
+        {
+
+        }
+
         public string ID { get; set; }
         public string TesterId { get; set; }
         public string TraineeId { get; set; }

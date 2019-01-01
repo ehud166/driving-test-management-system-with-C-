@@ -328,10 +328,10 @@ namespace BL
             }
             return result;
         }
-        public IEnumerable<IGrouping<Gender, Trainee>> GroupTraineesByGender(bool toSort = false)
+        public IEnumerable<IGrouping<string, Trainee>> GroupTraineesByGender(bool toSort = false)
         {
 
-            IEnumerable<IGrouping<Gender, Trainee>> result =
+            IEnumerable<IGrouping<string, Trainee>> result =
                 from trainee in dal.GetTraineeList()
                 group trainee by trainee.Gender;
             //to sort condition by school name

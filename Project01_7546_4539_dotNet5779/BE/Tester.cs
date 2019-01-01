@@ -10,9 +10,9 @@ namespace BE
     public class Tester : Person
     {
         //c-tor
-        public Tester(string id, string lastName, string firstName, DateTime birthday, Gender gender, string phone, Address address,
+        public Tester(string id, string firstName, string lastName, DateTime birthday, string gender, string phoneAreaCode, string phoneNumber, Address address,
             Vehicle vehicleType, int seniority, int maxTestsForWeek, double maxDistance, Schedule schedule, List<Test> testerTests)
-            : base(id, lastName, firstName, birthday, gender, phone, address, vehicleType)
+            : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType)
         {
             Seniority = seniority;
             MaxTestsForWeek = maxTestsForWeek;
@@ -20,15 +20,25 @@ namespace BE
             Schedule = schedule;
             TesterTests = testerTests;
         }
-        public Tester(string id, string lastName, string firstName, DateTime birthday, Gender gender, string phone, Address address,
+        public Tester(string id, string firstName, string lastName, DateTime birthday, string gender, string phoneAreaCode, string phoneNumber, Address address,
             Vehicle vehicleType, int seniority, int maxTestsForWeek, double maxDistance)
-            : base(id, lastName, firstName, birthday, gender, phone, address, vehicleType)
+            : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType)
         {
             Seniority = seniority;
             MaxTestsForWeek = maxTestsForWeek;
             MaxDistance = maxDistance;
             Schedule = new Schedule();
             TesterTests = new List<Test>();
+        }
+
+        public Tester()
+        {
+
+        }
+
+        public Tester(string id) : base(id)
+        {
+
         }
 
         //properties

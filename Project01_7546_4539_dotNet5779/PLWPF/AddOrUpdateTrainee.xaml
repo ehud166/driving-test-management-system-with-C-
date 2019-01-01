@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         mc:Ignorable="d"
-        Title="AddOrUpdateTrainee" MinHeight="400" MinWidth="800" SizeToContent="WidthAndHeight">
+        Title="AddOrUpdateTrainee" MinHeight="400" MinWidth="800" SizeToContent="WidthAndHeight" Closed="AddOrUpdateTrainee_OnClosed">
     <Window.Resources>
         <Style x:Key="myStyle" TargetType="Control" >
             <Setter Property="Width" Value="120"/>
@@ -21,10 +21,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
             <Grid Column="0" Margin="15" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -49,17 +45,19 @@
                 <Label VerticalAlignment="Center" Grid.Row="3" HorizontalAlignment="Left" Grid.Column="5" Content=":תאריך לידה" Height="26" Width="98" />
                 <DatePicker x:Name="birthdayDatePicker" VerticalAlignment="Center" SelectedDate="{Binding Birthday, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="3" HorizontalAlignment="Right" Grid.Column="4"/>
                 <Label VerticalAlignment="Center" Grid.Row="0"  HorizontalAlignment="Left" Content=":מין" Height="26" Width="168" Grid.Column="3"  Grid.ColumnSpan="2"/>
-                <ComboBox x:Name="GenderComboBox" Width="120" VerticalAlignment="Center" IsEditable="True" Grid.Row="0"  Height="23" HorizontalAlignment="right" Grid.Column="2"  >
+                <ComboBox x:Name="GenderComboBox" Width="120"   VerticalAlignment="Center"  Grid.Row="0"  Height="23" HorizontalAlignment="right" Grid.Column="2" IsEditable="True" SelectedItem="{Binding Gender, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" >
                     <ComboBoxItem Content ="זכר"/>
                     <ComboBoxItem Content ="נקבה"/>
                 </ComboBox>
-                <ComboBox x:Name="prefixPhoneComboBox" HorizontalAlignment="Left"  IsEditable="True" Width="50" Grid.Row="1"  VerticalAlignment="Center" Grid.Column="2" Height="23" Margin="20,12,0,12.667" Text="{Binding Phone, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
+                <ComboBox x:Name="prefixPhoneComboBox" HorizontalAlignment="Left" Width="50" Grid.Row="1"  VerticalAlignment="Center" Grid.Column="2" Height="23" Margin="20,12,0,12.667" Text="{Binding PhoneAreaCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
                     <ComboBoxItem Content="02"/>
                     <ComboBoxItem Content="03"/>
                     <ComboBoxItem Content="04"/>
                     <ComboBoxItem Content="08"/>
                     <ComboBoxItem Content="09"/>
                     <ComboBoxItem Content="077"/>
+                    <ComboBoxItem Content="074"/>
+                    <ComboBoxItem Content="079"/>
                     <ComboBoxItem Content="052"/>
                     <ComboBoxItem Content="053"/>
                     <ComboBoxItem Content="054"/>
@@ -67,11 +65,11 @@
                     <ComboBoxItem Content="059"/>
                     <ComboBoxItem Content="058"/>
                 </ComboBox >
-                <TextBox x:Name="phoneNumbersTextBox"  Height="23" Grid.Column="2" MaxLength="9"  Grid.Row="1" HorizontalAlignment="right"  VerticalAlignment="Center"  Width="120" Text="{Binding Phone, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }"/>
+                <TextBox x:Name="phoneNumbersTextBox"  Height="23" Grid.Column="2" MaxLength="7"  Grid.Row="1" HorizontalAlignment="right"  VerticalAlignment="Center"  Width="120" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }"/>
                 <Label VerticalAlignment="Center" Grid.Row="1" Content=":מס' טלפון" Height="26" Grid.Column="3" Margin="9.667,10.667,43.333,11.333" />
                 <ComboBox x:Name="AddressSuggestionsCBB" VerticalAlignment="Center" IsEditable="True" Grid.Row="2" Grid.Column="2" Height="22" Margin="1,9.333,0.333,15.333"/>
                 <Label VerticalAlignment="Center" Grid.Row="2"  HorizontalAlignment="Left" Content=":כתובת" Height="26" Width="192" Grid.Column="3" Margin="9.667,7.667,0,13" Grid.ColumnSpan="2"/>
-                <ComboBox x:Name="VehcileTypeComboBox" VerticalAlignment="Center" IsEditable="True" RenderTransformOrigin="1.675,7.167" Width="150"  Grid.Row="3" Grid.Column="2" Height="22" HorizontalAlignment="right"  ItemsSource="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
+                <ComboBox x:Name="VehcileTypeComboBox" VerticalAlignment="Center" IsEditable="False" RenderTransformOrigin="1.675,7.167" Width="150"  Grid.Row="3" Grid.Column="2" Height="22" HorizontalAlignment="right"  ItemsSource="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
                     <ComboBoxItem Content="רכב פרטי"/>
                     <ComboBoxItem Content="אופנוע"/>
                     <ComboBoxItem Content="משאית קלה עד 15 טון"/>
@@ -92,9 +90,48 @@
 
             </Grid>
         </Grid>
-        <Button x:Name="AddOrUpdateButtonClick" Content="הרשם"  Grid.Row="1" FontSize="25" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="50" Width="416" Height="41" Click="AddOrUpdateButtonClick_OnClick" />
+        <Button x:Name="AddOrUpdateButtonClick" Content="הרשם"  Grid.Row="1" FontSize="25" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="50" Width="416" Height="41" Click="AddOrUpdateButtonClick_OnClick" >
+            <Button.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=lastNameTextBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=firstNameTextBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=birthdayDatePicker, Path=SelectedDate.HasValue}" Value="false">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=GenderComboBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=prefixPhoneComboBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=phoneNumbersTextBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=AddressSuggestionsCBB, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=VehcileTypeComboBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=SchoolTextBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=TeacherNameTextBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=LessonNumTextBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
 
-
+        </Button>
 
     </Grid>
 

@@ -129,7 +129,7 @@ namespace BL
         /// </summary>
         /// <param name="toSort">order to sort the group list</param>
         /// <returns>Ienumarable for the group</returns>
-        IEnumerable<IGrouping<Gender, Trainee>> GroupTraineesByGender(bool toSort = false);
+        IEnumerable<IGrouping<string, Trainee>> GroupTraineesByGender(bool toSort = false);
 
 
         /// <summary>

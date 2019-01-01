@@ -24,37 +24,43 @@ namespace PLWPF
     /// </summary>
     public partial class LogInWindow : Window
     {
-        public LogInWindow()
+        IBL bl = Bl_imp.GetBl();
+        private static string id;
+        private static DateTime birth;
+        private static Window pWindow;
+
+        public LogInWindow(Window parent)
         {
+            pWindow = parent;
             DataContext = this;
+
             InitializeComponent();
         }
-        IBL bl = Bl_imp.GetBl();
-        private string id;
-        private DateTime birth;
+        
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-
-
                 id = idTextBox.Text;
                 Trainee a = bl.GetTraineeById(id);
                 birth = birthdayDatePicker.DisplayDate;
                 // MessageBox.Show(id + "\n" + birth.ToString("d"));
-                if (id != null && String.Empty != id && bl.CheckIdValidation(id))
+                if (bl.CheckIdValidation(id))
                 {
+                    this.Hide();
+                    pWindow.Hide();
+
                     if (a != null)
                     {
-                        this.Hide();
-                        TraneeMenu traneeMenu = new TraneeMenu(a);
-                        traneeMenu.ShowDialog();
+                        
+                        TraineeMenu_window traineeMenuWindow = new TraineeMenu_window(pWindow, a);
+                        traineeMenuWindow.ShowDialog();
+                        this.Close();
                     }
                     else
                     {
-                        this.Hide();
-                        AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(id);
+                        AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(pWindow, new Trainee(id));
                         addOrUpdateTrainee.ShowDialog();
                         this.Close();
                     }

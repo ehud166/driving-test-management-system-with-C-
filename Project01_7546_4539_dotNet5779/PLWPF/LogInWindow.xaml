@@ -26,13 +26,13 @@
             <TextBox Grid.Column="0" Grid.Row="0" Width="250" HorizontalAlignment="right"  Name="idTextBox" MaxLength="9" Margin="0,0,0,5" KeyDown="idTextBox_keyDown" BorderThickness = "2" FontSize="22" FontWeight="Bold"/>
             <DatePicker Grid.Column="0" Grid.Row="1" Name="birthdayDatePicker" Margin="0,0,0,5" Width="250"  HorizontalAlignment="right" FontSize="22" FontWeight="Bold" Background="{x:Null}" Opacity="0.4"/>
         </Grid>
-        <Image Source="C:\Users\ehud1\source\repos\Project01_7546_4539_dotNet5779\Project01_7546_4539_dotNet5779\PLWPF\person_add (2).png" Stretch="None" VerticalAlignment="Center"/>
+        <Image Source="C:\Users\ehud1\source\repos\Project01_7546_4539_dotNet5779\Project01_7546_4539_dotNet5779\PLWPF\images\logInImage.png" Stretch="None" VerticalAlignment="Center"/>
 
-        <Button x:Name="okButton"  Grid.Row="2" HorizontalAlignment="Center" Padding="-10" VerticalAlignment="top" Width="400" Height="40"  Content="אישור" IsDefault="True" Click="OkButton_Click" FontSize="36" FontWeight="Bold" BorderThickness="0,1,1,0" RenderTransformOrigin="0.5,0.5" FontFamily="Showcard Gothic">
+        <Button x:Name="okButton" Grid.Row="2" HorizontalAlignment="Center" Padding="-10" VerticalAlignment="top" Width="400" Height="40"  Content="אישור" IsDefault="True" Click="OkButton_Click" FontSize="36" FontWeight="Bold" BorderThickness="0,1,1,0" RenderTransformOrigin="0.5,0.5" FontFamily="Showcard Gothic">
             <Button.Style>
                 <Style>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=idTextBox, Path=DataContext.Check}" Value="false">
+                        <DataTrigger Binding="{Binding ElementName=idTextBox, Path=Text.Length}" Value="0">
                             <Setter Property="Button.IsEnabled" Value="False"/>
                         </DataTrigger>
                         <!--<DataTrigger Binding="{Binding ElementName=birthdayDatePicker, Path=Text}" Value="">

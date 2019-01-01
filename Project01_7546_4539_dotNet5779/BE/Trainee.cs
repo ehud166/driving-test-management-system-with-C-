@@ -8,14 +8,23 @@ namespace BE
 {
     public class Trainee : Person
     {
-        public Trainee(string id, string lastName, string firstName, DateTime birthday, Gender gender, string phone, Address address, 
+        public Trainee(string id, string firstName, string lastName, DateTime birthday, string gender, string phoneAreaCode, string phoneNumber, Address address, 
                         Vehicle vehicleType, Gear gear, string drivingSchool, string teacherName, int lessonNum)
-                        : base(id, lastName, firstName, birthday, gender, phone, address, vehicleType)
+                        : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType)
         {
             Gear = gear;
             DrivingSchool = drivingSchool;
             TeacherName = teacherName;
             LessonNum = lessonNum;
+        }
+
+        public Trainee() : base()
+        {
+
+        }
+        public Trainee(string id) : base(id)
+        {
+
         }
 
         //properties

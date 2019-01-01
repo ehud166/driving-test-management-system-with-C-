@@ -22,53 +22,48 @@ namespace PLWPF
     public partial class AddOrUpdateTrainee : Window
     {
         private static Trainee existTrainee;
-        static  bool flag = false;
+        private static Window pWindow = null;
+        static  bool exist = false;
         private IBL bl;
 
-        public AddOrUpdateTrainee(string id)
-        {
-            InitializeComponent();
-            bl = Bl_imp.GetBl();
-            idTextBox.Text = id;
-            idTextBox.IsEnabled = false;
-            //existTrainee = new Trainee(id);
-            //this.DataContext = existTrainee;
-        }
-
-
-        public AddOrUpdateTrainee(Trainee newTrainee)
+        public AddOrUpdateTrainee(Window parent, Trainee newTrainee)
         {
             InitializeComponent();
             bl = Bl_imp.GetBl();
             existTrainee = newTrainee;
-            flag = true;
-
-
+            pWindow = parent;
             this.DataContext = existTrainee;
-            AddOrUpdateButtonClick.Content = "עדכן";
             idTextBox.IsEnabled = false;
 
-         
-            //prefixPhoneComboBox.SelectedItem = existTrainee.Phone.Substring(0, existTrainee.Phone.Length - 7);
-            //phoneNumbersTextBox.Text = existTrainee.Phone.Substring(existTrainee.Phone.Length - 7, existTrainee.Phone.Length);
+            if (parent.GetType().ToString() == "PLWPF.TraineeMenu_window")
+            {
+                exist = true;
+                AddOrUpdateButtonClick.Content = "עדכן";
+                pWindow = new TraineeMenu_window(pWindow, existTrainee);
+            }
         }
 
        
 
         private void AddOrUpdateButtonClick_OnClick(object sender, RoutedEventArgs e)
         {
-            if (flag)
+            if (exist)
             {
                 bl.UpdateTrainee(existTrainee);
+                MessageBox.Show(existTrainee.FirstName + " עודכן בהצלחה");
             }
             else
             {
                 bl.AddTrainee(existTrainee);
+                MessageBox.Show(existTrainee.FirstName + " נרשם בהצלחה");
             }
 
             this.Close();
-            MessageBox.Show(existTrainee.ToString());
         }
 
+        private void AddOrUpdateTrainee_OnClosed(object sender, EventArgs e)
+        {
+            pWindow?.ShowDialog();
+        }
     }
 }

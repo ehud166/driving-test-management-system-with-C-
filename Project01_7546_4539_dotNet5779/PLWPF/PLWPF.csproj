@@ -57,18 +57,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddOrUpdateTester.xaml.cs">
+      <DependentUpon>AddOrUpdateTester.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddOrUpdateTrainee.xaml.cs">
       <DependentUpon>AddOrUpdateTrainee.xaml</DependentUpon>
     </Compile>
     <Compile Include="LogInWindow.xaml.cs">
       <DependentUpon>LogInWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="person.xaml.cs">
-      <DependentUpon>person.xaml</DependentUpon>
+    <Compile Include="TesterMenu.xaml.cs">
+      <DependentUpon>TesterMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TraneeMenu.xaml.cs">
-      <DependentUpon>TraneeMenu.xaml</DependentUpon>
+    <Compile Include="TraineeMenu_window.xaml.cs">
+      <DependentUpon>TraineeMenu_window.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddOrUpdateTester.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddOrUpdateTrainee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -89,11 +96,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="person.xaml">
+    <Page Include="TesterMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TraneeMenu.xaml">
+    <Page Include="TraineeMenu_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,6 +142,12 @@
       <Project>{4e1a141a-d367-4a82-843e-dca218da3d7c}</Project>
       <Name>BL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="logInImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\logInImage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
