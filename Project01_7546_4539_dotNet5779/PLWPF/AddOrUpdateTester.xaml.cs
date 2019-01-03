@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BL;
+using BE;
 
 namespace PLWPF
 {
@@ -19,13 +21,64 @@ namespace PLWPF
     /// </summary>
     public partial class AddOrUpdateTester : Window
     {
-        public AddOrUpdateTester()
+        private static Tester existTester;
+        private static Window pWindow = null;
+        static bool exist = false;
+        private IBL bl;
+
+        public AddOrUpdateTester(Window parent, Tester newTester)
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+                bl = Bl_imp.GetBl();
+                existTester = newTester;
+                pWindow = parent;
+                this.DataContext = existTester;
+                idTextBox.IsEnabled = false;
+                if (parent.GetType().ToString() == "PLWPF.TesterMenu")
+                {
+                    exist = true;
+                    AddOrUpdateButtonClick.Content = "עדכן";
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
-        
+        private void AddOrUpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
 
-      
+                if (exist)
+                {
+                    bl.UpdateTester(existTester);
+                    MessageBox.Show(existTester.FirstName + " עודכן בהצלחה");
+                }
+                else
+                {
+                    bl.AddTester(existTester);
+                    MessageBox.Show(existTester.FirstName + " נרשם בהצלחה");
+                    pWindow = new TesterMenu(pWindow, existTester);
+                }
+
+                this.Close();
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+              
+            }
+        }
+
+        private void AddOrUpdateTester_OnClosed(object sender, EventArgs e)
+        {
+            pWindow?.Show();
+        }
     }
+    
 }

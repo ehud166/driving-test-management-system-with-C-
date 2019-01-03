@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BE;
+using BL;
 
 namespace PLWPF
 {
@@ -19,18 +21,43 @@ namespace PLWPF
     /// </summary>
     public partial class TesterMenu : Window
     {
-        public TesterMenu()
+        private static Tester existTester = null;
+        private static Window pWindow = null;
+        private IBL bl;
+
+        public TesterMenu(Window parent, Tester tester)
         {
             InitializeComponent();
+            bl = Bl_imp.GetBl();
+            pWindow = parent;
+            existTester = tester;
+            header_textBlock.Text = string.Format("שלום, " + existTester.FirstName);
         }
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            System.Windows.Data.CollectionViewSource testerViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("testerViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // testerViewSource.Source = [generic data source]
+            
+        }
+
+        private void AddOrUpdateButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            AddOrUpdateTester addOrUpdateTester = new AddOrUpdateTester(this, existTester);
+            addOrUpdateTester.ShowDialog();
+            //this.Close();
+        }
+
+        private void BackToMainWindow_clickButton(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Exit_clickButton(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+            //this.Close();
         }
     }
 }

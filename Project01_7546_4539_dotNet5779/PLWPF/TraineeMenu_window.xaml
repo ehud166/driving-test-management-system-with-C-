@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         mc:Ignorable="d"
-        Title="TraineeMenu_window" Height="450" Width="800" Closed="TraineeMenu_window_OnClosed">
+        Title="TraineeMenu_window" MinHeight="200" MinWidth="200" SizeToContent="WidthAndHeight" Closed="TraineeMenu_window_OnClosed">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -26,13 +26,12 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="header_textBlock" Text = "תפריט תלמיד" FontWeight="Bold" FontSize="24" HorizontalAlignment="Right" Grid.Column="2"/>
-            <Button Content="תפריט ראשי" Grid.Column="1" Click="BackToMainWindow_clickButton" />
-            <Button Content="יציאה" Click="Exit_clickButton"/>
+            <TextBlock x:Name="header_textBlock" Text = "תפריט תלמיד" FontWeight="Bold" FontSize="36" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Column="2"/>
+            <Button Content="תפריט ראשי" Grid.Column="1" FontSize="15" Click="BackToMainWindow_clickButton" />
+            <Button Content="יציאה" FontSize="15" Click="Exit_clickButton"/>
         </Grid>
-        <Grid Row="1">
+        <Grid Row="1" Margin="20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -40,13 +39,11 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="רישום לטסט" Grid.Row="0" Grid.Column="1"  />
-            <Button Content="תוצאות הטסט" Grid.Row="1" Grid.Column="1" />
-            <Button Content="פרטי טסט" Grid.Row="2" Grid.Column="1"/>
+            <Button Content="רישום לטסט" Grid.Row="0" Grid.Column="1" />
             <Button Content="עדכון פרטים" Grid.Row="0" Grid.Column="0" Click="AddOrUpdate_ButtonClick" />
-            <Button Content="מחיקה" Grid.Row="1" Grid.Column="0"/>
-            <Button Content="הפרטים שלי" Grid.Row="2" Grid.Column="0" Click="MyDetailes_ButtonClick"/>
+            <Button Content="צא מהמאגר" Grid.Row="1" Grid.Column="0" Click="Remove_Click"/>
+            <Button Content="מידע" Grid.Row="1" Grid.Column="1" Click="MyDetailes_ButtonClick" />
         </Grid>
-        
+
     </Grid>
 </Window>

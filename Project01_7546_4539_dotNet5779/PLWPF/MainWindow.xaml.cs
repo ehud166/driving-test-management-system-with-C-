@@ -33,11 +33,19 @@ namespace PLWPF
         private void Trainee_Click(object sender, RoutedEventArgs e)
         {
             //this.Hide();
-            LogInWindow logInWindow = new LogInWindow(this);
+            bool a=false;
+            LogInWindow logInWindow = new LogInWindow(this,a);
             logInWindow.ShowDialog();
           //  this.Close();
         }
 
- 
+        private void Tester_Click(object sender, RoutedEventArgs e)
+        {
+            //this.Hide();
+            bool a = true;
+            LogInWindow logInWindow = new LogInWindow(this,a);
+            logInWindow.ShowDialog();
+            //  this.Close();
+        }
     }
 }

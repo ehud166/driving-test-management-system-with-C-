@@ -360,7 +360,7 @@ namespace BL
         /// </summary>
         /// <param name="id"></param>
         /// <returns>the test with this id</returns>
-        public Test GetTestById(string id) => dal.GetTestsList().Find(test => test.ID == id);
+        public List<Test> GetTestsById(string id) => dal.GetTestsList().FindAll(test => test.ID == id);
 
 
         /// <summary>
@@ -378,6 +378,13 @@ namespace BL
         /// <returns>the trainee with this id</returns>
         public Trainee GetTraineeById(string id) => dal.GetTraineeList().Find(trainee => trainee.ID == id);
 
+
+        /// <summary>
+        /// enonymous function to check if this trainee deserving to license
+        /// </summary>
+        /// <param name="myTrainee"></param>
+        /// <returns>true if he does</returns>
+        public bool DeservingToLicense(Trainee myTrainee) => dal.GetTestsList().Any(item => item.TraineeId == myTrainee.ID && item.TestResult == true);
 
 
         /// <summary>
@@ -618,13 +625,7 @@ namespace BL
         private int NumberOfTest(Trainee myTrainee) => dal.GetTestsList().Count(item => item.TraineeId == myTrainee.ID);
 
 
-        /// <summary>
-        /// enonymous function to check if this trainee deserving to license
-        /// </summary>
-        /// <param name="myTrainee"></param>
-        /// <returns>true if he does</returns>
-        private bool DeservingToLicense(Trainee myTrainee) => dal.GetTestsList().Any(item => item.TraineeId == myTrainee.ID && item.TestResult == true);
-
+       
 
         /// <summary>
         /// make a list from the tests on the expected day
@@ -632,9 +633,6 @@ namespace BL
         /// <param name="expectedDay"></param>
         /// <returns>list from all the test on this day</returns>
         private List<Test> GetListForExpectedDay(DayOfWeek expectedDay) => dal.GetTestsList().Where(test => test.TestDateAndTime.DayOfWeek == expectedDay).ToList();
-         
-
-        
 
 
         /// <summary>

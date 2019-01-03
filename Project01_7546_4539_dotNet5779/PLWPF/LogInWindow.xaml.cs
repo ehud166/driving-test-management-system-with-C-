@@ -26,15 +26,17 @@ namespace PLWPF
     {
         IBL bl = Bl_imp.GetBl();
         private static string id;
-        private static DateTime birth;
+        private static string password;
         private static Window pWindow;
+        private static bool isTester;
 
-        public LogInWindow(Window parent)
+        public LogInWindow(Window parent,bool flag)
         {
-            pWindow = parent;
-            DataContext = this;
-
             InitializeComponent();
+            isTester = flag;
+            pWindow = parent;
+            
+
         }
         
 
@@ -44,25 +46,49 @@ namespace PLWPF
             {
                 id = idTextBox.Text;
                 Trainee a = bl.GetTraineeById(id);
-                birth = birthdayDatePicker.DisplayDate;
+                Tester b = bl.GetTesterById(id);
+                //password = LogIn_ShowPassword.;
                 // MessageBox.Show(id + "\n" + birth.ToString("d"));
                 if (bl.CheckIdValidation(id))
                 {
                     this.Hide();
                     pWindow.Hide();
+                    if (!isTester)
+                    {
+                        this.DataContext = a;
+                        if (a != null)
+                        {
+                            TraineeMenu_window traineeMenuWindow = new TraineeMenu_window(pWindow, a);
+                            traineeMenuWindow.ShowDialog();
+                            this.Close();
+                        }
 
-                    if (a != null)
-                    {
-                        
-                        TraineeMenu_window traineeMenuWindow = new TraineeMenu_window(pWindow, a);
-                        traineeMenuWindow.ShowDialog();
-                        this.Close();
+                        else
+                        {
+                            // if (pWindow==MainWindow.Trainee_Click)
+                            AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(pWindow, new Trainee(id));
+                            addOrUpdateTrainee.ShowDialog();
+                            this.Close();
+                        }
                     }
-                    else
+
+                    if (isTester)
                     {
-                        AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(pWindow, new Trainee(id));
-                        addOrUpdateTrainee.ShowDialog();
-                        this.Close();
+                        this.DataContext = b;
+                        if (b != null)
+                        {
+                            TesterMenu testerMenu = new TesterMenu(pWindow, b);
+                            testerMenu.ShowDialog();
+                            this.Close();
+                        }
+
+                        else
+                        {
+                            // if (pWindow==MainWindow.Trainee_Click)
+                            AddOrUpdateTester addOrUpdateTester = new AddOrUpdateTester(pWindow, new Tester(id));
+                            addOrUpdateTester.ShowDialog();
+                            this.Close();
+                        }
                     }
                 }
 
@@ -95,6 +121,8 @@ namespace PLWPF
         {
             idTextBox.Focus();
         }
+
+        
     }
 
 }

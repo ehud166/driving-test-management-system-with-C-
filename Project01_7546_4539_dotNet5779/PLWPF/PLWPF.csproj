@@ -66,8 +66,15 @@
     <Compile Include="LogInWindow.xaml.cs">
       <DependentUpon>LogInWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PasswordHelper.cs" />
+    <Compile Include="ScheduleUserControl.xaml.cs">
+      <DependentUpon>ScheduleUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TesterMenu.xaml.cs">
       <DependentUpon>TesterMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TraineeDetailes.xaml.cs">
+      <DependentUpon>TraineeDetailes.xaml</DependentUpon>
     </Compile>
     <Compile Include="TraineeMenu_window.xaml.cs">
       <DependentUpon>TraineeMenu_window.xaml</DependentUpon>
@@ -96,7 +103,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ScheduleUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TesterMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TraineeDetailes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -123,6 +138,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\BE.Test.datasource" />
     <None Include="Properties\DataSources\BE.Tester.datasource" />
     <None Include="Properties\DataSources\BE.Trainee.datasource" />
     <None Include="Properties\Settings.settings">

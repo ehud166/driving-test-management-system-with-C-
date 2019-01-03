@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BE;
+using BL;
 
 namespace PLWPF
 {
@@ -23,13 +24,15 @@ namespace PLWPF
     {
         private static Trainee existTrainee = null;
         private static Window pWindow = null;
+        private IBL bl;
 
         public TraineeMenu_window(Window parent, Trainee trainee)
         {
             InitializeComponent();
+            bl = Bl_imp.GetBl();
             pWindow = parent;
             existTrainee = trainee;
-            header_textBlock.Text = string.Format("שלום " + existTrainee.FirstName);
+            header_textBlock.Text = string.Format("שלום, " + existTrainee.FirstName);
         }
 
 
@@ -54,12 +57,30 @@ namespace PLWPF
 
         private void MyDetailes_ButtonClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(existTrainee.ToString());
+           TraineeDetailes traineeDetailes =new TraineeDetailes(this,existTrainee);
+            traineeDetailes.ShowDialog();
         }
 
         private void TraineeMenu_window_OnClosed(object sender, EventArgs e)
         {
             pWindow?.Show();
         }
+
+        private void Remove_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.RemoveTrainee(existTrainee.ID);
+                MessageBox.Show("הוסרת מהמערכת בהצלחה");
+                this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+            
+        }
+
+       
     }
 }

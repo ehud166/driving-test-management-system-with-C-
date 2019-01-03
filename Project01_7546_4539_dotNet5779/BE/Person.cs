@@ -10,7 +10,7 @@ namespace BE
     {
 
         public Person(string id, string firstName, string lastName, DateTime birthday,
-   string gender, string phoneAreaCode, string phoneNumber, Address address, Vehicle vehicleType)
+   string gender, string phoneAreaCode, string phoneNumber, Address address, Vehicle vehicleType,string email = null,string password = null)
         {
             ID = id;
             LastName = lastName;
@@ -21,6 +21,8 @@ namespace BE
             PhoneNumber = phoneNumber;
             Address = address;
             VehicleType = vehicleType;
+            Email = email;
+            Password = password;
         }
 
         public Person()
@@ -41,6 +43,8 @@ namespace BE
         //property for store split phoneNumber
         public string PhoneAreaCode { get; set; }
         public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
         //gender property
         public string Gender { get => _gender == BE.Gender.male ? "זכר" : "נקבה"; set => _gender = ToGender(value); }
         //gender private field

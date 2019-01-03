@@ -28,18 +28,25 @@ namespace PLWPF
 
         public AddOrUpdateTrainee(Window parent, Trainee newTrainee)
         {
-            InitializeComponent();
-            bl = Bl_imp.GetBl();
-            existTrainee = newTrainee;
-            pWindow = parent;
-            this.DataContext = existTrainee;
-            idTextBox.IsEnabled = false;
-
-            if (parent.GetType().ToString() == "PLWPF.TraineeMenu_window")
+            try
             {
-                exist = true;
-                AddOrUpdateButtonClick.Content = "עדכן";
-                pWindow = new TraineeMenu_window(pWindow, existTrainee);
+
+                InitializeComponent();
+                bl = Bl_imp.GetBl();
+                existTrainee = newTrainee;
+                pWindow = parent;
+                this.DataContext = existTrainee;
+                idTextBox.IsEnabled = false;
+                MessageBox.Show(parent.ToString());
+                if (parent.GetType().ToString() == "PLWPF.TraineeMenu_window")
+                {
+                    exist = true;
+                    AddOrUpdateButtonClick.Content = "עדכן";
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
             }
         }
 
@@ -47,23 +54,30 @@ namespace PLWPF
 
         private void AddOrUpdateButtonClick_OnClick(object sender, RoutedEventArgs e)
         {
-            if (exist)
+            try
             {
-                bl.UpdateTrainee(existTrainee);
-                MessageBox.Show(existTrainee.FirstName + " עודכן בהצלחה");
+                if (exist)
+                {
+                    bl.UpdateTrainee(existTrainee);
+                    MessageBox.Show(existTrainee.FirstName + " עודכן בהצלחה");
+                }
+                else
+                {
+                    bl.AddTrainee(existTrainee);
+                    MessageBox.Show(existTrainee.FirstName + " נרשם בהצלחה");
+                    pWindow = new TraineeMenu_window(pWindow, existTrainee);
+                }
+                this.Close();
             }
-            else
+            catch (Exception exception)
             {
-                bl.AddTrainee(existTrainee);
-                MessageBox.Show(existTrainee.FirstName + " נרשם בהצלחה");
+                MessageBox.Show(exception.Message);
             }
-
-            this.Close();
         }
 
         private void AddOrUpdateTrainee_OnClosed(object sender, EventArgs e)
         {
-            pWindow?.ShowDialog();
+            pWindow?.Show();
         }
     }
 }

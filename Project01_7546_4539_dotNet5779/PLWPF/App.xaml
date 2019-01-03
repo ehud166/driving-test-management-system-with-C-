@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:PLWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <BitmapImage x:Key="logInImage" UriSource="images/logInImage.png"/>
+        <BitmapImage x:Key="ShowPasswordImage" UriSource="images/"/>
+
     </Application.Resources>
 </Application>

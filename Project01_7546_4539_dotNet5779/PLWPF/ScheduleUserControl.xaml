@@ -1,0 +1,119 @@
+﻿<UserControl x:Class="PLWPF.ScheduleUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PLWPF"
+             mc:Ignorable="d" >
+    <!--d:DesignHeight="NaN" d:DesignWidth="NaN"-->
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        </Style>
+        <Style TargetType="ToggleButton">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <!--<Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="80"/>-->
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style TargetType="RowDefinition">
+            <Setter Property="Height" Value="*"/>
+        </Style>
+        <Style TargetType="ColumnDefinition">
+            <Setter Property="Width" Value="*"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="DayGrid" Row="0" Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="א" Grid.Column="4"/>
+            <TextBlock Text="ב" Grid.Column="3"/>
+            <TextBlock Text="ג" Grid.Column="2"/>
+            <TextBlock Text="ד" Grid.Column="1"/>
+            <TextBlock Text="ה" Grid.Column="0"/>
+        </Grid>
+        <Grid x:Name="HoursGrid" Row="1" Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="9:00" Grid.Row="0"/>
+            <TextBlock Text="10:00" Grid.Row="1"/>
+            <TextBlock Text="11:00" Grid.Row="2"/>
+            <TextBlock Text="12:00" Grid.Row="3"/>
+            <TextBlock Text="13:00" Grid.Row="4"/>
+            <TextBlock Text="14:00" Grid.Row="5"/>
+        </Grid>
+        <Grid x:Name="ScheduleToggenGrid" Row="1" Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ToggleButton Grid.Row="0" Grid.Column="0"/>
+            <ToggleButton Grid.Row="0" Grid.Column="1"/>
+            <ToggleButton Grid.Row="0" Grid.Column="2"/>
+            <ToggleButton Grid.Row="0" Grid.Column="3"/>
+            <ToggleButton Grid.Row="0" Grid.Column="4"/>
+            <ToggleButton Grid.Row="1" Grid.Column="0"/>
+            <ToggleButton Grid.Row="1" Grid.Column="1"/>
+            <ToggleButton Grid.Row="1" Grid.Column="2"/>
+            <ToggleButton Grid.Row="1" Grid.Column="3"/>
+            <ToggleButton Grid.Row="1" Grid.Column="4"/>
+            <ToggleButton Grid.Row="2" Grid.Column="0"/>
+            <ToggleButton Grid.Row="2" Grid.Column="1"/>
+            <ToggleButton Grid.Row="2" Grid.Column="2"/>
+            <ToggleButton Grid.Row="2" Grid.Column="3"/>
+            <ToggleButton Grid.Row="2" Grid.Column="4"/>
+            <ToggleButton Grid.Row="3" Grid.Column="0"/>
+            <ToggleButton Grid.Row="3" Grid.Column="1"/>
+            <ToggleButton Grid.Row="3" Grid.Column="2"/>
+            <ToggleButton Grid.Row="3" Grid.Column="3"/>
+            <ToggleButton Grid.Row="3" Grid.Column="4"/>
+            <ToggleButton Grid.Row="4" Grid.Column="0"/>
+            <ToggleButton Grid.Row="4" Grid.Column="1"/>
+            <ToggleButton Grid.Row="4" Grid.Column="2"/>
+            <ToggleButton Grid.Row="4" Grid.Column="3"/>
+            <ToggleButton Grid.Row="4" Grid.Column="4"/>
+            <ToggleButton Grid.Row="5" Grid.Column="0"/>
+            <ToggleButton Grid.Row="5" Grid.Column="1"/>
+            <ToggleButton Grid.Row="5" Grid.Column="2"/>
+            <ToggleButton Grid.Row="5" Grid.Column="3"/>
+            <ToggleButton Grid.Row="5" Grid.Column="4"/>
+        </Grid>
+        
+    </Grid>
+</UserControl>

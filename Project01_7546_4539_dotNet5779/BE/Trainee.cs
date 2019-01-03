@@ -8,9 +8,9 @@ namespace BE
 {
     public class Trainee : Person
     {
-        public Trainee(string id, string firstName, string lastName, DateTime birthday, string gender, string phoneAreaCode, string phoneNumber, Address address, 
+        public Trainee(string id, string firstName, string lastName, DateTime birthday, string gender, string phoneAreaCode, string phoneNumber, Address address,string email, string password,
                         Vehicle vehicleType, Gear gear, string drivingSchool, string teacherName, int lessonNum)
-                        : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType)
+                        : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType, email,password)
         {
             Gear = gear;
             DrivingSchool = drivingSchool;

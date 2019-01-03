@@ -147,7 +147,7 @@ namespace BL
         /// </summary>
         /// <param name="id"></param>
         /// <returns>the test with this id</returns>
-        Test GetTestById(string id);
+        List<Test> GetTestsById(string id);
 
 
         /// <summary>
@@ -156,6 +156,8 @@ namespace BL
         /// <param name="id"></param>
         /// <returns>the tester with this id</returns>
         Tester GetTesterById(string id);
+
+        bool DeservingToLicense(Trainee myTrainee);
 
 
         /// <summary>

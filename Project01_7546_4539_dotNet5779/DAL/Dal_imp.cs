@@ -28,17 +28,17 @@ namespace DAL
 
 
 
-            Tester tester1 = new Tester("314784539", "אהוד", "גרשוני", DateTime.Parse("13/02/1970"), "זכר", "053","0010199", new Address("shakhal", 8, "jerusalem"), Vehicle.privateCar, 13, 30, 100);
+            Tester tester1 = new Tester("314784539", "אהוד", "גרשוני", DateTime.Parse("13/02/1970"), "זכר", "053","0010199", new Address("shakhal", 8, "jerusalem"),"e@global.com","12345678", Vehicle.privateCar, 13, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester1);
-            Tester tester2 = new Tester("000002121", "דודו", "כהן", DateTime.Parse("30/07/1956"), "זכר", "053","0010100", new Address("kolombia", 6, "jerusalem"), Vehicle.privateCar, 11, 30, 100);
+            Tester tester2 = new Tester("000002121", "דודו", "כהן", DateTime.Parse("30/07/1956"), "זכר", "053","0010100", new Address("kolombia", 6, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, 11, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester2);
 
-            Trainee trainee1 = new Trainee("032577546", "ישי", "בדיחי", DateTime.Parse("30/07/1996"), "זכר", "052","6608111", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
+            Trainee trainee1 = new Trainee("032577546", "ישי", "בדיחי", DateTime.Parse("30/07/1996"), "זכר", "052","6608111", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
             Trainees.Add(trainee1);
             //Console.WriteLine(trainee1);
-            Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), "נקבה", "058","6114147", new Address("kolombia", 7, "jerusalem"), Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
+            Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), "נקבה", "058","6114147", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
             Trainees.Add(trainee2);
 
             Test checkTest = new Test("032577546", DateTime.Parse("23/12/18 9:0"), new Address("f", 4, "a"), Vehicle.privateCar, Gear.manual);
@@ -131,7 +131,7 @@ namespace DAL
         {
             List<Tester> copyTesters = new List<Tester>();
             copyTesters = Testers.Select(x => new Tester(x.ID, x.FirstName, x.LastName, x.Birthday, x.Gender, x.PhoneAreaCode,x.PhoneNumber,
-                    new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.VehicleType,
+                    new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password, x.VehicleType,
                     x.Seniority, x.MaxTestsForWeek, x.MaxDistance, x.Schedule, new List<Test>(x.TesterTests)))
                 .ToList();
             return copyTesters;
@@ -150,7 +150,7 @@ namespace DAL
         {
             List<Trainee> copyTrainees = new List<Trainee>();
             copyTrainees = Trainees.Select(x => new Trainee(x.ID, x.FirstName, x.LastName, x.Birthday, x.Gender, x.PhoneAreaCode, x.PhoneNumber,
-                new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.VehicleType, x.Gear,
+                new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password, x.VehicleType, x.Gear,
                 x.DrivingSchool, x.TeacherName, x.LessonNum)).ToList();
             return copyTrainees;
         }
@@ -222,7 +222,7 @@ namespace DAL
 
                 Testers.Remove(v);
                 v = new Tester(my_tester.ID, my_tester.FirstName, my_tester.LastName, my_tester.Birthday,
-                    my_tester.Gender, my_tester.PhoneAreaCode, my_tester.PhoneNumber, my_tester.Address, my_tester.VehicleType,
+                    my_tester.Gender, my_tester.PhoneAreaCode, my_tester.PhoneNumber, my_tester.Address,my_tester.Email,my_tester.Password, my_tester.VehicleType,
                     my_tester.Seniority, my_tester.MaxTestsForWeek, my_tester.MaxDistance, my_tester.Schedule,
                     my_tester.TesterTests);
                 Testers.Add(v);
@@ -247,7 +247,7 @@ namespace DAL
                 v = new Trainee(my_trainee.ID, my_trainee.FirstName, my_trainee.LastName, my_trainee.Birthday,
                     my_trainee.Gender, my_trainee.PhoneAreaCode, my_trainee.PhoneNumber,
                     new Address(my_trainee.Address.StreetName, my_trainee.Address.BuildingNumber,
-                        my_trainee.Address.City),
+                        my_trainee.Address.City), my_trainee.Email, my_trainee.Password,
                     my_trainee.VehicleType, my_trainee.Gear, my_trainee.DrivingSchool, my_trainee.TeacherName,
                     my_trainee.LessonNum);
                 Trainees.Add(v);
