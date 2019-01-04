@@ -73,6 +73,9 @@
     <Compile Include="TesterMenu.xaml.cs">
       <DependentUpon>TesterMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test_Registration_Window.xaml.cs">
+      <DependentUpon>Test_Registration_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TraineeDetailes.xaml.cs">
       <DependentUpon>TraineeDetailes.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TesterMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test_Registration_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

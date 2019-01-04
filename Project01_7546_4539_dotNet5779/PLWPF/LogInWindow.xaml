@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         mc:Ignorable="d"
-        Title="LogInWindow" Height="250" Width="550" Loaded="LogInWindow_OnLoaded">
+        Title="LogInWindow" MinHeight="200" MinWidth="200" SizeToContent="WidthAndHeight" Loaded="LogInWindow_OnLoaded">
     <Grid Grid.Row="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -19,19 +19,19 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2.5*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="ת.ז" Grid.Column="3" Grid.Row="0" Target="{Binding ElementName=idTextBox}" FontSize="22" FontWeight="Bold"/>
+            <Label Content=".ת.ז" Grid.Column="3" Grid.Row="0" Target="{Binding ElementName=idTextBox}" FontSize="22" FontWeight="Bold"/>
             <Label Content="סיסמא" Grid.Column="3" Grid.Row="1" Target="{Binding ElementName=birthdayDatePicker}" FontSize="22" FontWeight="Bold"/>
-            <TextBox x:Name="idTextBox" Grid.Column="1" Grid.Row="0" Width="250" HorizontalAlignment="right"   MaxLength="9" Margin="0,0,0,5" KeyDown="idTextBox_keyDown" BorderThickness = "2" FontSize="22" FontWeight="Bold"/>
-            <PasswordBox x:Name="PasswordBox"  PasswordChar="*" Grid.Column="1" Grid.Row="1" Width="250" HorizontalAlignment="right"  MaxLength="4" Margin="0,0,0,5"  BorderThickness = "2" FontSize="22" FontWeight="Bold"/>
+            <TextBox x:Name="idTextBox" Grid.Column="1" Grid.Row="0" Width="250" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" MaxLength="9" Margin="5,5,0,5" KeyDown="idTextBox_keyDown" BorderThickness = "2" FontSize="22" FontWeight="Bold"/>
+            <PasswordBox x:Name="PasswordBox"  PasswordChar="*" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxLength="4" Margin="5,5,0,5"  BorderThickness = "2" FontSize="22" FontWeight="Bold"/>
             <!--<Image x:Name="LogIn_ShowPassword"  />-->
             <!--local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding Text, ElementName=plain, Mode=TwoWay}"-->
         </Grid>
         <Image Source="{StaticResource logInImage}" Stretch="Uniform" VerticalAlignment="Center"/>
 
-        <Button x:Name="okButton" Grid.Row="2" HorizontalAlignment="Center" Padding="-10" VerticalAlignment="top" Width="400" Height="40"  Content="אישור" IsDefault="True" Click="OkButton_Click" FontSize="36" FontWeight="Bold" BorderThickness="0,1,1,0" RenderTransformOrigin="0.5,0.5" FontFamily="Showcard Gothic">
+        <Button x:Name="okButton" Grid.Row="2" VerticalContentAlignment="Top"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Content="אישור" IsDefault="True" Click="OkButton_Click" FontSize="36" FontWeight="Bold" Margin="5" FontFamily="Showcard Gothic">
             <Button.Style>
                 <Style>
                     <Style.Triggers>

@@ -5,13 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         mc:Ignorable="d"
-        Title="TraineeMenu_window" MinHeight="200" MinWidth="200" SizeToContent="WidthAndHeight" Closed="TraineeMenu_window_OnClosed">
+        Title="TraineeMenu_window"  MinHeight="400" MinWidth="600" SizeToContent="WidthAndHeight" Closed="TraineeMenu_window_OnClosed">
     <Window.Resources>
         <Style TargetType="Button">
+            <Setter Property="BorderThickness" Value="5"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="36"/>
+            <Setter Property= "VerticalContentAlignment" Value="Center"/>
+            <Setter Property= "FontSize" Value="36"/>
+            <Setter Property= "HorizontalAlignment" Value="Stretch"/>
+            <Setter Property= "VerticalAlignment" Value="Stretch"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Margin" Value="20"/>
+            <Setter Property="Margin" Value="5"/>
             <Setter Property="Background" Value="IndianRed"/>
         </Style>
     </Window.Resources>
@@ -26,10 +30,10 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="header_textBlock" Text = "תפריט תלמיד" FontWeight="Bold" FontSize="36" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Column="2"/>
+            <TextBlock x:Name="header_textBlock" Text = "תפריט תלמיד" FontWeight="Bold" FontSize="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,30,0"   Grid.Column="2"/>
             <Button Content="תפריט ראשי" Grid.Column="1" FontSize="15" Click="BackToMainWindow_clickButton" />
             <Button Content="יציאה" FontSize="15" Click="Exit_clickButton"/>
-        </Grid>
+        </Grid> 
         <Grid Row="1" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -39,8 +43,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="רישום לטסט" Grid.Row="0" Grid.Column="1" />
-            <Button Content="עדכון פרטים" Grid.Row="0" Grid.Column="0" Click="AddOrUpdate_ButtonClick" />
+            <Button Content="רישום לטסט" Grid.Row="0" Grid.Column="1" Click="TestRegistar_Button" />
+            <Button Content=" עדכון פרטים " Grid.Row="0" Grid.Column="0" Click="AddOrUpdate_ButtonClick" />
             <Button Content="צא מהמאגר" Grid.Row="1" Grid.Column="0" Click="Remove_Click"/>
             <Button Content="מידע" Grid.Row="1" Grid.Column="1" Click="MyDetailes_ButtonClick" />
         </Grid>

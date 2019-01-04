@@ -116,6 +116,20 @@ namespace PLWPF
             
         }
 
-       
+        private void TestRegistar_Button(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Hide();
+               Test_Registar_Window test_Registar_Window = new Test_Registar_Window();
+                test_Registar_Window.ShowDialog();
+                //this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
     }
 }

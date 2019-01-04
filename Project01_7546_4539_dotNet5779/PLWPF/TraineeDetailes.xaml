@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.TraineeDetailes"
         mc:Ignorable="d"
-        Title="TraineeDetailes" MinHeight="300" MinWidth="800" SizeToContent="WidthAndHeight" >
+        Title="TraineeDetailes" MinHeight="300" MinWidth="500" SizeToContent="WidthAndHeight" >
     <Window.Resources>
         <Style TargetType="{x:Type Label}" >
             <Setter Property="FontSize" Value="22"/>
@@ -32,7 +32,7 @@
 
             <TabItem Header="הפרטים שלי" Margin="-2,-1,-2.333,1.667" Height="26" VerticalAlignment="Bottom" >
 
-                <Grid Grid.Column="0" Margin="30" ShowGridLines="true"  >
+                <Grid  Margin="30" ShowGridLines="true"  >
                     <Grid.RowDefinitions >
                         <RowDefinition/>
                         <RowDefinition/>
