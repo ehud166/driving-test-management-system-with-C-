@@ -46,7 +46,7 @@ namespace PLWPF
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
 
@@ -71,13 +71,20 @@ namespace PLWPF
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show(exception.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
 
         private void AddOrUpdateTrainee_OnClosed(object sender, EventArgs e)
         {
-            pWindow?.Show();
+            try
+            {
+                pWindow?.Show();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
+            }
         }
     }
 }

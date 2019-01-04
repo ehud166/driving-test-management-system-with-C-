@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BE;
 
 namespace PLWPF
 {
@@ -22,7 +23,14 @@ namespace PLWPF
     {
         public ScheduleUserControl()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

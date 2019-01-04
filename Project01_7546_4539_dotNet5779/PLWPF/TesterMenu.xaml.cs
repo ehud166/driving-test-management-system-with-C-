@@ -27,31 +27,48 @@ namespace PLWPF
 
         public TesterMenu(Window parent, Tester tester)
         {
-            InitializeComponent();
-            bl = Bl_imp.GetBl();
-            pWindow = parent;
-            existTester = tester;
-            header_textBlock.Text = string.Format("שלום, " + existTester.FirstName);
+            try
+            {
+                InitializeComponent();
+                bl = Bl_imp.GetBl();
+                pWindow = parent;
+                existTester = tester;
+                header_textBlock.Text = string.Format("שלום, " + existTester.FirstName);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            
-        }
+        
 
         private void AddOrUpdateButtonClick(object sender, RoutedEventArgs e)
         {
-            this.Hide();
-            AddOrUpdateTester addOrUpdateTester = new AddOrUpdateTester(this, existTester);
-            addOrUpdateTester.ShowDialog();
-            //this.Close();
+            try
+            {
+                this.Hide();
+                AddOrUpdateTester addOrUpdateTester = new AddOrUpdateTester(this, existTester);
+                addOrUpdateTester.ShowDialog();
+                //this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void BackToMainWindow_clickButton(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            try
+            {
+                this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Exit_clickButton(object sender, RoutedEventArgs e)

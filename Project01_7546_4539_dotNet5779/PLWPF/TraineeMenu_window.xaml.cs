@@ -28,25 +28,46 @@ namespace PLWPF
 
         public TraineeMenu_window(Window parent, Trainee trainee)
         {
-            InitializeComponent();
-            bl = Bl_imp.GetBl();
-            pWindow = parent;
-            existTrainee = trainee;
-            header_textBlock.Text = string.Format("שלום, " + existTrainee.FirstName);
+            try
+            {
+                InitializeComponent();
+                bl = Bl_imp.GetBl();
+                pWindow = parent;
+                existTrainee = trainee;
+                header_textBlock.Text = string.Format("שלום, " + existTrainee.FirstName);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
         private void AddOrUpdate_ButtonClick(object sender, RoutedEventArgs e)
         {
-            this.Hide();
-            AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(this,existTrainee);
-            addOrUpdateTrainee.ShowDialog();
-            //this.Close();
+            try
+            {
+                this.Hide();
+                AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(this, existTrainee);
+                addOrUpdateTrainee.ShowDialog();
+                //this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void BackToMainWindow_clickButton(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            try
+            {
+                this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Exit_clickButton(object sender, RoutedEventArgs e)
@@ -57,13 +78,27 @@ namespace PLWPF
 
         private void MyDetailes_ButtonClick(object sender, RoutedEventArgs e)
         {
-           TraineeDetailes traineeDetailes =new TraineeDetailes(this,existTrainee);
-            traineeDetailes.ShowDialog();
+            try
+            {
+                TraineeDetailes traineeDetailes = new TraineeDetailes(this, existTrainee);
+                traineeDetailes.ShowDialog();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void TraineeMenu_window_OnClosed(object sender, EventArgs e)
         {
+            try
+            { 
             pWindow?.Show();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -76,7 +111,7 @@ namespace PLWPF
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
         }

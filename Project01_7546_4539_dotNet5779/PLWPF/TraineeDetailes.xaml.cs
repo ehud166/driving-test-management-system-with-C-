@@ -29,17 +29,31 @@ namespace PLWPF
 
         public TraineeDetailes(Window parent,Trainee newTrainee)
         {
-            InitializeComponent();
-            bl = Bl_imp.GetBl();
-            existTrainee = newTrainee;
-            pWindow = parent;
-            this.DataContext = existTrainee;
+            try
+            {
+                InitializeComponent();
+                bl = Bl_imp.GetBl();
+                existTrainee = newTrainee;
+                pWindow = parent;
+                this.DataContext = existTrainee;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
         private void MyTests_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.DataContext = bl.GetTestsById(existTrainee.ID);
+            try
+            {
+                this.DataContext = bl.GetTestsById(existTrainee.ID);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

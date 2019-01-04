@@ -95,7 +95,7 @@ namespace PLWPF
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message,"Error");
+                MessageBox.Show(exception.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
 
@@ -103,23 +103,41 @@ namespace PLWPF
 
         private void idTextBox_keyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            try
             {
-                OkButton_Click(sender,e);
+
+
+                if (e.Key == Key.Enter)
+                {
+                    OkButton_Click(sender, e);
+                }
+
+                if ((e.Key < Key.D0 || e.Key > Key.D9) && (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) &&
+                    e.Key != Key.Tab) //to handled
+                {
+                    idTextBox.BorderBrush = Brushes.Red;
+                    e.Handled = true;
+
+                }
+
+                idTextBox.BorderBrush = Brushes.Gray;
             }
-            if ((e.Key< Key.D0|| e.Key > Key.D9)&& (e.Key < Key.NumPad0|| e.Key > Key.NumPad9)&& e.Key !=Key.Tab)//to handled
+            catch (Exception exception)
             {
-                idTextBox.BorderBrush = Brushes.Red;
-                e.Handled = true;
-
+                MessageBox.Show(exception.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
             }
-            idTextBox.BorderBrush = Brushes.Gray;
-
         }
 
         private void LogInWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            idTextBox.Focus();
+            try
+            {
+                idTextBox.Focus();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         

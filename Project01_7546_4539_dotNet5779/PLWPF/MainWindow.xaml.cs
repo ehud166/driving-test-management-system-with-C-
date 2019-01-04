@@ -24,28 +24,47 @@ namespace PLWPF
     {
         public MainWindow()
         {
-            IBL bl = Bl_imp.GetBl();
-            
-            InitializeComponent();
-
+            try
+            {
+                InitializeComponent();
+                IBL bl = Bl_imp.GetBl();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         
         private void Trainee_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
             //this.Hide();
             bool a=false;
             LogInWindow logInWindow = new LogInWindow(this,a);
             logInWindow.ShowDialog();
-          //  this.Close();
+                //  this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Tester_Click(object sender, RoutedEventArgs e)
         {
-            //this.Hide();
-            bool a = true;
-            LogInWindow logInWindow = new LogInWindow(this,a);
-            logInWindow.ShowDialog();
-            //  this.Close();
+            try
+            {
+                //this.Hide();
+                bool a = true;
+                LogInWindow logInWindow = new LogInWindow(this, a);
+                logInWindow.ShowDialog();
+                //  this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
