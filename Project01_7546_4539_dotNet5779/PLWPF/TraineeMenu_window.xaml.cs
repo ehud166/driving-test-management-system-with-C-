@@ -121,6 +121,7 @@ namespace PLWPF
         {
             try
             {
+              
                 this.Hide();
                Test_Registar_Window test_Registar_Window = new Test_Registar_Window();
                 test_Registar_Window.ShowDialog();
