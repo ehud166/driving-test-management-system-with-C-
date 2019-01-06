@@ -29,7 +29,7 @@
             <!--<Image x:Name="LogIn_ShowPassword"  />-->
             <!--local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding Text, ElementName=plain, Mode=TwoWay}"-->
         </Grid>
-        <Image Source="{StaticResource logInImage}" Stretch="Uniform" VerticalAlignment="Center"/>
+        <!--<Image Source="{StaticResource logInImage}" Stretch="Uniform" VerticalAlignment="Center"/>-->
 
         <Button x:Name="okButton" Grid.Row="2" Content="אישור" IsDefault="True"  Margin="10" Click="OkButton_Click">
             <Button.Style>

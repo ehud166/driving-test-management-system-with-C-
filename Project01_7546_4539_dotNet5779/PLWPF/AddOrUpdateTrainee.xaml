@@ -3,10 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local1="clr-namespace:BE;assembly=BE"
         xmlns:local="clr-namespace:PLWPF"
         mc:Ignorable="d"
         Title="AddOrUpdateTrainee"  Closed="AddOrUpdateTrainee_OnClosed" >
-
+    <Window.Resources>
+        <local1:EnumDescriptionConverter x:Key="descConverter"/>
+    </Window.Resources>
 
     <!--<Setter Property="HorizantalAlignment" Value="Left"/>-->
 
@@ -24,6 +27,8 @@
                     <RowDefinition/>
                     <RowDefinition />
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -40,11 +45,15 @@
                 <Label  Grid.Row="3"  Grid.Column="3" Content=":תאריך לידה"/>
                 <DatePicker x:Name="birthdayDatePicker" SelectedDate="{Binding Birthday, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="3" Grid.Column="2"/>
                 <Label Content=":מין" Grid.Row="4" Grid.Column="3"/>
-                <ComboBox x:Name="GenderComboBox"    Grid.Row="4" Grid.Column="2" IsEditable="True" SelectedItem="{Binding Gender, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" >
-                    <ComboBoxItem Content ="זכר"/>
-                    <ComboBoxItem Content ="נקבה"/>
+                <ComboBox x:Name="GenderComboBox" Grid.Row="4" Grid.Column="2" ItemsSource="{Binding Source={StaticResource enmGender}}" SelectedValue="{Binding Gender}" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
-                <ComboBox x:Name="prefixPhoneComboBox" Grid.Row="6"  Grid.Column="2" Text="{Binding PhoneAreaCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
+                <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal">
+                    <ComboBox x:Name="prefixPhoneComboBox"  Margin="10,10,0,10" MinWidth="10" Width="50" Text="{Binding PhoneAreaCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
                     <ComboBoxItem Content="02"/>
                     <ComboBoxItem Content="03"/>
                     <ComboBoxItem Content="04"/>
@@ -60,28 +69,48 @@
                     <ComboBoxItem Content="059"/>
                     <ComboBoxItem Content="058"/>
                 </ComboBox >
-                <TextBox x:Name="phoneNumbersTextBox" Grid.Column="2" MaxLength="7"  Grid.Row="6" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }"/>
+                    <TextBox x:Name="phoneNumbersTextBox" Width="130"  MaxLength="7" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }"/>
+                </StackPanel>
                 <Label Grid.Row="6" Content=":מס' טלפון" Grid.Column="3" />
-                <ComboBox x:Name="AddressSuggestionsCBB" IsEditable="True" />
-                <Label  Content=":כתובת"  Grid.Column="1" />
-                <ComboBox x:Name="VehcileTypeComboBox" IsEditable="False"  Grid.Row="1" ItemsSource="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
-                    <ComboBoxItem Content="רכב פרטי"/>
-                    <ComboBoxItem Content="אופנוע"/>
-                    <ComboBoxItem Content="משאית קלה עד 15 טון"/>
-                    <ComboBoxItem Content="משאית כבדה מעל 15 טון"/>
-                </ComboBox>
-                <Label  Grid.Row="1" Content=":סוג הרכב" Grid.Column="1" />
+                <ComboBox x:Name="AddressSuggestionsCBB" IsEditable="True" Grid.Column="2" Grid.Row="5"/>
+                <Label  Content=":כתובת"  Grid.Column="3" Grid.Row="5" />
+                    <ComboBox x:Name="VehcileTypeComboBox" Grid.Row="1"  ItemsSource="{Binding Source={StaticResource enmVehicle}}" SelectedValue="{Binding VehicleType, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Label  Grid.Row="1" Content=":סוג הרכב" Grid.Column="1" />
                 <Label  Grid.Row="2" Grid.Column="1" Content=":גיר"/>
                 <Label  Grid.Row="3" Grid.Column="1" Content=":בית הספר לנהיגה" />
                 <Label  Grid.Row="4" Grid.Column="1" Content=":מורה הנהיגה" />
-                <Label  Grid.Row="5" Grid.Column="1" Content=":דואר אלקטרוני "/>
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" >
-                    <RadioButton Content="ידני" />
-                    <RadioButton Content="אוטומטי" Margin="10,0,0,0"/>
+                <Label  Grid.Row="7" Grid.Column="3" Content=":דואר אלקטרוני "/>
+                <Label  Grid.Row="7" Grid.Column="1" Content=  "מספר השיעורים"/>
+                <ComboBox x:Name="GearComboBox" IsEditable="False"  Grid.Row="2"  ItemsSource="{Binding Source={StaticResource enmGear}}" SelectedValue="{Binding Gear, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <StackPanel Grid.Row="7"   Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBox x:Name="LessonNumTextBox" IsEnabled="False"  Text="{Binding LessonNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"/>
+                    <ScrollBar x:Name="LessonNumScrollBar"   HorizontalAlignment="Right" ValueChanged="LessonNumScrollBar_OnValueChanged" RenderTransformOrigin="0.5,0.5" >
+                        <ScrollBar.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="180"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </ScrollBar.RenderTransform>
+                    </ScrollBar>
                 </StackPanel>
                 <TextBox x:Name="SchoolTextBox"  Text="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" />
                 <TextBox x:Name="TeacherNameTextBox" Text="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4"/>
-                <TextBox x:Name="EmailTextBox"  Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5"  />
+                <TextBox x:Name="EmailTextBox"  Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Grid.Column="2" />
 
             </Grid>
         </Grid>

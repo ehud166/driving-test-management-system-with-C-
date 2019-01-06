@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -21,16 +22,53 @@ namespace PLWPF
     /// </summary>
     public partial class ScheduleUserControl : UserControl
     {
+        public Schedule Build;
         public ScheduleUserControl()
         {
+            
             try
             {
                 InitializeComponent();
+                Build = new Schedule();
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void ScheduleToggenGrid_Checked(object sender, RoutedEventArgs e)
+        {
+
+            ToggleButton btn = sender as ToggleButton;
+            int x = (int)btn.GetValue(Grid.RowProperty) + 9;
+            int y = 4 - (int)btn.GetValue(Grid.ColumnProperty);
+            Build[(DayOfWeek)y][x] = false;
+            MessageBox.Show("row" + x.ToString() + "column" + y.ToString()+"checked");
+            MessageBox.Show(Build[(DayOfWeek)y][x].ToString());
+            
+        }
+
+        private void ScheduleToggenGrid_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ToggleButton btn = sender as ToggleButton;
+            int x = (int)btn.GetValue(Grid.RowProperty)+9;
+            int y = 5-(int)btn.GetValue(Grid.ColumnProperty);
+            MessageBox.Show("row" + x.ToString() + "column" + y.ToString()+ "unchecked");
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    for (int j = 0; j < 6; j++)
+            //    {
+            //        if (Build[(DayOfWeek)i][j])
+            //        {
+            //            this.SetValue
+            //        }
+            //    }
+            //}
         }
     }
 }

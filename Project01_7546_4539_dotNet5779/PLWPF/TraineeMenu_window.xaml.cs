@@ -121,11 +121,14 @@ namespace PLWPF
         {
             try
             {
-              
-                this.Hide();
-               Test_Registar_Window test_Registar_Window = new Test_Registar_Window();
-                test_Registar_Window.ShowDialog();
-                //this.Close();
+                if (bl.TraineeConditionsForTest(existTrainee.ID))
+                {
+                    this.Hide();
+                    Test_Registar_Window test_Registar_Window = new Test_Registar_Window();
+                    test_Registar_Window.ShowDialog();
+                    //this.Close();
+                }
+           
             }
             catch (Exception exception)
             {

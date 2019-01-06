@@ -67,16 +67,14 @@ namespace BL
         {
             try
             {
-                var q = CheckIdValidation(my_test.TraineeId) && TraineeHave20Lessons(my_test) &&
-                        NotExistTestIn7Days(my_test) && !PassedForThisType(my_test) &&
-                        !TraineeTryingToSignTwice(my_test.TraineeId, my_test.VehicleType, my_test.Gear);
+                bool q = TraineeConditionsForTest(my_test.TraineeId);
                 if (q)
                 {//now the trainee past the conditions and we need to find tester (including check id for trainee but not necessary to check tester because it checked on AddTester)
                     var relevantTester = (from tester in dal.GetTestersList()
-                            let listOfRelevantTesters = GetListOfTestersAtTraineeArea(
-                                GetListByVehicleType(my_test), my_test.TestAddress) //get a list of tester match the condition to test 
-                            from item in listOfRelevantTesters
-                            where FreeTester(item, my_test.TestDateAndTime) && FreeTesterAtThisWeek(item,my_test.TestDateAndTime) //now find free tester
+                                          let listOfRelevantTesters = GetListOfTestersAtTraineeArea(
+                                              GetListByVehicleType(my_test), my_test.TestAddress) //get a list of tester match the condition to test 
+                                          from item in listOfRelevantTesters
+                                          where FreeTester(item, my_test.TestDateAndTime) && FreeTesterAtThisWeek(item, my_test.TestDateAndTime) //now find free tester
                                           select item
                         ).FirstOrDefault();
 
@@ -94,9 +92,9 @@ namespace BL
                                 my_test.TestAddress);
 
                         OfferFreeDateForTest(listOfRelevantTesters);
-                        
+
                     }
-                    
+
                 }
             }
             catch (Exception e)
@@ -105,6 +103,13 @@ namespace BL
                 throw;
             }
             
+        }
+
+        public bool TraineeConditionsForTest(String id)
+        {
+            return CheckIdValidation(id) && TraineeHave20Lessons(id) &&
+                   /* NotExistTestIn7Days(id) &&*/ !PassedForThisType(id) &&
+                    !TraineeTryingToSignTwice(id);
         }
 
 
@@ -448,10 +453,10 @@ namespace BL
         /// </summary>
         /// <param name="my_test"></param>
         /// <returns>true if trainee filling the condition</returns>
-        private bool TraineeHave20Lessons(Test my_test)
+        private bool TraineeHave20Lessons(String id)
         {
             var v = (from item in GetTraineeList()
-                                  where item.ID == my_test.TraineeId && item.LessonNum >= 20 && item.VehicleType == my_test.VehicleType
+                                  where item.ID == id && item.LessonNum >= 20 
                                   select item).FirstOrDefault();
             return v != null ? true: throw new Exception("ERROR:\n" +
                                     "This trainee have not study 20 lesson yet for this vehicle type or he does NOT exist\n");
@@ -464,10 +469,10 @@ namespace BL
         /// </summary>
         /// <param name="my_test"></param>
         /// <returns>true if not</returns>
-        private bool NotExistTestIn7Days(Test my_test)
+        private bool NotExistTestIn7Days(String id)
         {
             var v = (from item in GetTestsList()
-                    where item.TraineeId == my_test.TraineeId && (item.TestDateAndTime.AddMinutes(1) - DateTime.Now).Days < 7// adding minute to round the lossing miliseconds at running time
+                    where item.TraineeId == id && (item.TestDateAndTime.AddMinutes(1) - DateTime.Now).Days < 7// adding minute to round the lossing miliseconds at running time
                     select item).FirstOrDefault();
             return v==null? true : throw new Exception("ERROR:\n" +
                                              "This Test are too early (haven't pass 7 days from this trainee last test\n");
@@ -529,8 +534,8 @@ namespace BL
         /// <param name="vType"></param>
         /// <param name="gType"></param>
         /// <returns>true if he does</returns>
-        private bool TraineeTryingToSignTwice(string id, Vehicle vType, Gear gType) => dal.GetTestsList()
-                    .Any(x => x.TraineeId == id && x.VehicleType == vType && x.Gear == gType && x.TestResult == null);
+        private bool TraineeTryingToSignTwice(string id) => dal.GetTestsList()
+                    .Any(x => x.TraineeId == id && x.VehicleType == GetTraineeById(id).VehicleType && x.Gear == GetTraineeById(id).Gear && x.TestResult == null);
 
 
         /// <summary>
@@ -602,13 +607,15 @@ namespace BL
             }
             return false;
         }
-        private bool PassedForThisType(Test myTest)
+        private bool PassedForThisType(String id)
         {
             var conditionCheck = (from test in dal.GetTestsList()
-                where test.TraineeId == myTest.TraineeId && //same id
-                     (( test.VehicleType == myTest.VehicleType &&  //case a: same vehicle and (same gear or manual gear)
-                      (test.Gear == myTest.Gear || test.Gear == Gear.manual ))|| 
-                       ((test.VehicleType == Vehicle.maxTrailer || test.VehicleType == Vehicle.midTrailer) && myTest.VehicleType == Vehicle.privateCar)) //case b: he has track license and want to test for private
+                                  let x= GetTraineeById(id)
+
+                                  where test.TraineeId == id && //same id
+                     (( test.VehicleType == x.VehicleType &&  //case a: same vehicle and (same gear or manual gear)
+                      (test.Gear == x.Gear || test.Gear == Gear.manual ))|| 
+                       ((test.VehicleType == Vehicle.maxTrailer || test.VehicleType == Vehicle.midTrailer) && x.VehicleType == Vehicle.privateCar)) //case b: he has track license and want to test for private
                        && test.TestResult == true//pass the test
                                   select test).Count();
             return conditionCheck == 0 ? false : throw new Exception("dear trainee: you have already driver license for this type of test\n");

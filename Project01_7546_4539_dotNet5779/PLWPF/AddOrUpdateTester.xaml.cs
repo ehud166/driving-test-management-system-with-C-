@@ -38,6 +38,7 @@ namespace PLWPF
                 idTextBox.IsEnabled = false;
                 if (parent.GetType().ToString() == "PLWPF.TesterMenu")
                 {
+                    mySchedule.Build = existTester.Schedule;
                     exist = true;
                     AddOrUpdateButtonClick.Content = "עדכן";
                 }
@@ -52,7 +53,7 @@ namespace PLWPF
         {
             try
             {
-
+                existTester.Schedule = mySchedule.Build;
                 if (exist)
                 {
                     bl.UpdateTester(existTester);
@@ -87,6 +88,8 @@ namespace PLWPF
                 MessageBox.Show(exception.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
+
+        
     }
     
 }
