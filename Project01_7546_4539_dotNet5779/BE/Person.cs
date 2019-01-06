@@ -4,13 +4,16 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using BE;
+using static BE.Enums;
+
 namespace BE
 {
     public class Person
     {
 
         public Person(string id, string firstName, string lastName, DateTime birthday,
-   string gender, string phoneAreaCode, string phoneNumber, Address address, Vehicle vehicleType,string email = null,string password = null)
+   Gender gender, string phoneAreaCode, string phoneNumber, Address address, Vehicle vehicleType,string email = null,string password = null)
         {
             ID = id;
             LastName = lastName;
@@ -45,16 +48,23 @@ namespace BE
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public Gender Gender { get; set; }
+
+        //public Dictionary<Enums.Gender,string> GenderDictionaryList
+        //{
+        //    get { return Enums.genderDictionary; }
+        //}
+        //public Enums.Gender SelectedGender { get; set; }
         //gender property
-        public string Gender { get => _gender == BE.Gender.male ? "זכר" : "נקבה"; set => _gender = ToGender(value); }
+        //public string Gender { get => _gender == BE.Enums.Gender.male ? "זכר" : "נקבה"; set => _gender = ToGender(value); }
         //gender private field
         private Gender _gender;
 
         //helper to convert hebrew string to enum
         private static Gender ToGender(string value)
         {
-            if (value == "זכר") return BE.Gender.male;
-               else if (value == "נקבה") return BE.Gender.female;
+            if (value == "זכר") return BE.Enums.Gender.male;
+               else if (value == "נקבה") return BE.Enums.Gender.female;
             return 0;
         }
 

@@ -3,11 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local1="clr-namespace:BE;assembly=BE"
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.TraineeDetailes"
         mc:Ignorable="d"
-        Title="TraineeDetailes" MinHeight="300" MinWidth="500" SizeToContent="WidthAndHeight" >
+        Title="TraineeDetailes" MinHeight="300" MinWidth="500" SizeToContent="WidthAndHeight" Closed="TraineeDetailes_OnClosed" >
     <Window.Resources>
+        <local1:EnumDescriptionConverter x:Key="descConverter"/>
         <Style TargetType="{x:Type Label}" >
             <Setter Property="FontSize" Value="22"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -23,8 +25,6 @@
             <Setter Property="Width" Value="Auto"/>
             <Setter Property="MinWidth" Value="150"/>
         </Style>
-
-
     </Window.Resources>
 
     <Grid>
@@ -56,7 +56,7 @@
                     <Label Grid.Row="3" Grid.Column="5" Content=":תאריך לידה" FontWeight="Bold"/>
                     <Label x:Name="birthdayDatePicker"  Content="{Binding Birthday, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="3" Grid.Column="4"/>
                     <Label VerticalAlignment="Center" Grid.Row="0" Content=":מין" Grid.Column="3"  FontWeight="Bold"/>
-                    <Label x:Name="GenderComboBox" Grid.Row="0" Grid.Column="2" Content="{Binding Gender, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <Label x:Name="GenderComboBox" Grid.Row="0" Grid.Column="2"  Content="{Binding Gender, Mode=TwoWay,Converter={StaticResource descConverter}}"/>
                     <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
                         <Label x:Name="prefixPhoneComboBox" Margin="10,10,-10,10" Content="{Binding PhoneAreaCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                         <Label x:Name="phoneNumbersTextBox" ContentStringFormat="-{0}" Margin="0,10" Content="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
@@ -64,14 +64,14 @@
                     <Label Grid.Row="1" Content=":מס' טלפון" Grid.Column="3"  FontWeight="Bold"/>
                     <Label x:Name="AddressSuggestionsCBB" Grid.Row="2" Grid.Column="2" />
                     <Label Grid.Row="2" Content=":כתובת" Grid.Column="3"  FontWeight="Bold"/>
-                    <Label x:Name="VehcileTypeComboBox" Grid.Row="3" Grid.Column="2" Content="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <Label x:Name="VehcileTypeComboBox" Grid.Row="3" Grid.Column="2" Content="{Binding VehicleType, Mode=TwoWay,Converter={StaticResource descConverter}}"/>
 
                     <Label Grid.Row="3"  Content=":סוג הרכב" Grid.Column="3" FontWeight="Bold"/>
                     <Label Grid.Row="0" Grid.Column="1" Content=":גיר" FontWeight="Bold"/>
                     <Label Grid.Row="1" Grid.Column="1" Content=":בית הספר לנהיגה" FontWeight="Bold"/>
                     <Label Grid.Row="2" Grid.Column="1" Content=":מורה הנהיגה" FontWeight="Bold"/>
                     <Label Grid.Row="3" Grid.Column="1" Content=":מס' השיעורים" FontWeight="Bold"/>
-                    <Label x:Name="GearTextBox" Content="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" />
+                    <Label x:Name="GearTextBox" Content="{Binding Gear, Mode=TwoWay,Converter={StaticResource descConverter}, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" />
                     <Label x:Name="SchoolTextBox" Content="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" />
                     <Label x:Name="TeacherNameTextBox"  Content="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2"/>
                     <Label x:Name="LessonNumTextBox" Content="{Binding LessonNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3"/>
@@ -79,29 +79,8 @@
             </TabItem>
 
             <TabItem Header="הטסטים שלי" Height="26" Margin="-1.667,-1,-1.667,0" VerticalAlignment="Top">
-                <Grid Background="#FFCB1414">
-                    <DataGrid x:Name="testDataGrid" ItemsSource="{Binding Source=MyList}" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RowDetailsVisibilityMode="VisibleWhenSelected">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="gearColumn" Binding="{Binding Gear, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="גיר" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="ת.ז" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="testCommentColumn" Binding="{Binding TestComment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="הערת הבוחן" Width="SizeToHeader"/>
-                            <DataGridTemplateColumn x:Name="testDateAndTimeColumn" Header="תאריך ושעה" Width="SizeToHeader">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding TestDateAndTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridCheckBoxColumn x:Name="testDistanceColumn" Binding="{Binding TestDistance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="שמירת מרחק" Width="SizeToHeader"/>
-                            <DataGridCheckBoxColumn x:Name="testMergeColumn" Binding="{Binding TestMerge, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="השתלבות" Width="SizeToHeader"/>
-                            <DataGridCheckBoxColumn x:Name="testMirrorsColumn" Binding="{Binding TestMirrors, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="מראות" Width="SizeToHeader"/>
-                            <DataGridCheckBoxColumn x:Name="testResultColumn" Binding="{Binding TestResult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="תוצאות הטסט" Width="SizeToHeader"/>
-                            <DataGridCheckBoxColumn x:Name="testReverseParkingColumn" Binding="{Binding TestReverseParking, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="חנייה  ברוורס" Width="SizeToHeader"/>
-                            <DataGridCheckBoxColumn x:Name="testVinkerColumn" Binding="{Binding TestVinker, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="איתות" Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="vehicleTypeColumn" Binding="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="סוג הרכב" Width="SizeToHeader"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+                <Grid Background="#FFCB1414"/>
+
             </TabItem>
 
         </TabControl>

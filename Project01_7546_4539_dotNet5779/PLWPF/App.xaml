@@ -2,9 +2,26 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PLWPF"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:enm="clr-namespace:BE;assembly=BE"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <BitmapImage x:Key="logInImage" UriSource="images/logInImage.png"/>
         <BitmapImage x:Key="ShowPasswordImage" UriSource="images/"/>
+        <ObjectDataProvider x:Key="enmGender" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enm:Enums+Gender"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="enmVehicle" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enm:Enums+Vehicle"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="enmGear" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enm:Enums+Gear"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </Application.Resources>
 </Application>

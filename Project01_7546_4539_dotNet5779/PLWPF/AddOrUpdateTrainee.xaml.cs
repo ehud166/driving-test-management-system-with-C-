@@ -1,19 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using BL;
 using BE;
-
 namespace PLWPF
 {
     /// <summary>
@@ -37,12 +25,17 @@ namespace PLWPF
                 pWindow = parent;
                 this.DataContext = existTrainee;
                 idTextBox.IsEnabled = false;
-                MessageBox.Show(parent.ToString());
+                //MessageBox.Show(parent.ToString());
                 if (parent.GetType().ToString() == "PLWPF.TraineeMenu_window")
                 {
                     exist = true;
                     AddOrUpdateButtonClick.Content = "עדכן";
                 }
+
+                LessonNumScrollBar.ValueChanged += new RoutedPropertyChangedEventHandler<double>(LessonNumScrollBar_OnValueChanged);
+                LessonNumScrollBar.Minimum = 0;
+                LessonNumScrollBar.Maximum = 100;
+                LessonNumScrollBar.SmallChange = 1;
             }
             catch (Exception e)
             {
@@ -85,6 +78,12 @@ namespace PLWPF
             {
                 MessageBox.Show(exception.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
             }
+        }
+
+
+        private void LessonNumScrollBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            LessonNumTextBox.Text = LessonNumScrollBar.Value.ToString();
         }
     }
 }

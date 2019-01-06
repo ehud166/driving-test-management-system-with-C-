@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
+        xmlns:local1="clr-namespace:BE;assembly=BE"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
         mc:Ignorable="d"
         Title="AddOrUpdateTrainee" MinHeight="400" MinWidth="800" SizeToContent="WidthAndHeight" Closed="AddOrUpdateTrainee_OnClosed">
     <Window.Resources>
+        <local1:EnumDescriptionConverter x:Key="descConverter"/>
         <Style x:Key="myStyle" TargetType="Control" >
             <Setter Property="Width" Value="120"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -45,10 +48,13 @@
                 <Label VerticalAlignment="Center" Grid.Row="3" HorizontalAlignment="Left" Grid.Column="5" Content=":תאריך לידה" Height="26" Width="98" />
                 <DatePicker x:Name="birthdayDatePicker" VerticalAlignment="Center" SelectedDate="{Binding Birthday, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="3" HorizontalAlignment="Right" Grid.Column="4"/>
                 <Label VerticalAlignment="Center" Grid.Row="0" Margin="10,0"  HorizontalAlignment="Left" Content=":מין" Height="26" Width="168" Grid.Column="3"  Grid.ColumnSpan="2"/>
-                <ComboBox x:Name="GenderComboBox" Width="120"   VerticalAlignment="Center"  Grid.Row="0"  Height="23" HorizontalAlignment="right" Grid.Column="2" IsEditable="True" SelectedItem="{Binding Gender, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" >
-                    <ComboBoxItem Content ="זכר"/>
-                    <ComboBoxItem Content ="נקבה"/>
-                </ComboBox>
+                <ComboBox x:Name="GenderComboBox" Width="120"   VerticalAlignment="Center"  Grid.Row="0"  Height="23" HorizontalAlignment="right" Grid.Column="2" ItemsSource="{Binding Source={StaticResource enmGender}}" SelectedValue="{Binding Gender}" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+</ComboBox>
                 <ComboBox x:Name="prefixPhoneComboBox" HorizontalAlignment="Left" Width="50" Grid.Row="1"  VerticalAlignment="Center" Grid.Column="2" Height="23" Margin="20,12,0,12.667" Text="{Binding PhoneAreaCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
                     <ComboBoxItem Content="02"/>
                     <ComboBoxItem Content="03"/>
@@ -67,28 +73,46 @@
                 </ComboBox >
                 <TextBox x:Name="phoneNumbersTextBox"  Height="23" Grid.Column="2" MaxLength="7"  Grid.Row="1" HorizontalAlignment="right"  VerticalAlignment="Center"  Width="120" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }"/>
                 <Label VerticalAlignment="Center" Grid.Row="1" Content=":מס' טלפון" Height="26" Grid.Column="3" Margin="9.667,10.667,43.333,11.333" />
-                <ComboBox x:Name="AddressSuggestionsCBB" VerticalAlignment="Center" IsEditable="True" Grid.Row="2" Grid.Column="2" Height="22" Margin="1,9.333,0.333,15.333"/>
+                <ComboBox x:Name="AddressSuggestionsCBB" VerticalAlignment="Center" IsEditable="True" Grid.Row="2" Grid.Column="2" Height="22" Margin="1,9.333,0.333,15.333" >
+               
+                    </ComboBox>
                 <Label VerticalAlignment="Center" Grid.Row="2"  HorizontalAlignment="Left" Content=":כתובת" Height="26" Width="192" Grid.Column="3" Margin="9.667,7.667,0,13" Grid.ColumnSpan="2"/>
-                <ComboBox x:Name="VehcileTypeComboBox" VerticalAlignment="Center" IsEditable="False" RenderTransformOrigin="1.675,7.167" Width="150"  Grid.Row="3" Grid.Column="2" Height="22" HorizontalAlignment="right"  ItemsSource="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
-                    <ComboBoxItem Content="רכב פרטי"/>
-                    <ComboBoxItem Content="אופנוע"/>
-                    <ComboBoxItem Content="משאית קלה עד 15 טון"/>
-                    <ComboBoxItem Content="משאית כבדה מעל 15 טון"/>
+                <ComboBox x:Name="VehcileTypeComboBox" VerticalAlignment="Center" IsEditable="False" RenderTransformOrigin="1.675,7.167" Width="150"  Grid.Row="3" Grid.Column="2" Height="22" HorizontalAlignment="right"  ItemsSource="{Binding Source={StaticResource enmVehicle}}" SelectedValue="{Binding VehicleType, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
                 <Label VerticalAlignment="Center" Grid.Row="3"  HorizontalAlignment="Left" Content=":סוג הרכב" Height="26" Width="192" Grid.Column="3" Margin="9.667,13,0,8.333" Grid.ColumnSpan="2"/>
                 <Label VerticalAlignment="Center" Grid.Row="0" Margin="3,2,0,7" HorizontalAlignment="Left" Grid.Column="1" Content=":גיר" Height="26" Width="68"/>
                 <Label VerticalAlignment="Center" Grid.Row="1" Margin="3,3,-38.667,8.333" HorizontalAlignment="Left" Grid.Column="1" Content=":בית הספר לנהיגה" Height="26" Width="109"/>
                 <Label VerticalAlignment="Center" Grid.Row="2" Margin="3,3.333,-13,8" HorizontalAlignment="Left" Grid.Column="1" Content=":מורה הנהיגה" Height="26" Width="86"/>
                 <Label VerticalAlignment="Center" Grid.Row="3" Margin="3,2.667,-22.667,7.333" HorizontalAlignment="Left" Grid.Column="1" Content=":מס' השיעורים" Height="26" Width="97"/>
-                <StackPanel Orientation="Horizontal" Margin="10,18" FlowDirection="RightToLeft">
-                    <RadioButton Content="ידני         "/>
-                    <RadioButton Content="אוטומטי"/>
-                </StackPanel>
+                <ComboBox x:Name="GearComboBox" VerticalAlignment="Center" IsEditable="False"  Width="150"  Grid.Row="0" Grid.Column="0" Height="22" HorizontalAlignment="right"  ItemsSource="{Binding Source={StaticResource enmGear}}" SelectedValue="{Binding Gear, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
                 <TextBox x:Name="SchoolTextBox" Width="120" VerticalAlignment="Center" Text="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3,6,0,6" Height="23" HorizontalAlignment="right" />
                 <TextBox x:Name="TeacherNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3,6,0,6" Height="23" HorizontalAlignment="right"/>
-                <TextBox x:Name="LessonNumTextBox" Width="120" VerticalAlignment="Center" Text="{Binding LessonNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" Margin="3,6,0,6" Height="23" HorizontalAlignment="right" />
+                <StackPanel Grid.Row="3" Margin="3,6,0,6" Height="23" Width="120" Orientation="Horizontal" HorizontalAlignment="Right">
+                   <TextBox x:Name="LessonNumTextBox"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"/>
+                    <ScrollBar x:Name="LessonNumScrollBar"   HorizontalAlignment="Right" ValueChanged="LessonNumScrollBar_OnValueChanged" RenderTransformOrigin="0.5,0.5" Value="{Binding LessonNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
+                        <ScrollBar.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="180"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </ScrollBar.RenderTransform>
+                    </ScrollBar>
 
-            </Grid>
+                </StackPanel>
+</Grid>
         </Grid>
         <Button x:Name="AddOrUpdateButtonClick" Content="הרשם"  Grid.Row="1" FontSize="25" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="50" Width="416" Height="41" Click="AddOrUpdateButtonClick_OnClick" >
             <Button.Style>

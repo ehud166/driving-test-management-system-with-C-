@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BE.Enums;
 
 namespace BE
 {
     public class Trainee : Person
     {
-        public Trainee(string id, string firstName, string lastName, DateTime birthday, string gender, string phoneAreaCode, string phoneNumber, Address address,string email, string password,
+        public Trainee(string id, string firstName, string lastName, DateTime birthday, Gender gender, string phoneAreaCode, string phoneNumber, Address address,string email, string password,
                         Vehicle vehicleType, Gear gear, string drivingSchool, string teacherName, int lessonNum)
                         : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType, email,password)
         {

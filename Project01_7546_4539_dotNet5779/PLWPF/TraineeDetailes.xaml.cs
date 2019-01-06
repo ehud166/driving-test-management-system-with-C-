@@ -33,9 +33,10 @@ namespace PLWPF
             {
                 InitializeComponent();
                 bl = Bl_imp.GetBl();
-                existTrainee = newTrainee;
+                existTrainee = bl.GetTraineeById(newTrainee.ID);
                 pWindow = parent;
                 this.DataContext = existTrainee;
+                this.testDataGrid.ItemsSource = bl.GetTestsById(existTrainee.ID);
             }
             catch (Exception exception)
             {
@@ -54,6 +55,11 @@ namespace PLWPF
             {
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void TraineeDetailes_OnClosed(object sender, EventArgs e)
+        {
+            pWindow?.Show();
         }
     }
 }

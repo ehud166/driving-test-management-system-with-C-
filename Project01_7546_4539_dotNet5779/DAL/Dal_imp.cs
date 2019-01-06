@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DS;
+using static BE.Enums;
 
 namespace DAL
 {
@@ -28,17 +29,17 @@ namespace DAL
 
 
 
-            Tester tester1 = new Tester("314784539", "אהוד", "גרשוני", DateTime.Parse("13/02/1970"), "זכר", "053","0010199", new Address("shakhal", 8, "jerusalem"),"e@global.com","12345678", Vehicle.privateCar, 13, 30, 100);
+            Tester tester1 = new Tester("314784539", "אהוד", "גרשוני", DateTime.Parse("13/02/1970"), Gender.male, "053","0010199", new Address("shakhal", 8, "jerusalem"),"e@global.com","12345678", Vehicle.privateCar, 13, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester1);
-            Tester tester2 = new Tester("000002121", "דודו", "כהן", DateTime.Parse("30/07/1956"), "זכר", "053","0010100", new Address("kolombia", 6, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, 11, 30, 100);
+            Tester tester2 = new Tester("000002121", "דודו", "כהן", DateTime.Parse("30/07/1956"), Gender.male, "053","0010100", new Address("kolombia", 6, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, 11, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester2);
 
-            Trainee trainee1 = new Trainee("032577546", "ישי", "בדיחי", DateTime.Parse("30/07/1996"), "זכר", "052","6608111", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
+            Trainee trainee1 = new Trainee("032577546", "ישי", "בדיחי", DateTime.Parse("30/07/1996"), Gender.male, "052","6608111", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
             Trainees.Add(trainee1);
             //Console.WriteLine(trainee1);
-            Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), "נקבה", "058","6114147", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
+            Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), Gender.female, "058","6114147", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
             Trainees.Add(trainee2);
 
             Test checkTest = new Test("032577546", DateTime.Parse("23/12/18 9:0"), new Address("f", 4, "a"), Vehicle.privateCar, Gear.manual);

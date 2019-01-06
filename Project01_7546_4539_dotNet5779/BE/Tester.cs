@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BE.Enums;
 
 namespace BE
 {
     public class Tester : Person
     {
         //c-tor
-        public Tester(string id, string firstName, string lastName, DateTime birthday, string gender, string phoneAreaCode, string phoneNumber, Address address, string email, string password,
+        public Tester(string id, string firstName, string lastName, DateTime birthday, Gender gender, string phoneAreaCode, string phoneNumber, Address address, string email, string password,
             Vehicle vehicleType, int seniority, int maxTestsForWeek, double maxDistance, Schedule schedule, List<Test> testerTests)
             : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType, email, password)
         {
@@ -20,7 +21,7 @@ namespace BE
             Schedule = schedule;
             TesterTests = testerTests;
         }
-        public Tester(string id, string firstName, string lastName, DateTime birthday, string gender, string phoneAreaCode, string phoneNumber, Address address, string email, string password,
+        public Tester(string id, string firstName, string lastName, DateTime birthday, Gender gender, string phoneAreaCode, string phoneNumber, Address address, string email, string password,
             Vehicle vehicleType, int seniority, int maxTestsForWeek, double maxDistance)
             : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType, email, password)
         {

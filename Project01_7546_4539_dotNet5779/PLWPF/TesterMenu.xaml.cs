@@ -76,5 +76,10 @@ namespace PLWPF
             Environment.Exit(0);
             //this.Close();
         }
+
+        private void TesterMenu_OnClosed(object sender, EventArgs e)
+        {
+            pWindow?.Show();
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
+using static BE.Enums;
 
 namespace BL
 {
@@ -129,7 +130,7 @@ namespace BL
         /// </summary>
         /// <param name="toSort">order to sort the group list</param>
         /// <returns>Ienumarable for the group</returns>
-        IEnumerable<IGrouping<string, Trainee>> GroupTraineesByGender(bool toSort = false);
+        IEnumerable<IGrouping<Gender, Trainee>> GroupTraineesByGender(bool toSort = false);
 
 
         /// <summary>

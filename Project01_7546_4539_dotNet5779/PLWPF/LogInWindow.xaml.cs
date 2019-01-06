@@ -45,39 +45,20 @@ namespace PLWPF
             try
             {
                 id = idTextBox.Text;
-                Trainee a = bl.GetTraineeById(id);
-                Tester b = bl.GetTesterById(id);
                 //password = LogIn_ShowPassword.;
                 // MessageBox.Show(id + "\n" + birth.ToString("d"));
                 if (bl.CheckIdValidation(id))
                 {
                     this.Hide();
                     pWindow.Hide();
-                    if (!isTester)
-                    {
-                        this.DataContext = a;
-                        if (a != null)
-                        {
-                            TraineeMenu_window traineeMenuWindow = new TraineeMenu_window(pWindow, a);
-                            traineeMenuWindow.ShowDialog();
-                            this.Close();
-                        }
-
-                        else
-                        {
-                            // if (pWindow==MainWindow.Trainee_Click)
-                            AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(pWindow, new Trainee(id));
-                            addOrUpdateTrainee.ShowDialog();
-                            this.Close();
-                        }
-                    }
 
                     if (isTester)
                     {
-                        this.DataContext = b;
-                        if (b != null)
+                        Tester testerDetailes = bl.GetTesterById(id);
+                        if (testerDetailes != null)
                         {
-                            TesterMenu testerMenu = new TesterMenu(pWindow, b);
+                            //this.DataContext = testerDetailes;
+                            TesterMenu testerMenu = new TesterMenu(pWindow, testerDetailes);
                             testerMenu.ShowDialog();
                             this.Close();
                         }
@@ -87,6 +68,25 @@ namespace PLWPF
                             // if (pWindow==MainWindow.Trainee_Click)
                             AddOrUpdateTester addOrUpdateTester = new AddOrUpdateTester(pWindow, new Tester(id));
                             addOrUpdateTester.ShowDialog();
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        Trainee traineeDetailes = bl.GetTraineeById(id);
+                        if (traineeDetailes != null)
+                        {
+                            //this.DataContext = traineeDetailes;
+                            TraineeMenu_window traineeMenuWindow = new TraineeMenu_window(pWindow, traineeDetailes);
+                            traineeMenuWindow.ShowDialog();
+                            this.Close();
+                        }
+
+                        else
+                        {
+                            // if (pWindow==MainWindow.Trainee_Click)
+                            AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(pWindow, new Trainee(id));
+                            addOrUpdateTrainee.ShowDialog();
                             this.Close();
                         }
                     }
@@ -139,6 +139,7 @@ namespace PLWPF
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         
     }
