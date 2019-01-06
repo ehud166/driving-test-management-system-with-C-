@@ -53,7 +53,7 @@ namespace PLWPF
                 {
                     this.Hide();
                     pWindow.Hide();
-                    if (!isTester)
+                    if (!isTester)//us trainee
                     {
                         this.DataContext = a;
                         if (a != null)

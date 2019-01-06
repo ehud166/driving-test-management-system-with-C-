@@ -8,11 +8,9 @@
     <!--d:DesignHeight="NaN" d:DesignWidth="NaN"-->
     <UserControl.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="FontSize" Value="10"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Margin" Value="10,5"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
         </Style>
         <Style TargetType="ToggleButton">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>

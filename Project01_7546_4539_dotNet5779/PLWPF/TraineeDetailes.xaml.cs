@@ -55,5 +55,10 @@ namespace PLWPF
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
