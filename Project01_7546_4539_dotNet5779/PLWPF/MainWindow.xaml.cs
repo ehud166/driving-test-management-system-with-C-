@@ -37,7 +37,7 @@ namespace PLWPF
         
         private void Trainee_Click(object sender, RoutedEventArgs e)
         {
-            try
+             try
             {
             //this.Hide();
             bool a=false;
