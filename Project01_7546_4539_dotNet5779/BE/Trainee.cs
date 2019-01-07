@@ -10,34 +10,60 @@ namespace BE
     public class Trainee : Person
     {
         public Trainee(string id, string firstName, string lastName, DateTime birthday, Gender gender, string phoneAreaCode, string phoneNumber, Address address,string email, string password,
-                        Vehicle vehicleType, Gear gear, string drivingSchool, string teacherName, int lessonNum)
-                        : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType, email,password)
+            List<LicenseType> licenseType, string drivingSchool, string teacherName)
+                        : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, email, password)
         {
-            Gear = gear;
             DrivingSchool = drivingSchool;
             TeacherName = teacherName;
-            LessonNum = lessonNum;
+            LicenseType = licenseType;
         }
 
+        public Trainee(string id, string firstName, string lastName, DateTime birthday, Gender gender, string phoneAreaCode, string phoneNumber, Address address, string email, string password,
+             string drivingSchool, string teacherName)
+            : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, email, password)
+        {
+            DrivingSchool = drivingSchool;
+            TeacherName = teacherName;
+            LicenseTypeInitialize();
+        }
         public Trainee() : base()
         {
 
         }
+
         public Trainee(string id) : base(id)
         {
+            LicenseTypeInitialize();
+        }
 
+        private static void LicenseTypeInitialize()
+        {
+            List<LicenseType> LicenseType = new List<LicenseType>();
+            LicenseType.Add(new LicenseType(Vehicle.maxTrailer, Gear.auto));
+            LicenseType.Add(new LicenseType(Vehicle.maxTrailer, Gear.manual));
+            LicenseType.Add(new LicenseType(Vehicle.midTrailer, Gear.auto));
+            LicenseType.Add(new LicenseType(Vehicle.midTrailer, Gear.manual));
+            LicenseType.Add(new LicenseType(Vehicle.motorcycle, Gear.auto));
+            LicenseType.Add(new LicenseType(Vehicle.motorcycle, Gear.manual));
+            LicenseType.Add(new LicenseType(Vehicle.privateCar, Gear.auto));
+            LicenseType.Add(new LicenseType(Vehicle.privateCar, Gear.manual));
         }
 
         //properties
-        public Gear Gear { get; set; }
         public string DrivingSchool { get; set; }
         public string TeacherName { get; set; }
-        public int LessonNum { get; set; }
+        public List<LicenseType> LicenseType { get; set; }
+
         //ToString
         public override string ToString()
         {
-
-            return base.ToString() + string.Format("{0}: {1}\n{2}: {3}\n{4}: {5}\n{6}: {7}\n", ToSentence("Gear"), Gear.ToString(), ToSentence("DrivingSchool"), DrivingSchool, ToSentence("TeacherName"), TeacherName, ToSentence("LessonNum"), LessonNum.ToString());
+            string str = "";
+            foreach (var type in LicenseType)
+            {
+                str += string.Format("vehicle type: {0}  gear: {1}  lesson number: {2}", type.VehicleType, type.Gear,
+                    type.LessonNum);
+            }
+            return base.ToString() + string.Format("{0}\n {1}: {2}\n{3}: {4}\n", str, ToSentence("DrivingSchool"), DrivingSchool, ToSentence("TeacherName"), TeacherName);
         }
     }
 }

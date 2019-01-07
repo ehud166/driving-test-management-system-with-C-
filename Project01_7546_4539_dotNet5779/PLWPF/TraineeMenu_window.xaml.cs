@@ -121,7 +121,7 @@ namespace PLWPF
         {
             try
             {
-                if (bl.TraineeConditionsForTest(existTrainee.ID))
+                if (bl.TraineeHave20Lessons(existTrainee.ID))
                 {
                     this.Hide();
                     Test_Registar_Window test_Registar_Window = new Test_Registar_Window();
