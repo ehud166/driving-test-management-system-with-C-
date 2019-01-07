@@ -10,6 +10,15 @@
         Title="TraineeDetailes" Width="1020" Height="550">
     <Window.Resources>
         <local1:EnumDescriptionConverter x:Key="descConverter"/>
+        <Style x:Key="MyTextStyle" TargetType="Control">
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="MinWidth" Value="120"/>
+        </Style>
     </Window.Resources>
 
 
@@ -41,47 +50,47 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="3" Content=":מספר זהות" />
-                    <Label x:Name="idTextBox" HorizontalAlignment="Right" Grid.Column="2" Content="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                    <Label  Grid.Row="1" Grid.Column="3" Content=":שם משפחה"  FontWeight="Bold"/>
-                    <Label x:Name="lastNameTextBox"  HorizontalAlignment="Right" Content="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Grid.Column="2"/>
-                    <Label Grid.Row="2" Grid.Column="3" Content=":שם פרטי" FontWeight="Bold"/>
-                    <Label x:Name="firstNameTextBox"  HorizontalAlignment="Right" Content="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Grid.Column="2"/>
+                        <Label x:Name="idTextBox"  Grid.Column="2" Style="{StaticResource MyTextStyle}"  Content="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <Label  Grid.Row="1" Grid.Column="3" Content=":שם משפחה" />
+                        <Label x:Name="lastNameTextBox"  Style="{StaticResource MyTextStyle}" Content="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Grid.Column="2"/>
+                    <Label Grid.Row="2" Grid.Column="3" Content=":שם פרטי" />
+                        <Label x:Name="firstNameTextBox"  Style="{StaticResource MyTextStyle}" Content="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Grid.Column="2"/>
                     <Label Grid.Row="6" Grid.Column="3" Content=":דואר אלקטרוני"/>
-                    <Label x:Name="emailLable" MinWidth="120" HorizontalAlignment="Right" Content="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Grid.Column="2"/>
+                        <Label x:Name="emailLable" Width="auto"   Style="{StaticResource MyTextStyle}" Content="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Grid.Column="2"/>
 
-                    <Label Grid.Row="4" Grid.Column="3" Content=":תאריך לידה" FontWeight="Bold"/>
-                    <Label x:Name="birthdayDatePicker"  HorizontalAlignment="Right"  Content="{Binding Birthday, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="4" Grid.Column="2"/>
-                    <Label VerticalAlignment="Center" Grid.Row="0" Content=":מין" Grid.Column="1" />
-                    <Label x:Name="GenderComboBox" Grid.Row="0" Grid.Column="0" Content="{Binding Gender, Mode=TwoWay,Converter={StaticResource descConverter}, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                    <StackPanel Grid.Row="5" Grid.Column="2" Orientation="Horizontal">
-                        <Label x:Name="prefixPhoneComboBox" Margin="10,10,0,10" MinWidth="10" Width="50" Content="{Binding PhoneAreaCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                        <Label x:Name="phoneNumbersTextBox"  ContentStringFormat="-{0}" Content="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <Label Grid.Row="4" Grid.Column="3" Content=":תאריך לידה"/>
+                        <Label x:Name="birthdayDatePicker"   Style="{StaticResource MyTextStyle}"  Content="{Binding Birthday, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="4" Grid.Column="2"/>
+                    <Label Grid.Row="0" Content=":מין" Grid.Column="1" />
+                        <Label x:Name="GenderComboBox" Grid.Row="0" Grid.Column="0"   Style="{StaticResource MyTextStyle}" Content="{Binding Gender, Mode=TwoWay,Converter={StaticResource descConverter}, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <StackPanel Grid.Row="5" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0" >
+                            <Label x:Name="prefixPhoneComboBox"   Style="{StaticResource MyTextStyle}" MinWidth="5" Margin="0" Width="auto"  Content="{Binding PhoneAreaCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <Label x:Name="phoneNumbersTextBox"   Style="{StaticResource MyTextStyle}"  MinWidth="10" Margin="0" Width="auto"  ContentStringFormat="-{0}" Content="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                     </StackPanel>
                     <Label Grid.Row="5" Content=":מס' טלפון" Grid.Column="3"  />
-                    <Label x:Name="AddressSuggestionsCBB"  HorizontalAlignment="Center" Grid.Row="3" Grid.Column="2" />
+                        <Label x:Name="AddressSuggestionsCBB"   Style="{StaticResource MyTextStyle}" Width="240" Grid.Row="3" Grid.Column="2" />
                     <Label Grid.Row="3" Content=":כתובת" Grid.Column="3" />
-                    <ComboBox x:Name="VehcileTypeComboBox" Grid.Row="2"  Width="240" ItemsSource="{Binding Source={StaticResource enmVehicle}}" >
+                        <ComboBox x:Name="VehcileTypeComboBox"   Style="{StaticResource MyTextStyle}" Grid.Row="3"  Width="240" ItemsSource="{Binding Source={StaticResource enmVehicle}}" >
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Label Grid.Row="2"  Content=":סוג הרכב" Grid.Column="1"/>
-                    <Label Grid.Row="3" Grid.Column="1" Content=":גיר"/>
-                    <Label Grid.Row="1" Grid.Column="1" Content=":בית הספר לנהיגה" />
-                    <Label Grid.Row="5" Grid.Column="1" Content=":מורה הנהיגה" />
-                    <Label Grid.Row="4" Grid.Column="1" Content=":מס' השיעורים" />
-                    <ComboBox x:Name="GearComboBox" Grid.Row="3"  ItemsSource="{Binding Source={StaticResource enmGear}}">
+                    <Label Grid.Row="3"  Content=":סוג הרכב" Grid.Column="1"/>
+                    <Label Grid.Row="4" Grid.Column="1" Content=":גיר"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content=":בית הספר לנהיגה"/>
+                    <Label Grid.Row="2" Grid.Column="1" Content=":מורה הנהיגה" />
+                    <Label Grid.Row="5" Grid.Column="1" Content=":מס' השיעורים" />
+                        <ComboBox x:Name="GearComboBox"   Style="{StaticResource MyTextStyle}" Grid.Row="4"  ItemsSource="{Binding Source={StaticResource enmGear}}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Label x:Name="SchoolTextBox" Content="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" />
-                    <Label x:Name="TeacherNameTextBox"  Content="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5"/>
-                    <Label x:Name="LessonNumTextBox" Content="{Binding LessonNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4"/>
+                        <Label x:Name="SchoolTextBox"  Style="{StaticResource MyTextStyle}" Content="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" />
+                        <Label x:Name="TeacherNameTextBox"   Style="{StaticResource MyTextStyle}" Content="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2"/>
+                        <Label x:Name="LessonNumTextBox"   Style="{StaticResource MyTextStyle}" Content="{Binding LessonNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5"/>
                 </Grid>
                 </Grid>
                

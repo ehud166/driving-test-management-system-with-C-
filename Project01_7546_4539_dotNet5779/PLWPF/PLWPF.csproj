@@ -66,6 +66,9 @@
     <Compile Include="LogInWindow.xaml.cs">
       <DependentUpon>LogInWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManagerMenu_Window.xaml.cs">
+      <DependentUpon>ManagerMenu_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PasswordHelper.cs" />
     <Compile Include="ScheduleUserControl.xaml.cs">
       <DependentUpon>ScheduleUserControl.xaml</DependentUpon>
@@ -106,6 +109,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ManagerMenu_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ScheduleUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

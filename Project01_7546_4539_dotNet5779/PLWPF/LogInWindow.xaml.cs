@@ -28,12 +28,12 @@ namespace PLWPF
         private static string id;
         private static string password;
         private static Window pWindow;
-        private static bool isTester;
+        private static string sender;
 
-        public LogInWindow(Window parent,bool flag)
+        public LogInWindow(Window parent,string  s)
         {
             InitializeComponent();
-            isTester = flag;
+            sender = s;
             pWindow = parent;
             
 
@@ -51,44 +51,56 @@ namespace PLWPF
                 {
                     this.Hide();
                     pWindow.Hide();
-
-                    if (isTester)
+                    switch (sender)
                     {
-                        Tester testerDetailes = bl.GetTesterById(id);
-                        if (testerDetailes != null)
-                        {
-                            //this.DataContext = testerDetailes;
-                            TesterMenu testerMenu = new TesterMenu(pWindow, testerDetailes);
-                            testerMenu.ShowDialog();
-                            this.Close();
-                        }
+                        case "manager":
+                            Manager managerDetails = bl.GetManagerById(id);
+                            if (managerDetails != null)
+                                ManagerMenu_Window managerMenu_Window=new ManagerMenu_Window(pWindow, managerDetails);
+                            else
+                            {
+                                MessageBox.Show("!!!אין לך הרשאת מנהל");
+                            }
+                            break;
+                        case "tester":
 
-                        else
-                        {
-                            // if (pWindow==MainWindow.Trainee_Click)
-                            AddOrUpdateTester addOrUpdateTester = new AddOrUpdateTester(pWindow, new Tester(id));
-                            addOrUpdateTester.ShowDialog();
-                            this.Close();
-                        }
-                    }
-                    else
-                    {
-                        Trainee traineeDetailes = bl.GetTraineeById(id);
-                        if (traineeDetailes != null)
-                        {
-                            //this.DataContext = traineeDetailes;
-                            TraineeMenu_window traineeMenuWindow = new TraineeMenu_window(pWindow, traineeDetailes);
-                            traineeMenuWindow.ShowDialog();
-                            this.Close();
-                        }
+                            Tester testerDetailes = bl.GetTesterById(id);
+                            if (testerDetailes != null)
+                            {
+                                //this.DataContext = testerDetailes;
+                                TesterMenu testerMenu = new TesterMenu(pWindow, testerDetailes);
+                                testerMenu.ShowDialog();
+                                this.Close();
+                            }
 
-                        else
-                        {
-                            // if (pWindow==MainWindow.Trainee_Click)
-                            AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(pWindow, new Trainee(id));
-                            addOrUpdateTrainee.ShowDialog();
-                            this.Close();
-                        }
+                            else
+                            {
+                                // if (pWindow==MainWindow.Trainee_Click)
+                                AddOrUpdateTester addOrUpdateTester = new AddOrUpdateTester(pWindow, new Tester(id));
+                                addOrUpdateTester.ShowDialog();
+                                this.Close();
+                            }
+                            break;
+                        case "trainee":
+                            Trainee traineeDetailes = bl.GetTraineeById(id);
+                            if (traineeDetailes != null)
+                            {
+                                //this.DataContext = traineeDetailes;
+                                TraineeMenu_window traineeMenuWindow = new TraineeMenu_window(pWindow, traineeDetailes);
+                                traineeMenuWindow.ShowDialog();
+                                this.Close();
+                            }
+
+                            else
+                            {
+                                // if (pWindow==MainWindow.Trainee_Click)
+                                AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(pWindow, new Trainee(id));
+                                addOrUpdateTrainee.ShowDialog();
+                                this.Close();
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 }
 
