@@ -96,8 +96,8 @@
                
             </TabItem>
 
-            <TabItem Header="הטסטים שלי" Height="26" VerticalAlignment="Top">
-                <Grid Background="#FFCB1414">
+            <TabItem Header="הטסטים שלי" Height="26" VerticalAlignment="Top" PreviewMouseDown="MyTests_OnMouseLeftButtonDown">
+                <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="7*"/>
                         <ColumnDefinition Width="10*"/>

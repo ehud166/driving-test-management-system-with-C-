@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using BL;
@@ -50,6 +51,7 @@ namespace PLWPF
         {
             try
             {
+                
                 if (exist)
                 {
                     bl.UpdateTrainee(existTrainee);
@@ -57,6 +59,11 @@ namespace PLWPF
                 }
                 else
                 {
+                    //LicenseType a = new LicenseType(Enums.Vehicle.motorcycle, Enums.Gear.manual, 30);
+                    //existTrainee.LicenseType = new List<LicenseType>();
+                    //existTrainee.LicenseType.Add(a);
+                    //Address b = new Address("yu", 5, "gerusalem");
+                    //existTrainee.Address = b;
                     bl.AddTrainee(existTrainee);
                     MessageBox.Show(existTrainee.FirstName + " נרשם בהצלחה");
                     pWindow = new TraineeMenu_window(pWindow, existTrainee);
@@ -87,11 +94,25 @@ namespace PLWPF
             LessonNumTextBox.Text = LessonNumScrollBar.Value.ToString();
         }
 
-        private void EmailTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        private void EmailTextBox_OnTextChanged(object sender, TextChangedEventArgs e)//need to uncomment the condition after
         {
-
             bool result = bl.IsValidEmailAddress(EmailTextBox.Text);
+            
+            //if (!result)
+            //{
+            //    MessageBox.Show(result.ToString() + ": email validation error");
+            //}
 
         }
+
+        private void LicenseTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //MessageBox.Show(GearComboBox.SelectedValue.ToString() + VehcileTypeComboBox.SelectedValue.ToString());
+            LicenseType some = existTrainee.LicenseType.Find(x =>
+                x.Gear.ToString() == GearComboBox.SelectedValue?.ToString() && x.VehicleType.ToString() == VehcileTypeComboBox.SelectedValue?.ToString());
+            LessonNumTextBox.Text = some?.LessonNum.ToString();
+        }
+
+        
     }
 }

@@ -151,6 +151,12 @@ namespace BL
         /// <returns>the test with this id</returns>
         List<Test> GetTestsById(string id);
 
+        /// <summary>
+        /// find the test Trainee id and get the test
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the test with this trainee id</returns>
+        List<Test> GetTestsByTraineeId(string id);
 
         /// <summary>
         /// find the tester id and get the tester
