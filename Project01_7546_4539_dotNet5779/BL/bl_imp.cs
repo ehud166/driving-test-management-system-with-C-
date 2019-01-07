@@ -371,7 +371,7 @@ namespace BL
         /// </summary>
         /// <param name="id"></param>
         /// <returns>the test with this id</returns>
-        public List<Test> GetTestsById(string id) => dal.GetTestsList().FindAll(test => test.ID == id);
+        public List<Test> GetTestsById(string id) => dal.GetTestsList().FindAll(test => test.TraineeId == id);
 
 
         /// <summary>

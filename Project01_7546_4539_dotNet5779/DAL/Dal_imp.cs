@@ -42,6 +42,7 @@ namespace DAL
             Trainees.Add(trainee2);
 
             Test checkTest = new Test("032577546", DateTime.Parse("23/12/18 9:0"), new Address("f", 4, "a"), Vehicle.privateCar, Gear.manual);
+            checkTest.ID = "1234";
             Tests.Add(checkTest);
 
             checkTest.TestDistance = false;
@@ -52,6 +53,35 @@ namespace DAL
             checkTest.TestResult = false;
             UpdateTest(checkTest);
             checkTest = new Test("206026858", DateTime.Parse("23/12/18 10:0"), new Address("f", 4, "a"), Vehicle.privateCar, Gear.manual);
+            checkTest.ID = "1234";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             Tests.Add(checkTest);
             checkTest.TestDistance = false;
             checkTest.TestReverseParking = false;

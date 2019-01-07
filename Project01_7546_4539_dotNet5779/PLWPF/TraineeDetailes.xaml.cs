@@ -37,7 +37,7 @@ namespace PLWPF
                 pWindow = parent;
                 this.DataContext = existTrainee;
                 //this.testDataGrid.ItemsSource = bl.GetTestsById(existTrainee.ID);
-                testDataGrid.DataContext = bl.GetTestsById(existTrainee.ID);
+               // testDataGrid.DataContext = bl.GetTestsById(existTrainee.ID);
 
             }
             catch (Exception exception)
@@ -51,6 +51,7 @@ namespace PLWPF
         {
             try
             {
+                //this.TestsDataGrid.ItemsSource = bl.GetTestsList();
                 this.DataContext = bl.GetTestsById(existTrainee.ID);
             }
             catch (Exception exception)

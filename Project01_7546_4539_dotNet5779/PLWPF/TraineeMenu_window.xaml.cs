@@ -80,7 +80,7 @@ namespace PLWPF
         {
             try
             {
-                this.Hide();
+                 this.Hide();
                 TraineeDetailes traineeDetailes = new TraineeDetailes(this, existTrainee);
                 traineeDetailes.ShowDialog();
             }
