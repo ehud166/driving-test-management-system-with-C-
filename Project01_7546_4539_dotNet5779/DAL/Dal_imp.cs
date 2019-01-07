@@ -36,10 +36,10 @@ namespace DAL
             //Console.WriteLine(tester1);
             Testers.Add(tester2);
 
-            Trainee trainee1 = new Trainee("032577546", "ישי", "בדיחי", DateTime.Parse("30/07/1996"), Gender.male, "052","6608111", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
+            Trainee trainee1 = new Trainee("032577546", "ישי", "בדיחי", DateTime.Parse("30/07/1996"), Gender.male, "052","6608111", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", "or-yarok", tester1.FirstName + " " + tester1.LastName);
             Trainees.Add(trainee1);
             //Console.WriteLine(trainee1);
-            Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), Gender.female, "058","6114147", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, Gear.manual, "or-yarok", tester1.FirstName + " " + tester1.LastName, 50);
+            Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), Gender.female, "058","6114147", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", "or-yarok", tester1.FirstName + " " + tester1.LastName);
             Trainees.Add(trainee2);
 
             Test checkTest = new Test("032577546", DateTime.Parse("23/12/18 9:0"), new Address("f", 4, "a"), Vehicle.privateCar, Gear.manual);
@@ -131,9 +131,17 @@ namespace DAL
         public List<Tester> GetTestersList()
         {
             List<Tester> copyTesters = new List<Tester>();
-            copyTesters = Testers.Select(x => new Tester(x.ID, x.FirstName, x.LastName, x.Birthday, x.Gender, x.PhoneAreaCode,x.PhoneNumber,
-                    new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password, x.VehicleType,
-                    x.Seniority, x.MaxTestsForWeek, x.MaxDistance, x.Schedule, new List<Test>(x.TesterTests)))
+            copyTesters = Testers.Select(x => new Tester(x.ID, x.FirstName, x.LastName, x.Birthday, x.Gender,
+                    x.PhoneAreaCode, x.PhoneNumber,
+                    new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password,
+                    x.VehicleType,
+                    x.Seniority, x.MaxTestsForWeek, x.MaxDistance, x.Schedule, new List<Test>(x.TesterTests.Select(y =>
+                        new Test(y.TraineeId, y.TestDateAndTime,
+                            new Address(y.TestAddress.StreetName, y.TestAddress.BuildingNumber, y.TestAddress.City),
+                            y.VehicleType,
+                            y.Gear, y.TestComment, y.TestDistance,
+                            y.TestReverseParking, y.TestMirrors, y.TestMerge, y.TestVinker, y.TestResult, y.TesterId,
+                            y.ID)).ToList())))
                 .ToList();
             return copyTesters;
         }
@@ -151,8 +159,8 @@ namespace DAL
         {
             List<Trainee> copyTrainees = new List<Trainee>();
             copyTrainees = Trainees.Select(x => new Trainee(x.ID, x.FirstName, x.LastName, x.Birthday, x.Gender, x.PhoneAreaCode, x.PhoneNumber,
-                new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password, x.VehicleType, x.Gear,
-                x.DrivingSchool, x.TeacherName, x.LessonNum)).ToList();
+                new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password, new List<LicenseType>(x.LicenseType.Select(y => new LicenseType(y.VehicleType,y.Gear,y.LessonNum)).ToList()), 
+                x.DrivingSchool, x.TeacherName)).ToList();
             return copyTrainees;
         }
 
@@ -249,8 +257,9 @@ namespace DAL
                     my_trainee.Gender, my_trainee.PhoneAreaCode, my_trainee.PhoneNumber,
                     new Address(my_trainee.Address.StreetName, my_trainee.Address.BuildingNumber,
                         my_trainee.Address.City), my_trainee.Email, my_trainee.Password,
-                    my_trainee.VehicleType, my_trainee.Gear, my_trainee.DrivingSchool, my_trainee.TeacherName,
-                    my_trainee.LessonNum);
+                    new List<LicenseType>(my_trainee.LicenseType
+                        .Select(y => new LicenseType(y.VehicleType, y.Gear, y.LessonNum)).ToList()),
+                    my_trainee.DrivingSchool, my_trainee.TeacherName);
                 Trainees.Add(v);
             }
             catch (Exception e)

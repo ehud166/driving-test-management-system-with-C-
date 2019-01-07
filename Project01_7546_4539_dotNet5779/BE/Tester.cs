@@ -13,8 +13,9 @@ namespace BE
         //c-tor
         public Tester(string id, string firstName, string lastName, DateTime birthday, Gender gender, string phoneAreaCode, string phoneNumber, Address address, string email, string password,
             Vehicle vehicleType, int seniority, int maxTestsForWeek, double maxDistance, Schedule schedule, List<Test> testerTests)
-            : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType, email, password)
+            : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, email, password)
         {
+            VehicleType = vehicleType;
             Seniority = seniority;
             MaxTestsForWeek = maxTestsForWeek;
             MaxDistance = maxDistance;
@@ -23,8 +24,9 @@ namespace BE
         }
         public Tester(string id, string firstName, string lastName, DateTime birthday, Gender gender, string phoneAreaCode, string phoneNumber, Address address, string email, string password,
             Vehicle vehicleType, int seniority, int maxTestsForWeek, double maxDistance)
-            : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, vehicleType, email, password)
+            : base(id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, email, password)
         {
+            VehicleType = vehicleType;
             Seniority = seniority;
             MaxTestsForWeek = maxTestsForWeek;
             MaxDistance = maxDistance;
@@ -43,6 +45,7 @@ namespace BE
         }
 
         //properties
+        public Vehicle VehicleType { get; set; }
         public int Seniority { get; set; }
         public int MaxTestsForWeek { get; set; }
         public double MaxDistance { get; set; }
@@ -71,7 +74,7 @@ namespace BE
                 str += "\n  "  ;
 
             }
-            return  base.ToString() + string.Format("   {0}: {1}\n   {2}: {3}\n   {4}: {5}\n   {6}:\n{7}\n ", ToSentence("Seniority"), Seniority.ToString(), ToSentence("MaxTestsForWeek"), MaxTestsForWeek.ToString(), ToSentence("MaxDistance"), MaxDistance.ToString(),"Schedule", str);
+            return  base.ToString() + string.Format("   {0}: {1}\n   {2}: {3}\n   {4}: {5}\n   {6}:\n{7}\n ", ToSentence("VehicleType"), VehicleType, ToSentence("Seniority"), Seniority.ToString(), ToSentence("MaxTestsForWeek"), MaxTestsForWeek.ToString(), ToSentence("MaxDistance"), MaxDistance.ToString(),"Schedule", str);
         }
     }
 }
