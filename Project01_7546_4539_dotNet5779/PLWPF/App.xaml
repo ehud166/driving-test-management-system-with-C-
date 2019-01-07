@@ -6,7 +6,7 @@
              xmlns:enm="clr-namespace:BE;assembly=BE"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <BitmapImage x:Key="logInImage" UriSource="images/logInImage.png"/>
+        <!--<BitmapImage x:Key="logInImage" UriSource="pack://application:,,,/images/loginimage.png"/>-->
         <BitmapImage x:Key="ShowPasswordImage" UriSource="images/"/>
         <ObjectDataProvider x:Key="enmGender" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -23,5 +23,128 @@
                 <x:Type TypeName="enm:Enums+Gear"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+
+        <Style TargetType="Window">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property= "SizeToContent" Value="WidthAndHeight"/>
+            <Setter Property="MinHeight" Value="300"/>
+            <Setter Property="MinWidth" Value="300"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="WindowState" Value="Maximized" />
+
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Height" Value="40" />
+            <Setter Property="MaxLength" Value="4" />
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+
+        </Style>
+
+        <Style TargetType="ColumnDefinition">
+            <Setter Property="Width" Value="*" />
+
+        </Style>
+
+        <Style TargetType="RowDefinition">
+            <Setter Property="Height" Value="auto" />
+        </Style>
+
+        <Style TargetType="Grid">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Width" Value="170"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="Width" Value="170"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Width" Value="170"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="black" />
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property= "VerticalContentAlignment" Value="Center"/>
+            <Setter Property= "FontSize" Value="20"/>
+            <Setter Property= "HorizontalAlignment" Value="Stretch"/>
+            <Setter Property= "VerticalAlignment" Value="Stretch"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="7"/>
+            <Setter Property="Background" Value="IndianRed"/>
+        </Style>
+
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="7"/>
+        </Style>
+      
+        <Style TargetType="RadioButton">
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FlowDirection" Value="RightToLeft"/>
+
+
+        </Style>
     </Application.Resources>
 </Application>

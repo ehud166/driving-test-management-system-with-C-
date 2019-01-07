@@ -85,5 +85,6 @@ namespace PLWPF
         {
             LessonNumTextBox.Text = LessonNumScrollBar.Value.ToString();
         }
+
     }
 }

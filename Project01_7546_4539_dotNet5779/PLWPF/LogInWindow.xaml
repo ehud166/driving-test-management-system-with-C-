@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         mc:Ignorable="d"
-        Title="LogInWindow" MinHeight="200" MinWidth="200" SizeToContent="WidthAndHeight" Loaded="LogInWindow_OnLoaded" >
+        Title="LogInWindow" Loaded="LogInWindow_OnLoaded" Width="400">
     <Grid Grid.Row="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -22,16 +22,16 @@
                 <ColumnDefinition Width="2.5*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content=".ת.ז" Grid.Column="3" Grid.Row="0" Target="{Binding ElementName=idTextBox}" FontSize="22" FontWeight="Bold"/>
-            <Label Content="סיסמא" Grid.Column="3" Grid.Row="1" Target="{Binding ElementName=birthdayDatePicker}" FontSize="22" FontWeight="Bold"/>
-            <TextBox x:Name="idTextBox" Grid.Column="1" Grid.Row="0" Width="250" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" MaxLength="9" Margin="5,5,0,5" KeyDown="idTextBox_keyDown" BorderThickness = "2" FontSize="22" FontWeight="Bold"/>
-            <PasswordBox x:Name="PasswordBox"  PasswordChar="*" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxLength="4" Margin="5,5,0,5"  BorderThickness = "2" FontSize="22" FontWeight="Bold"/>
+            <Label Content=".ת.ז" Grid.Column="3" Grid.Row="0" Target="{Binding ElementName=idTextBox}"/>
+            <Label Content="סיסמא" Grid.Column="3" Grid.Row="1" Target="{Binding ElementName=birthdayDatePicker}"/>
+            <TextBox x:Name="idTextBox" Grid.Column="1" Grid.Row="0" MaxLength="9" KeyDown="idTextBox_keyDown"/>
+            <PasswordBox x:Name="PasswordBox"  PasswordChar="*" Grid.Column="1" Grid.Row="1" />
             <!--<Image x:Name="LogIn_ShowPassword"  />-->
             <!--local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding Text, ElementName=plain, Mode=TwoWay}"-->
         </Grid>
-        <Image Source="{StaticResource logInImage}" Stretch="Uniform" VerticalAlignment="Center"/>
+        <!--<Image Source="{StaticResource logInImage}" Stretch="Uniform" VerticalAlignment="Center"/>-->
 
-        <Button x:Name="okButton" Grid.Row="2" VerticalContentAlignment="Top"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Content="אישור" IsDefault="True" Click="OkButton_Click" FontSize="36" FontWeight="Bold" Margin="5" FontFamily="Showcard Gothic">
+        <Button x:Name="okButton" Grid.Row="2" Content="אישור" IsDefault="True"  Margin="10" Click="OkButton_Click">
             <Button.Style>
                 <Style>
                     <Style.Triggers>

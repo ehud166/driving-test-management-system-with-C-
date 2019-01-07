@@ -169,6 +169,7 @@ namespace BL
         Trainee GetTraineeById(string id);
 
         bool CheckIdValidation(string id);
+        bool TraineeConditionsForTest(String id);
         //------------------------------------------------------------------------------------
     }
 }
