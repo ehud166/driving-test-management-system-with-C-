@@ -26,9 +26,8 @@ namespace DAL
         {
             #region help to insert
 
-
-
-
+            List<LicenseType> vt = new List<LicenseType>();
+             vt.Add(new LicenseType(Vehicle.motorcycle,Gear.manual,30));
             Tester tester1 = new Tester("314784539", "אהוד", "גרשוני", DateTime.Parse("13/02/1970"), Gender.male, "053","0010199", new Address("shakhal", 8, "jerusalem"),"e@global.com","12345678", Vehicle.privateCar, 13, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester1);
@@ -36,10 +35,10 @@ namespace DAL
             //Console.WriteLine(tester1);
             Testers.Add(tester2);
 
-            Trainee trainee1 = new Trainee("032577546", "ישי", "בדיחי", DateTime.Parse("30/07/1996"), Gender.male, "052","6608111", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", "or-yarok", tester1.FirstName + " " + tester1.LastName);
+            Trainee trainee1 = new Trainee("032577546", "ישי", "בדיחי", DateTime.Parse("30/07/1996"), Gender.male, "052","6608111", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678",vt, "or-yarok", tester1.FirstName + " " + tester1.LastName);
             Trainees.Add(trainee1);
             //Console.WriteLine(trainee1);
-            Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), Gender.female, "058","6114147", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", "or-yarok", tester1.FirstName + " " + tester1.LastName);
+            Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), Gender.female, "058","6114147", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", vt, "or-yarok", tester1.FirstName + " " + tester1.LastName);
             Trainees.Add(trainee2);
 
             Test checkTest = new Test("032577546", DateTime.Parse("23/12/18 9:0"), new Address("f", 4, "a"), Vehicle.privateCar, Gear.manual);
@@ -159,10 +158,11 @@ namespace DAL
         {
             List<Trainee> copyTrainees = new List<Trainee>();
             copyTrainees = Trainees.Select(x => new Trainee(x.ID, x.FirstName, x.LastName, x.Birthday, x.Gender, x.PhoneAreaCode, x.PhoneNumber,
-                new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password, new List<LicenseType>(x.LicenseType.Select(y => new LicenseType(y.VehicleType,y.Gear,y.LessonNum)).ToList()), 
+                new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password, new List<LicenseType>(x?.LicenseType.Select(y => new LicenseType(y.VehicleType, y.Gear, y.LessonNum)).ToList()), 
                 x.DrivingSchool, x.TeacherName)).ToList();
             return copyTrainees;
         }
+        //
 
 
         //remove

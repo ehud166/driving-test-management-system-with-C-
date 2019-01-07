@@ -72,7 +72,7 @@
                     <TextBox x:Name="phoneNumbersTextBox" HorizontalAlignment="Right" MinWidth="110" Margin="0" Width="auto"  MaxLength="7" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }"/>
                 </StackPanel>
                 <Label Grid.Row="6" Content=":מס' טלפון" Grid.Column="3" />
-                <ComboBox x:Name="AddressSuggestionsCBB" FontSize="20" MinWidth="170" Width="auto" IsEditable="True" Grid.Column="2" Grid.Row="5"/>
+                <ComboBox x:Name="AddressSuggestionsCBB" FontSize="20" MinWidth="170" Width="auto" IsEditable="True" Grid.Column="2" Grid.Row="5" ItemsSource="{Binding Adress.city}"  SelectedValue="{Binding Adress.city, Mode=TwoWay}"/>
                 <Label  Content=":כתובת"  Grid.Column="3" Grid.Row="5" />
                     <ComboBox x:Name="VehcileTypeComboBox" Grid.Row="1"  ItemsSource="{Binding Source={StaticResource enmVehicle}}" SelectedValue="{Binding VehicleType, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
@@ -89,7 +89,7 @@
                 <Label  Grid.Row="7" Grid.Column="1" Content=  "מספר השיעורים"/>
                 <Label  Grid.Row="5" Grid.Column="1" Content=  "סיסמא"/>
                 <Label  Grid.Row="6" Grid.Column="1" Content=  "אימות סיסמא"/>
-                <PasswordBox x:Name="passwordBox"  Grid.Row="5" />
+                <PasswordBox x:Name="passwordBox"  Grid.Row="5"  />
                 <PasswordBox x:Name="validationPasswordBox" Grid.Row="6"/>
 
                 <ComboBox x:Name="GearComboBox" IsEditable="False"  Grid.Row="2"  ItemsSource="{Binding Source={StaticResource enmGear}}" SelectedValue="{Binding Gear, Mode=TwoWay}">
@@ -115,7 +115,7 @@
                 </StackPanel>
                 <TextBox x:Name="SchoolTextBox"  Text="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" />
                 <TextBox x:Name="TeacherNameTextBox" Text="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4"/>
-                <TextBox x:Name="EmailTextBox" MinWidth="170" Width="auto" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Grid.Column="2" />
+                <TextBox x:Name="EmailTextBox" MinWidth="170" Width="auto" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Grid.Column="2" TextChanged="EmailTextBox_OnTextChanged"/>
 
             </Grid>
         </Grid>

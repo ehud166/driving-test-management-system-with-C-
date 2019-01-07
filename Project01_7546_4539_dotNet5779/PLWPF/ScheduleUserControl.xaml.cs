@@ -22,14 +22,26 @@ namespace PLWPF
     /// </summary>
     public partial class ScheduleUserControl : UserControl
     {
+        public Tester existTester { get; set; }
         public Schedule Build;
+
+
+
         public ScheduleUserControl()
         {
-            
+            existTester = this.DataContext as BE.Tester;  
             try
             {
+
                 InitializeComponent();
                 Build = new Schedule();
+                this.DataContext = existTester;
+                for (var i = 0; i < ScheduleToggenGrid.Children.Count; i++)
+                {
+                    var s = ScheduleToggenGrid.Children[i] as ToggleButton;
+                    s.IsChecked = Build[(DayOfWeek)Grid.GetColumn(s)][9 + Grid.GetRow(s)];
+                }
+
             }
             catch (Exception exception)
             {
@@ -59,6 +71,8 @@ namespace PLWPF
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            
+
             //for (int i = 0; i < 5; i++)
             //{
             //    for (int j = 0; j < 6; j++)

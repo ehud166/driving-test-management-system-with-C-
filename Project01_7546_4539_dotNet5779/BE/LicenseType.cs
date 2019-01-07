@@ -13,7 +13,7 @@ namespace BE
         public Gear Gear { get; set; }
         public int LessonNum { get; set; }
 
-        public LicenseType(Vehicle vehicleType, Gear gear, int lessonNum=0)
+        public LicenseType(Vehicle vehicleType, Gear gear, int lessonNum = 0)
         {
             VehicleType = vehicleType;
             Gear = gear;

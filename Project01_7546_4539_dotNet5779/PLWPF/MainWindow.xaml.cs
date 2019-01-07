@@ -40,8 +40,7 @@ namespace PLWPF
             try
             {
             //this.Hide();
-            bool a=false;
-            LogInWindow logInWindow = new LogInWindow(this,a);
+            LogInWindow logInWindow = new LogInWindow(this,"trainee");
             logInWindow.ShowDialog();
                 //  this.Close();
             }
@@ -56,8 +55,7 @@ namespace PLWPF
             try
             {
                 //this.Hide();
-                bool a = true;
-                LogInWindow logInWindow = new LogInWindow(this, a);
+                LogInWindow logInWindow = new LogInWindow(this, "tester");
                 logInWindow.ShowDialog();
                 //  this.Close();
             }
