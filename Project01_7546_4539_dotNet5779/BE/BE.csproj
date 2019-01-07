@@ -45,6 +45,7 @@
     <Compile Include="Address.cs" />
     <Compile Include="EnumDescriptionConverter.cs" />
     <Compile Include="HoursPerDay.cs" />
+    <Compile Include="Manager.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Enums.cs" />
