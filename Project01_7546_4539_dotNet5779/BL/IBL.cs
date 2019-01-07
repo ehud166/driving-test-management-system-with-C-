@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DAL;
 using static BE.Enums;
 
+
 namespace BL
 {
     public interface IBL
@@ -168,7 +169,10 @@ namespace BL
         /// <returns>the trainee with this id</returns>
         Trainee GetTraineeById(string id);
 
+        Manager GetManagerById(string id);
+
         bool CheckIdValidation(string id);
+        bool IsValidEmailAddress(string s);
         bool TraineeHave20Lessons(String id);
         bool TraineeConditionsForTest(String id,Vehicle vehicle,Gear gear);
         //------------------------------------------------------------------------------------

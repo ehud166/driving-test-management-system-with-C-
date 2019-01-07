@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using BL;
 using BE;
 namespace PLWPF
@@ -86,5 +87,11 @@ namespace PLWPF
             LessonNumTextBox.Text = LessonNumScrollBar.Value.ToString();
         }
 
+        private void EmailTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            bool result = bl.IsValidEmailAddress(EmailTextBox.Text);
+
+        }
     }
 }

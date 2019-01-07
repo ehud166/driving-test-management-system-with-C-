@@ -10,11 +10,13 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using static BE.Enums;
+using System.Text.RegularExpressions;
 
 namespace BL
 {
     public class Bl_imp : IBL
     {
+        private List<Manager> managerList;
         #region singleton
         IDAL dal = Dal_imp.GetDal();
         
@@ -29,9 +31,12 @@ namespace BL
         protected Bl_imp()
         {
             //default c-tor
+            managerList = new List<Manager>();
+            managerList.Add(new Manager("314784539","אהוד","1234"));
+            managerList.Add(new Manager("032577546","ישי","1234"));
         }
         #endregion
-        
+
         public void AddTester(Tester my_tester)
         {
             try
@@ -383,6 +388,7 @@ namespace BL
         /// <param name="id"></param>
         /// <returns>the trainee with this id</returns>
         public Trainee GetTraineeById(string id) => dal.GetTraineeList().Find(trainee => trainee.ID == id);
+        public Manager GetManagerById(string id) => managerList.Find(manager => manager.ID == id);
 
 
         /// <summary>
@@ -576,6 +582,12 @@ namespace BL
                 throw new Exception("illigal ID, try again\n");
             }
             return true;
+        }
+
+        public bool IsValidEmailAddress(string s)
+        {
+            Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+            return regex.IsMatch(s);
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BE;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace PLWPF
     /// </summary>
     public partial class ManagerMenu_Window : Window
     {
-        public ManagerMenu_Window()
+        public ManagerMenu_Window(Window parent, Manager newManager)
         {
             InitializeComponent();
         }

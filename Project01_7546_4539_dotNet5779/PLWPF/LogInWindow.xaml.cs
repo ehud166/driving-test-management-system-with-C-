@@ -28,12 +28,12 @@ namespace PLWPF
         private static string id;
         private static string password;
         private static Window pWindow;
-        private static string sender;
+        private static string user;
 
         public LogInWindow(Window parent,string  s)
         {
             InitializeComponent();
-            sender = s;
+            user = s;
             pWindow = parent;
             
 
@@ -51,12 +51,14 @@ namespace PLWPF
                 {
                     this.Hide();
                     pWindow.Hide();
-                    switch (sender)
+                    switch (user)
                     {
                         case "manager":
                             Manager managerDetails = bl.GetManagerById(id);
                             if (managerDetails != null)
-                                ManagerMenu_Window managerMenu_Window=new ManagerMenu_Window(pWindow, managerDetails);
+                            {
+                                ManagerMenu_Window managerMenu_Window = new ManagerMenu_Window(pWindow, managerDetails);
+                            }
                             else
                             {
                                 MessageBox.Show("!!!אין לך הרשאת מנהל");
