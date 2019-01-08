@@ -36,7 +36,6 @@ namespace PLWPF
                 existTrainee = bl.GetTraineeById(newTrainee.ID);
                 pWindow = parent;
                 this.DataContext = existTrainee;
-                //this.testDataGrid.ItemsSource = bl.GetTestsById(existTrainee.ID);
                 testDataGrid.DataContext = bl.GetTestsByTraineeId(existTrainee.ID);
 
             }
@@ -51,12 +50,19 @@ namespace PLWPF
         {
             try
             {
-                this.DataContext = bl.GetTestsById(existTrainee.ID);
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void LicenseTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //MessageBox.Show(GearComboBox.SelectedValue.ToString() + VehcileTypeComboBox.SelectedValue.ToString());
+            LicenseType some = existTrainee.LicenseType.Find(x =>
+                x.Gear.ToString() == GearComboBox.SelectedValue?.ToString() && x.VehicleType.ToString() == VehcileTypeComboBox.SelectedValue?.ToString());
+            LessonNumTextBox.Content = some?.LessonNum.ToString();
         }
 
         private void TraineeDetailes_OnClosed(object sender, EventArgs e)
@@ -69,6 +75,11 @@ namespace PLWPF
             {
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void OkButtun_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

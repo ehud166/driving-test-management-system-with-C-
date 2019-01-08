@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         xmlns:local1="clr-namespace:BE;assembly=BE"
-        xmlns:BE="clr-namespace:BE;assembly=BE"
+        xmlns:BE="clr-namespace:BE;assembly=BE" Closing="AddOrUpdateTester_OnClosing"
         mc:Ignorable="d"  WindowStartupLocation="CenterScreen" Closed="AddOrUpdateTester_OnClosed"
         Title="AddOrUpdateTester" MinHeight="400" MinWidth="1000" SizeToContent="WidthAndHeight">
     <Window.Resources>

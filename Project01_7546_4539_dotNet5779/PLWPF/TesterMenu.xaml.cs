@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,13 +74,25 @@ namespace PLWPF
 
         private void Exit_clickButton(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
-            //this.Close();
+            this.Close();
+            pWindow?.Close();
         }
 
         private void TesterMenu_OnClosed(object sender, EventArgs e)
         {
             pWindow?.Show();
+        }
+
+        private void TesterMenu_OnClosing(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                pWindow?.Show();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

@@ -94,7 +94,7 @@
                 <PasswordBox x:Name="passwordBox" Visibility="Visible" Grid.Row="5"  xaml:SecurePassword.Password="{Binding Password}" />
                 <PasswordBox x:Name="validationPasswordBox"  Grid.Row="6"  xaml:SecurePassword.Password="{Binding Password}"/>
 
-                <ComboBox x:Name="GearComboBox" IsEditable="False"  Grid.Row="2"  ItemsSource="{Binding Source={StaticResource enmGear}}" SelectedValue="{Binding LicenseType[0].Gear, Mode=OneWay}" SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
+                <ComboBox x:Name="GearComboBox"  Grid.Row="2"  ItemsSource="{Binding Source={StaticResource enmGear}}" SelectedValue="{Binding LicenseType[0].Gear, Mode=OneWay}" SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>

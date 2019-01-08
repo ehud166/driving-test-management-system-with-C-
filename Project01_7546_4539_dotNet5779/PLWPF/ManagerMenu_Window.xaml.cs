@@ -1,6 +1,7 @@
 ﻿using BE;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,23 @@ namespace PLWPF
     /// </summary>
     public partial class ManagerMenu_Window : Window
     {
+        private static Window pWindow = null;
         public ManagerMenu_Window(Window parent, Manager newManager)
         {
             InitializeComponent();
+            pWindow = parent;
+        }
+
+        private void ManagerMenu_Window_OnClosing(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                pWindow?.Show();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

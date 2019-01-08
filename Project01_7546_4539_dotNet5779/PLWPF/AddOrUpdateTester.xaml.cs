@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,7 +90,11 @@ namespace PLWPF
             }
         }
 
-        
+
+        private void AddOrUpdateTester_OnClosing(object sender, CancelEventArgs e)
+        {
+            this.Close();
+        }
     }
     
 }

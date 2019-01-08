@@ -6,7 +6,7 @@
         xmlns:local1="clr-namespace:BE;assembly=BE"
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.TraineeDetailes"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Closed="TraineeDetailes_OnClosed"
         Title="TraineeDetailes" Width="1020" Height="550">
     <Window.Resources>
         <local1:EnumDescriptionConverter x:Key="descConverter"/>
@@ -23,16 +23,13 @@
 
 
     <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="*"  />
+        </Grid.RowDefinitions>
         <TabControl x:Name="tabControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-
             <TabItem Header="הפרטים שלי">
                 <Grid>
-                  
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Button x:Name="okButtun" Content="אישור" Grid.Row="1"/>
                         <Grid  ShowGridLines="true" >
                     <Grid.RowDefinitions >
                         <RowDefinition/>
@@ -69,7 +66,7 @@
                     <Label Grid.Row="5" Content=":מס' טלפון" Grid.Column="3"  />
                         <Label x:Name="AddressSuggestionsCBB"   Style="{StaticResource MyTextStyle}" Width="240" Grid.Row="3" Grid.Column="2" />
                     <Label Grid.Row="3" Content=":כתובת" Grid.Column="3" />
-                        <ComboBox x:Name="VehcileTypeComboBox"   Style="{StaticResource MyTextStyle}" Grid.Row="3"  Width="240" ItemsSource="{Binding Source={StaticResource enmVehicle}}" >
+                        <ComboBox x:Name="VehcileTypeComboBox"   Style="{StaticResource MyTextStyle}" Grid.Row="3"  Width="240" ItemsSource="{Binding Source={StaticResource enmVehicle}}" SelectedValue="{Binding LicenseType[0].VehicleType, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
@@ -81,7 +78,7 @@
                     <Label Grid.Row="1" Grid.Column="1" Content=":בית הספר לנהיגה"/>
                     <Label Grid.Row="2" Grid.Column="1" Content=":מורה הנהיגה" />
                     <Label Grid.Row="5" Grid.Column="1" Content=":מס' השיעורים" />
-                        <ComboBox x:Name="GearComboBox"   Style="{StaticResource MyTextStyle}" Grid.Row="4"  ItemsSource="{Binding Source={StaticResource enmGear}}">
+                        <ComboBox x:Name="GearComboBox"   Style="{StaticResource MyTextStyle}" Grid.Row="4"  ItemsSource="{Binding Source={StaticResource enmGear}}" SelectedValue="{Binding LicenseType[0].Gear, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
@@ -90,21 +87,14 @@
                     </ComboBox>
                         <Label x:Name="SchoolTextBox"  Style="{StaticResource MyTextStyle}" Content="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" />
                         <Label x:Name="TeacherNameTextBox"   Style="{StaticResource MyTextStyle}" Content="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2"/>
-                        <Label x:Name="LessonNumTextBox"   Style="{StaticResource MyTextStyle}" Content="{Binding LessonNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5"/>
+                        <Label x:Name="LessonNumTextBox"   Style="{StaticResource MyTextStyle}" Content="{Binding LicenseType[0].LessonNum, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="5"/>
                 </Grid>
                 </Grid>
                
             </TabItem>
 
             <TabItem Header="הטסטים שלי" Height="26" VerticalAlignment="Top" PreviewMouseDown="MyTests_OnMouseLeftButtonDown">
-                <Grid >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*"/>
-                        <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width="13*"/>
-                        <ColumnDefinition Width="68*"/>
-                        <ColumnDefinition Width="689*"/>
-                    </Grid.ColumnDefinitions>
+                <Grid Background="#FFCB1414" Height="400" >
                     <DataGrid x:Name="testDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" EnableRowVirtualization="True"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="5" Margin="0,0,0.333,0.333">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="gearColumn" Binding="{Binding Gear, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="גיר" Width="SizeToHeader"/>
@@ -130,6 +120,7 @@
             </TabItem>
 
         </TabControl>
+        <Button x:Name="okButtun" Content="אישור" Grid.Row="1" Click="OkButtun_OnClick"/>
 
 
     </Grid>

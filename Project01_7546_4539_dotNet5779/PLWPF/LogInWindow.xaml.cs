@@ -26,7 +26,6 @@ namespace PLWPF
     {
         IBL bl = Bl_imp.GetBl();
         private static string id;
-        private static string password;
         private static Window pWindow;
         private static string user;
 
@@ -55,9 +54,10 @@ namespace PLWPF
                     {
                         case "manager":
                             Manager managerDetails = bl.GetManagerById(id);
-                            if (managerDetails != null)
+                            if (managerDetails != null && SecurePassword.GetPassword(PasswordBox) == managerDetails.Password)
                             {
                                 ManagerMenu_Window managerMenu_Window = new ManagerMenu_Window(pWindow, managerDetails);
+                                managerMenu_Window.ShowDialog();
                             }
                             else
                             {
@@ -72,7 +72,6 @@ namespace PLWPF
                                 //this.DataContext = testerDetailes;
                                 TesterMenu testerMenu = new TesterMenu(pWindow, testerDetailes);
                                 testerMenu.ShowDialog();
-                                this.Close();
                             }
 
                             else
@@ -80,7 +79,6 @@ namespace PLWPF
                                 // if (pWindow==MainWindow.Trainee_Click)
                                 AddOrUpdateTester addOrUpdateTester = new AddOrUpdateTester(pWindow, new Tester(id));
                                 addOrUpdateTester.ShowDialog();
-                                this.Close();
                             }
                             break;
                         case "trainee":
@@ -90,7 +88,6 @@ namespace PLWPF
                                 //this.DataContext = traineeDetailes;
                                 TraineeMenu_window traineeMenuWindow = new TraineeMenu_window(pWindow, traineeDetailes);
                                 traineeMenuWindow.ShowDialog();
-                                this.Close();
                             }
 
                             else
@@ -98,12 +95,13 @@ namespace PLWPF
                                 // if (pWindow==MainWindow.Trainee_Click)
                                 AddOrUpdateTrainee addOrUpdateTrainee = new AddOrUpdateTrainee(pWindow, new Trainee(id));
                                 addOrUpdateTrainee.ShowDialog();
-                                this.Close();
                             }
                             break;
                         default:
                             break;
                     }
+                    this.Close();
+
                 }
 
             }

@@ -6,7 +6,7 @@
          xmlns:local1="clr-namespace:BE;assembly=BE"
          WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:PLWPF"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Closed="Test_Registar_Window_OnClosed"
         Title="Test_Registration_Window" MinHeight="450" MinWidth="450" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <local1:EnumDescriptionConverter x:Key="descConverter"/>
@@ -24,8 +24,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="יציאה" Margin="20,5,5,5"/>
-            <Button Content="תפריט ראשי" Grid.Column="1" Margin="5"/>
+            <Button Content="יציאה" Margin="20,5,5,5" Click="Exit_clickButton"/>
+            <Button Content="תפריט ראשי" Grid.Column="1" Margin="5" Click="BackToMainWindow_clickButton"/>
 
         </Grid>
         <Grid Grid.Row="1">

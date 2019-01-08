@@ -65,6 +65,15 @@ namespace PLWPF
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Manager_OnClick(object sender, RoutedEventArgs e)
+        {
+            //this.Hide();
+            LogInWindow logInWindow = new LogInWindow(this, "manager");
+            logInWindow.ShowDialog();
+            //  this.Close();
+
+        }
     }
 
 
