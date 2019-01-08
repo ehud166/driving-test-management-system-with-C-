@@ -374,6 +374,14 @@ namespace BL
         public List<Test> GetTestsById(string id) => dal.GetTestsList().FindAll(test => test.TraineeId == id);
 
 
+
+        /// <summary>
+        /// find the trainee id and get the test
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>the test with this Trainee id</returns>
+        public List<Test> GetTestsByTraineeId(string id) => dal.GetTestsList().FindAll(test => test.TraineeId == id);
+
         /// <summary>
         /// find the tester id and get the tester
         /// </summary>
