@@ -13,6 +13,7 @@ namespace PLWPF
     {
         private static Trainee existTrainee;
         private static Window pWindow = null;
+        LicenseType some = new LicenseType();
         static  bool exist = false;
         private IBL bl;
 
@@ -34,8 +35,8 @@ namespace PLWPF
                     AddOrUpdateButtonClick.Content = "עדכן";
                 }
 
-                LessonNumScrollBar.ValueChanged += new RoutedPropertyChangedEventHandler<double>(LessonNumScrollBar_OnValueChanged);
-                LessonNumScrollBar.Minimum = 0;
+                //LessonNumScrollBar.ValueChanged += new RoutedPropertyChangedEventHandler<double>(LessonNumScrollBar_OnValueChanged);
+                //LessonNumScrollBar.Minimum = 0;
                 LessonNumScrollBar.Maximum = 100;
                 LessonNumScrollBar.SmallChange = 1;
             }
@@ -51,7 +52,8 @@ namespace PLWPF
         {
             try
             {
-                
+        
+                some.LessonNum = int.Parse(LessonNumTextBox.Text); 
                 if (exist)
                 {
                     bl.UpdateTrainee(existTrainee);
@@ -108,7 +110,7 @@ namespace PLWPF
         private void LicenseTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //MessageBox.Show(GearComboBox.SelectedValue.ToString() + VehcileTypeComboBox.SelectedValue.ToString());
-            LicenseType some = existTrainee.LicenseType.Find(x =>
+           some = existTrainee.LicenseType.Find(x =>
                 x.Gear.ToString() == GearComboBox.SelectedValue?.ToString() && x.VehicleType.ToString() == VehcileTypeComboBox.SelectedValue?.ToString());
             LessonNumTextBox.Text = some?.LessonNum.ToString();
         }
