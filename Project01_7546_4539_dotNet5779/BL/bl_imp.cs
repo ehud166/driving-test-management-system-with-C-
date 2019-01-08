@@ -686,6 +686,20 @@ namespace BL
         /// <returns>sum of all this specific tests</returns>
         private int GetNumOfTraineeTests(string id, Vehicle vType, Gear gType) => dal.GetTestsList()
             .Where(x => x.TraineeId == id && x.VehicleType == vType && x.Gear == gType).Count();
+
+        /// <summary>
+        /// helps printing test final result
+        /// </summary>
+        /// <param name="testResult"></param>
+        /// <returns></returns>
+        private String TestResultToString( bool testResult)
+        {
+            if (testResult)
+            {
+                return "עבר";
+            }
+            return "נכשל";
+        }
     }
 
 }

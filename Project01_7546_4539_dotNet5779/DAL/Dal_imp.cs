@@ -39,6 +39,7 @@ namespace DAL
             Trainees.Add(trainee1);
             //Console.WriteLine(trainee1);
             Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), Gender.female, "058","6114147", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", vt, "or-yarok", tester1.FirstName + " " + tester1.LastName);
+            
             Trainees.Add(trainee2);
 
             Test checkTest = new Test("032577546", DateTime.Parse("23/12/18 9:0"), new Address("f", 4, "a"), Vehicle.privateCar, Gear.manual);

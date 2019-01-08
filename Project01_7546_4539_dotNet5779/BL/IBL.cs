@@ -181,6 +181,7 @@ namespace BL
         bool IsValidEmailAddress(string s);
         bool TraineeHave20Lessons(String id);
         bool TraineeConditionsForTest(String id,Vehicle vehicle,Gear gear);
+
         //------------------------------------------------------------------------------------
     }
 }
