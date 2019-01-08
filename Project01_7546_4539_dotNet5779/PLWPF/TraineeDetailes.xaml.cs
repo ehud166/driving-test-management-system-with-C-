@@ -27,7 +27,25 @@ namespace PLWPF
         private IBL bl;
 
 
-        public TraineeDetailes(Window parent,Trainee newTrainee)
+        //public TraineeDetailes(Window parent,Trainee newTrainee)
+        //{
+        //    try
+        //    {
+        //        InitializeComponent();
+        //        bl = Bl_imp.GetBl();
+        //        existTrainee = bl.GetTraineeById(newTrainee.ID);
+        //        pWindow = parent;
+        //        this.DataContext = existTrainee;
+        //        TestsDataGrid.DataContext = bl.GetTestsByTraineeId(existTrainee.ID);
+
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
+
+        public TraineeDetailes(Window parent, Trainee newTrainee)
         {
             try
             {
@@ -36,8 +54,7 @@ namespace PLWPF
                 existTrainee = bl.GetTraineeById(newTrainee.ID);
                 pWindow = parent;
                 this.DataContext = existTrainee;
-                testDataGrid.DataContext = bl.GetTestsByTraineeId(existTrainee.ID);
-
+                this.TestsDataGrid.ItemsSource = bl.GetTestsByTraineeId(existTrainee.ID);
             }
             catch (Exception exception)
             {

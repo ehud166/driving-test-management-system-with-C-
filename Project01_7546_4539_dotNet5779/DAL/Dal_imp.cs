@@ -27,14 +27,14 @@ namespace DAL
             #region help to insert
 
             List<LicenseType> vt = new List<LicenseType>();
-             vt.Add(new LicenseType(Vehicle.motorcycle,Gear.manual,30));
-             vt.Add(new LicenseType(Vehicle.motorcycle,Gear.auto,31));
+             vt.Add(new LicenseType(Vehicle.motorcycle,Gear.manual,10));
+             vt.Add(new LicenseType(Vehicle.motorcycle,Gear.auto,10));
              vt.Add(new LicenseType(Vehicle.privateCar, Gear.manual, 32));
              vt.Add(new LicenseType(Vehicle.privateCar, Gear.auto, 33));
              vt.Add(new LicenseType(Vehicle.midTrailer, Gear.manual, 34));
              vt.Add(new LicenseType(Vehicle.midTrailer, Gear.auto, 35));
-             vt.Add(new LicenseType(Vehicle.maxTrailer, Gear.manual, 36));
-             vt.Add(new LicenseType(Vehicle.maxTrailer, Gear.auto, 37));
+             vt.Add(new LicenseType(Vehicle.maxTrailer, Gear.manual, 25));
+             vt.Add(new LicenseType(Vehicle.maxTrailer, Gear.auto, 6));
             Tester tester1 = new Tester("314784539", "אהוד", "גרשוני", DateTime.Parse("13/02/1970"), Gender.male, "053","0010199", new Address("shakhal", 8, "jerusalem"),"e@global.com","12345678", Vehicle.privateCar, 13, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester1);

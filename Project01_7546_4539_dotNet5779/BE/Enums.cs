@@ -34,11 +34,18 @@ namespace BE
             exit
         }
 
-        //public static Dictionary<Gender, string> genderDictionary = new Dictionary<Gender, string>()
-        //{
-        //    {Gender.male, "זכר"},
-        //    {Gender.female, "נקבה"}
-        //};
+        public static string VTToHebrew(Vehicle myVehicle)
+        {
+            if (myVehicle == Vehicle.privateCar)
+                return ("רכב פרטי");
+            if (myVehicle == Vehicle.motorcycle)
+                return ("אופנוע");
+            if (myVehicle == Vehicle.midTrailer)
+                return ("משאית קלה");
+            if (myVehicle == Vehicle.maxTrailer)
+                return ("משאית כבדה");
+            return "";
+        }
     }
 
 }

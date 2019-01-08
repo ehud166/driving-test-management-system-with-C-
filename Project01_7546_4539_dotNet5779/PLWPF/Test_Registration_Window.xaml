@@ -6,7 +6,7 @@
          xmlns:local1="clr-namespace:BE;assembly=BE"
          WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:PLWPF"
-        mc:Ignorable="d" Closed="Test_Registar_Window_OnClosed"
+        mc:Ignorable="d" Closed="Test_Registar_Window_OnClosed" Loaded="Test_Registar_Window_OnLoaded"
         Title="Test_Registration_Window" MinHeight="450" MinWidth="450" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <local1:EnumDescriptionConverter x:Key="descConverter"/>
@@ -48,7 +48,7 @@
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <DatePicker x:Name="testDatePicker" Grid.Row="3"/>
+            <DatePicker x:Name="testDatePicker" Grid.Row="3" />
             <ComboBox x:Name="testHourComboBox" Grid.Row="4">
                 <ComboBoxItem Content="9:00"/>
                 <ComboBoxItem Content="10:00"/>
@@ -57,20 +57,20 @@
                 <ComboBoxItem Content="13:00"/>
                 <ComboBoxItem Content="14:00"/>
             </ComboBox>
-            <ComboBox x:Name="VehcileTypeComboBox" Width="250" ItemsSource="{Binding Source={StaticResource enmVehicle}}" >
-                <ComboBox.ItemTemplate>
+            <ComboBox x:Name="VehicleTypeComboBox" Width="250"  SelectionChanged="VehicleTypeComboBox_OnSelectionChanged">
+                <!--<ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
+                        <TextBlock Text="{Binding Converter={StaticResource descConverter}}" />
                     </DataTemplate>
-                </ComboBox.ItemTemplate>
+                </ComboBox.ItemTemplate>-->
             </ComboBox>
             <ComboBox x:Name="testGearComboBox" Grid.Row="1" />
-            <ComboBox x:Name="GearComboBox" Grid.Row="1"  ItemsSource="{Binding Source={StaticResource enmGear}}">
-                <ComboBox.ItemTemplate>
+            <ComboBox x:Name="GearComboBox" Grid.Row="1"   IsEnabled="False">
+                <!--<ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
                     </DataTemplate>
-                </ComboBox.ItemTemplate>
+                </ComboBox.ItemTemplate>-->
             </ComboBox>
             <Label x:Name="testAdressLable" Content=":כתובת" Grid.Column="1" Grid.Row="2"/>
             <Label x:Name="testDateLable" Content=":תאריך"  Grid.Row="3" Grid.Column="1"/>

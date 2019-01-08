@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,7 @@ namespace PLWPF
         {
             try
             {
+
                 id = idTextBox.Text;
                 //password = LogIn_ShowPassword.;
                 // MessageBox.Show(id + "\n" + birth.ToString("d"));
@@ -54,7 +56,7 @@ namespace PLWPF
                     {
                         case "manager":
                             Manager managerDetails = bl.GetManagerById(id);
-                            if (managerDetails != null && SecurePassword.GetPassword(PasswordBox) == managerDetails.Password)
+                            if (managerDetails != null && PasswordBox.Password == managerDetails.Password)
                             {
                                 ManagerMenu_Window managerMenu_Window = new ManagerMenu_Window(pWindow, managerDetails);
                                 managerMenu_Window.ShowDialog();
@@ -65,11 +67,11 @@ namespace PLWPF
                             }
                             break;
                         case "tester":
-
                             Tester testerDetailes = bl.GetTesterById(id);
-                            if (testerDetailes != null)
+
+                            if (testerDetailes != null /*&& testerDetailes.Password == PasswordBox.Password*/)
                             {
-                                //this.DataContext = testerDetailes;
+
                                 TesterMenu testerMenu = new TesterMenu(pWindow, testerDetailes);
                                 testerMenu.ShowDialog();
                             }
@@ -152,7 +154,37 @@ namespace PLWPF
             }
         }
 
-       
+        private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            if (idTextBox.Text.Length == 9)
+            {
+                if ((user == "manager" || user == "trainee") && bl.GetTraineeById(idTextBox.Text) != null)
+                {
+                    PasswordBox.Visibility = Visibility.Visible;
+                    passwordLabel.Visibility = Visibility.Visible;
+                }
+                if ((user == "manager" || user == "tester") && bl.GetTesterById(idTextBox.Text) != null)
+                {
+                    PasswordBox.Visibility = Visibility.Visible;
+                    passwordLabel.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        
+
+        private void LogInWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                pWindow?.Show();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 
 }

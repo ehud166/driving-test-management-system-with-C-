@@ -56,8 +56,8 @@ namespace PLWPF
             int x = (int)btn.GetValue(Grid.RowProperty) + 9;
             int y = 4 - (int)btn.GetValue(Grid.ColumnProperty);
             Build[(DayOfWeek)y][x] = false;
-            MessageBox.Show("row" + x.ToString() + "column" + y.ToString()+"checked");
-            MessageBox.Show(Build[(DayOfWeek)y][x].ToString());
+          //  MessageBox.Show("row" + x.ToString() + "column" + y.ToString()+"checked");
+          //  MessageBox.Show(Build[(DayOfWeek)y][x].ToString());
             
         }
 
@@ -66,7 +66,7 @@ namespace PLWPF
             ToggleButton btn = sender as ToggleButton;
             int x = (int)btn.GetValue(Grid.RowProperty)+9;
             int y = 5-(int)btn.GetValue(Grid.ColumnProperty);
-            MessageBox.Show("row" + x.ToString() + "column" + y.ToString()+ "unchecked");
+          //  MessageBox.Show("row" + x.ToString() + "column" + y.ToString()+ "unchecked");
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
