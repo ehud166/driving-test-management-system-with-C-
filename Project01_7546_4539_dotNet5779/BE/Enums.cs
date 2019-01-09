@@ -47,6 +47,47 @@ namespace BE
                 return ("משאית כבדה");
             return "";
         }
-    }
 
+        public static Vehicle? Hebrew2VT(string myVehicle = null)
+        {
+            Vehicle? vehicle = null;
+            switch (myVehicle)
+            {
+                case "רכב פרטי":
+                    vehicle = Vehicle.privateCar;
+                    break;
+                case "אופנוע":
+                    vehicle = Vehicle.motorcycle;
+                    break;
+                case "משאית קלה":
+                    vehicle = Vehicle.midTrailer;
+                    break;
+                case "משאית כבדה":
+                    vehicle = Vehicle.maxTrailer;
+                    break;
+                default:
+                    break;
+
+            }
+            return vehicle;
+        }
+        public static Gear? Hebrew2GT(string myGear = null)
+        {
+            Gear? gear = null;
+            switch (myGear)
+            {
+                case "ידני":
+                    gear = Gear.manual;
+                    break;
+                case "אוטומט":
+                    gear = Gear.auto;
+                    break;
+                default:
+                    break;
+
+            }
+            return gear;
+
+        }
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using BE;
+using BL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,17 @@ namespace PLWPF
     {
         private static Window pWindow = null;
         private static Trainee existTrainee;
+        private static IBL bl = Bl_imp.GetBl();
+        private static List<Tester> myRelevantTesters = new List<Tester>();
+        private static Test myTest = new Test();
+
+
         public Test_Registar_Window(Window parent, Trainee newTrainee)
         {
             InitializeComponent();
             pWindow = parent;
             existTrainee = newTrainee;
+            this.DataContext = existTrainee;
         }
 
 
@@ -95,7 +102,9 @@ namespace PLWPF
 
         private void VehicleTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MessageBox.Show(VehicleTypeComboBox.SelectedValue.ToString());
+            //MessageBox.Show(VehicleTypeComboBox.SelectedValue.ToString());
+            myTest.VehicleType = Hebrew2VT(VehicleTypeComboBox.SelectedValue.ToString());
+
             if (existTrainee.LicenseType.Any(x =>
                 VTToHebrew(x.VehicleType) == VehicleTypeComboBox.SelectedValue.ToString() && x.LessonNum >= 20 && x.Gear == Gear.auto))
             {
@@ -121,16 +130,14 @@ namespace PLWPF
 
         private void setBlackOutDates(DateTime start, DateTime end)
         {
-
-            testDatePicker.BlackoutDates.Clear();
-            testDatePicker.DisplayDateStart = DateTime.Now;
-            testDatePicker.DisplayDateEnd = DateTime.Now.AddDays(32);
-
             CalendarDateRange XForTheFirst2Days = new CalendarDateRange();
             XForTheFirst2Days.Start = DateTime.Now;
             XForTheFirst2Days.End = DateTime.Now.AddDays(1);
             testDatePicker.BlackoutDates.Add(XForTheFirst2Days);
-            string a = existTrainee.Address.City;
+            // myTest.TestAddress = new Address("tr", 45, "ff", 4);
+            // myTest.VehicleType = Vehicle.maxTrailer;
+            //testAdressTextBox.Text = existTrainee.Address.City;
+            // myTest.TestAddress.City = testAdressTextBox.Text;
             DateTime i = start;
             while (i <= end)
             {
@@ -138,12 +145,65 @@ namespace PLWPF
                     testDatePicker.BlackoutDates.Add(new CalendarDateRange(i));
                 else
                 {
-                    //var v = myBL.Available_testers_by_day_nearby(i, a, Tools.ToCarType(car_typeComboBox.SelectedItem), Tools.ToGearType(gear_typeComboBox.SelectedItem));
-                    //if (v.Count() == 0)
-                    //    Test_datePicker.BlackoutDates.Add(new CalendarDateRange(i));
+                    myTest.TestDateAndTime = i;
+                    List <Tester> my_relevantTesters = bl.RelevantTesters(myTest);
+                    if (my_relevantTesters.Count() == 0)
+                        testDatePicker.BlackoutDates.Add(new CalendarDateRange(i));
                 }
                 i = i.AddDays(1);
             }
+        }
+
+        private void DatePickerOpened(object sender, RoutedEventArgs e)
+        {
+            testDatePicker.BlackoutDates.Clear();
+            testDatePicker.DisplayDateStart = DateTime.Today;
+            testDatePicker.DisplayDateEnd = DateTime.Now.AddDays(32);
+            setBlackOutDates(DateTime.Now, DateTime.Now.AddDays(32));
+        }
+
+        private void testDatePicker_selectedChanged(object sender, SelectionChangedEventArgs e)
+        {
+            myTest.TestDateAndTime = testDatePicker.SelectedDate.Value;
+            List<Tester> myRelevantTesters = bl.RelevantTesters(myTest);
+            bool[] hours = new bool[6];
+            DateTime dateTime = new DateTime();
+            dateTime = myTest.TestDateAndTime;
+            foreach (var item in myRelevantTesters)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if(bl.FreeTester(item, myTest.TestDateAndTime.AddHours(i + 9)))
+                    {
+                            hours[i] = true;
+                    }
+                }
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                    if (hours[i] == true)
+                    {
+                        testHourComboBox.Items.Add(string.Format("{0}:00", i + 9));
+                    }
+            }
+
+
+
+
+
+
+
+        }
+
+        private void GearComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            myTest.Gear = Hebrew2GT(GearComboBox.SelectedValue.ToString());
+        }
+
+        private void testAdressTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            myTest.TestAddress.City = testAdressTextBox.Text.ToString();
         }
     }
 }

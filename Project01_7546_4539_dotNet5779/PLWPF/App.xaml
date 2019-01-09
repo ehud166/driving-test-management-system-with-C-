@@ -68,32 +68,9 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <Style x:Key="DGHeaderStyle" TargetType="{x:Type DataGrid}">  
-        <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DGCHeaderStyle}"/>  
-    </Style>  
-        <Style x:Key="DGCHeaderStyle" TargetType="DataGridColumnHeader">  
-        <Setter Property="Height" Value="30"/>  
-        <Setter Property="Background" Value="LightBlue"  />  
-        <Setter Property="Foreground" Value="Black"/>  
-        <Setter Property="FontSize" Value="6" />
-            <Setter Property="Width" Value="auto" />
-            <Setter Property="FontFamily" Value="Calibri" />
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        </Style>
+     
         
-        <Style  TargetType="DataGridRow">
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Background" Value="LightGray"  />
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="FontFamily" Value="Calibri" />
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-
-        </Style>
-        
-        
+    
         
         
 
@@ -145,9 +122,85 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="bg" BorderBrush="#FF825E5E" BorderThickness="2">
+                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+
+                            <!--<Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="blue"/>
+                                <Setter Property="BorderThickness" TargetName="bg" Value="3"/>
+                            </Trigger>-->
+
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="navy"/>
+                                <Setter Property="BorderThickness" TargetName="bg" Value="3"/>
+                            </Trigger>
+
+
+                            <Trigger Property="IsFocused" Value="False">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="#858585"/>
+                                <Setter Property="BorderThickness" TargetName="bg" Value="2"/>
+                            </Trigger>
+
+                            <!--<Trigger Property="IsMouseOver" Value="False">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="#858585"/>
+                                <Setter Property="BorderThickness" TargetName="bg" Value="2"/>
+                            </Trigger>-->
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
+      
+
+            <!--<Style BasedOn="{x:Null}" TargetType="{x:Type TextBox}">
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="Padding" Value="1"/>
+                <Setter Property="AllowDrop" Value="true"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Border x:Name="bg" BorderBrush="#FF825E5E" BorderThickness="1">
+                                <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bg" Value="Red"/>
+                                    <Setter Property="BorderThickness" TargetName="bg" Value="2"/>
+                                </Trigger>
+
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="bg" Value="Red"/>
+                                    <Setter Property="BorderThickness" TargetName="bg" Value="2"/>
+                                </Trigger>
+
+
+                                <Trigger Property="IsFocused" Value="False">
+                                    <Setter Property="BorderBrush" TargetName="bg" Value="#858585"/>
+                                    <Setter Property="BorderThickness" TargetName="bg" Value="2"/>
+                                </Trigger>
+
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="BorderBrush" TargetName="bg" Value="#858585"/>
+                                    <Setter Property="BorderThickness" TargetName="bg" Value="2"/>
+                                </Trigger>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
+
+        
+        
         <Style TargetType="ComboBox">
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="Margin" Value="5"/>
@@ -159,6 +212,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="BorderThickness" Value="2"/>
+            
         </Style>
 
         <Style TargetType="DatePicker">
@@ -199,7 +253,6 @@
         <Style TargetType="{x:Type Border}">
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="CornerRadius" Value="7"/>
-            
         </Style>
       
         <Style TargetType="RadioButton">

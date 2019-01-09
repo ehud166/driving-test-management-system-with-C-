@@ -9,7 +9,7 @@ namespace BE
 {
     public class Test
     {
-        public Test( string traineeId, DateTime testDateAndTime, Address testAddress, Vehicle vehicleType, Gear gear , string testComment = "", bool ? testDistance = null, bool? testReverseParking = null, bool? testMirrors = null, bool? testMerge = null, bool? testVinker = null, bool? testResult = null, string testerId = null, string iD = null)
+        public Test( string traineeId, DateTime testDateAndTime, Address testAddress, Vehicle? vehicleType, Gear? gear , string testComment = "", bool ? testDistance = null, bool? testReverseParking = null, bool? testMirrors = null, bool? testMerge = null, bool? testVinker = null, bool? testResult = null, string testerId = null, string iD = null)
         {
             ID = iD;
             TesterId = testerId;
@@ -37,8 +37,8 @@ namespace BE
         public string TraineeId { get; set; }
         public DateTime TestDateAndTime { get; set; }
         public Address TestAddress { get; set; }
-        public Vehicle VehicleType { get; set; }
-        public Gear Gear { get; set; }
+        public Vehicle? VehicleType { get; set; }
+        public Gear? Gear { get; set; }
         //test results
         public bool? TestDistance { get; set; }
         public bool? TestReverseParking { get; set; }

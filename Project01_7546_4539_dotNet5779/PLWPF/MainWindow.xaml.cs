@@ -28,7 +28,8 @@ namespace PLWPF
             {
                 InitializeComponent();
                 IBL bl = Bl_imp.GetBl();
-
+                MessageBox.Show(DateTime.Now.TimeOfDay.ToString());
+                MessageBox.Show(DateTime.Today.ToString());
             }
             catch (Exception e)
             {

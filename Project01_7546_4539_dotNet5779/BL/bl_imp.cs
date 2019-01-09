@@ -72,42 +72,56 @@ namespace BL
         {
             try
             {
-                bool q = TraineeConditionsForTest(my_test.TraineeId, my_test.VehicleType, my_test.Gear);
-                if (q)
-                {//now the trainee past the conditions and we need to find tester (including check id for trainee but not necessary to check tester because it checked on AddTester)
-                    var relevantTester = (from tester in dal.GetTestersList()
-                                          let listOfRelevantTesters = GetListOfTestersAtTraineeArea(
-                                              GetListByVehicleType(my_test), my_test.TestAddress) //get a list of tester match the condition to test 
-                                          from item in listOfRelevantTesters
-                                          where FreeTester(item, my_test.TestDateAndTime) && FreeTesterAtThisWeek(item, my_test.TestDateAndTime) //now find free tester
-                                          select item
-                        ).FirstOrDefault();
+                //bool q = TraineeConditionsForTest(my_test.TraineeId, my_test.VehicleType, my_test.Gear);
+                //if (q)
+                //{//now the trainee past the conditions and we need to find tester (including check id for trainee but not necessary to check tester because it checked on AddTester)
 
-                    if (relevantTester != null)
-                    {
-                        my_test.TesterId = relevantTester.ID;
-                        relevantTester.TesterTests.Add(my_test);
-                        dal.UpdateTester(relevantTester);
-                        dal.AddTest(my_test);
-                    }
-                    else//not found free tester
-                    {
-                        var listOfRelevantTesters =
-                            GetListOfTestersAtTraineeArea(GetListByVehicleType(my_test),
-                                my_test.TestAddress);
+                    //if (relevantTester != null)
+                    //{
+                    //    my_test.TesterId = relevantTester.ID;
+                    //    relevantTester.TesterTests.Add(my_test);
+                    //    dal.UpdateTester(relevantTester); 
 
-                        OfferFreeDateForTest(listOfRelevantTesters);
+                    //    dal.AddTest(my_test);
+                    //}
+                    //else//not found free tester
+                    //{
+                    //    var listOfRelevantTesters =
+                    //        GetListOfTestersAtTraineeArea(GetListByVehicleType(my_test),
+                    //            my_test.TestAddress);
 
-                    }
+                    //    OfferFreeDateForTest(listOfRelevantTesters);
 
-                }
+                    //}
+
+                //}
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
-            
+
+        }
+
+        public List<Tester> RelevantTesters(Test my_test)
+        {
+            DateTime dateTime = new DateTime();
+            dateTime = my_test.TestDateAndTime;
+            int[] hours = new int[6];
+            for (int i = 0; i < 6; i++)
+            {
+                hours[i] = 9 + i;
+            }
+            var relevantTesters = (from tester in dal.GetTestersList()
+                                   let listOfRelevantTesters = GetListOfTestersAtTraineeArea(
+                                       GetListByVehicleType(my_test), my_test.TestAddress) //get a list of tester match the condition to test 
+                                   from item in listOfRelevantTesters
+                                   from someHour in hours
+                                   where FreeTester(item, my_test.TestDateAndTime.AddHours(someHour)) && FreeTesterAtThisWeek(item, my_test.TestDateAndTime.AddHours(someHour)) //now find free tester
+                                   select item
+                ).ToList();
+            return relevantTesters;
         }
 
         public bool TraineeConditionsForTest(String id,Vehicle vehicle,Gear gear)
@@ -211,7 +225,7 @@ namespace BL
         /// </summary>
         /// <param name="optionalTester">optional tester to test </param>
         /// <param name="checkDateTime">optional date</param>
-        /// <returns>true for available</returns>
+        /// <returns>true for available</returns>r
         public bool FreeTester(Tester optionalTester, DateTime checkDateTime)
         {
             return optionalTester.Schedule[checkDateTime.DayOfWeek][checkDateTime.Hour] && !optionalTester.TesterTests.Any(x => x.TestDateAndTime == checkDateTime);
@@ -445,9 +459,10 @@ namespace BL
         /// <param name="copyTesters"></param>
         /// <param name="myAddress"></param>
         /// <returns>relvant tester list</returns>
-        private List<Tester> GetListOfTestersAtTraineeArea(List<Tester> copyTesters, Address myAddress)
+        private List<Tester> GetListOfTestersAtTraineeArea(List<Tester> copyTesters, Address myAddress)//חייב לתקן שיחפש מרחק נכון
         {
-            return copyTesters.Where(item => Math.Abs(item.Address.TemporaryCoordinate-myAddress.TemporaryCoordinate) <= item.MaxDistance).ToList();
+            return copyTesters;
+            //return copyTesters.Where(item => Math.Abs(item.Address.TemporaryCoordinate-myAddress.TemporaryCoordinate) <= item.MaxDistance).ToList();
         }
 
 
@@ -687,19 +702,7 @@ namespace BL
         private int GetNumOfTraineeTests(string id, Vehicle vType, Gear gType) => dal.GetTestsList()
             .Where(x => x.TraineeId == id && x.VehicleType == vType && x.Gear == gType).Count();
 
-        /// <summary>
-        /// helps printing test final result
-        /// </summary>
-        /// <param name="testResult"></param>
-        /// <returns></returns>
-        private String TestResultToString( bool testResult)
-        {
-            if (testResult)
-            {
-                return "עבר";
-            }
-            return "נכשל";
-        }
+        
     }
 
 }

@@ -41,22 +41,17 @@
                 <RowDefinition/>
 
             </Grid.RowDefinitions >
-            <TextBox x:Name="testAdressTextBox" Grid.Row="2">
+            <TextBox x:Name="testAdressTextBox" Grid.Row="2" TextChanged="testAdressTextBox_TextChanged">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <DatePicker x:Name="testDatePicker" Grid.Row="3" />
-            <ComboBox x:Name="testHourComboBox" Grid.Row="4">
-                <ComboBoxItem Content="9:00"/>
-                <ComboBoxItem Content="10:00"/>
-                <ComboBoxItem Content="11:00"/>
-                <ComboBoxItem Content="12:00"/>
-                <ComboBoxItem Content="13:00"/>
-                <ComboBoxItem Content="14:00"/>
-            </ComboBox>
+            <DatePicker x:Name="testDatePicker" Grid.Row="3" CalendarOpened="DatePickerOpened" SelectedDateChanged="testDatePicker_selectedChanged" />
+            <ComboBox x:Name="testHourComboBox" Grid.Row="4"/>
+
+
             <ComboBox x:Name="VehicleTypeComboBox" Width="250"  SelectionChanged="VehicleTypeComboBox_OnSelectionChanged">
                 <!--<ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -64,8 +59,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>-->
             </ComboBox>
-            <ComboBox x:Name="testGearComboBox" Grid.Row="1" />
-            <ComboBox x:Name="GearComboBox" Grid.Row="1"   IsEnabled="False">
+            <ComboBox x:Name="GearComboBox" Grid.Row="1"   IsEnabled="False" SelectionChanged="GearComboBox_SelectionChanged" >
                 <!--<ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
