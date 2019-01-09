@@ -179,6 +179,8 @@ namespace BL
 
         bool CheckIdValidation(string id);
         bool IsValidEmailAddress(string s);
+        bool IsValidNumber(string s);
+        bool IsValidAlphabetic(string s);
         bool TraineeHave20Lessons(String id);
         bool TraineeConditionsForTest(String id,Vehicle vehicle,Gear gear);
         List<Tester> RelevantTesters(Test my_test);

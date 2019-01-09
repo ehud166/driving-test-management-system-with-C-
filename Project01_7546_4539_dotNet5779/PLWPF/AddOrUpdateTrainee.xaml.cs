@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
 using System.Windows.Media;
 using BL;
 using BE;
@@ -54,8 +55,6 @@ namespace PLWPF
         {
             try
             {
-                
-               
                 some.LessonNum = int.Parse(LessonNumTextBox.Text);
                 existTrainee.LicenseType.Find(x => x.VehicleType == some.VehicleType && x.Gear == some.Gear).LessonNum =
                     some.LessonNum;
@@ -124,21 +123,31 @@ namespace PLWPF
 
         private void NumberValidationTextBox(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            if (!bl.IsValidNumber(e?.Text))
+            {
+                e.Handled = true;
+            }
         }
 
         private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            bool result = bl.IsValidEmailAddress(EmailTextBox?.Text);
-
-            if (!result)
+            if (!bl.IsValidEmailAddress(EmailTextBox?.Text))
             {
                 EmailTextBox.Clear();
                 EmailTextBox.BorderBrush = Brushes.Red;
             }
             else
-            EmailTextBox.BorderBrush = Brushes.LightBlue;
+            {
+                EmailTextBox.BorderBrush = Brushes.LightBlue;
+            }
+        }
+
+        private void AlphabeticValidation_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!bl.IsValidAlphabetic(e?.Text))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
