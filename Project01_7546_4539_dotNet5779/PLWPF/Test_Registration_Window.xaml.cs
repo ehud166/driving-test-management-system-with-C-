@@ -88,7 +88,7 @@ namespace PLWPF
                 VehicleTypeComboBox.Items.Add("אופנוע");
             }
 
-            setBlackOutDates(DateTime.Now.AddDays(2), DateTime.Now.AddDays(32));
+            setBlackOutDates(DateTime.Now, DateTime.Now.AddDays(32));
 
 
         }
@@ -121,7 +121,15 @@ namespace PLWPF
 
         private void setBlackOutDates(DateTime start, DateTime end)
         {
+
             testDatePicker.BlackoutDates.Clear();
+            testDatePicker.DisplayDateStart = DateTime.Now;
+            testDatePicker.DisplayDateEnd = DateTime.Now.AddDays(32);
+
+            CalendarDateRange XForTheFirst2Days = new CalendarDateRange();
+            XForTheFirst2Days.Start = DateTime.Now;
+            XForTheFirst2Days.End = DateTime.Now.AddDays(1);
+            testDatePicker.BlackoutDates.Add(XForTheFirst2Days);
             string a = existTrainee.Address.City;
             DateTime i = start;
             while (i <= end)

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
+using System.Windows.Media;
 using BL;
 using BE;
 namespace PLWPF
@@ -99,16 +101,7 @@ namespace PLWPF
             LessonNumTextBox.Text = LessonNumScrollBar.Value.ToString();
         }
 
-        private void EmailTextBox_OnTextChanged(object sender, TextChangedEventArgs e)//need to uncomment the condition after
-        {
-            bool result = bl.IsValidEmailAddress(EmailTextBox.Text);
-            
-            //if (!result)
-            //{
-            //    MessageBox.Show(result.ToString() + ": email validation error");
-            //}
-
-        }
+     
 
         private void LicenseTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -116,7 +109,7 @@ namespace PLWPF
            some = existTrainee.LicenseType.Find(x =>
                 x.Gear.ToString() == GearComboBox.SelectedValue?.ToString() && x.VehicleType.ToString() == VehcileTypeComboBox.SelectedValue?.ToString());
             LessonNumTextBox.Text = some?.LessonNum.ToString();
-            LessonNumScrollBar.Minimum = double.Parse(LessonNumTextBox.Text);
+            
 
         }
 
@@ -127,6 +120,25 @@ namespace PLWPF
             {
                 MessageBox.Show("הסיסמאות אינן תואמות אחת לשניה, נסה שוב");
             }
+        }
+
+        private void NumberValidationTextBox(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            bool result = bl.IsValidEmailAddress(EmailTextBox?.Text);
+
+            if (!result)
+            {
+                EmailTextBox.Clear();
+                EmailTextBox.BorderBrush = Brushes.Red;
+            }
+            else
+            EmailTextBox.BorderBrush = Brushes.LightBlue;
         }
     }
 }

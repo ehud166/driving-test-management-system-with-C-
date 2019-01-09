@@ -70,7 +70,7 @@
                     <ComboBoxItem Content="059"/>
                     <ComboBoxItem Content="058"/>
                 </ComboBox >
-                    <TextBox x:Name="phoneNumbersTextBox" HorizontalAlignment="Right" MinWidth="110" Margin="0" Width="auto"  MaxLength="7" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }"/>
+                    <TextBox x:Name="phoneNumbersTextBox" HorizontalAlignment="Right" MinWidth="110" Margin="0" Width="auto"  MaxLength="7" PreviewTextInput="NumberValidationTextBox" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }"/>
                 </StackPanel>
                 <Label Grid.Row="6" Content=":מס' טלפון" Grid.Column="3" />
                 <ComboBox x:Name="AddressSuggestionsCBB" FontSize="20" MinWidth="170" Width="auto" IsEditable="True" Grid.Column="2" Grid.Row="5" ItemsSource="{Binding Address.city, Mode=TwoWay}" />
@@ -104,7 +104,7 @@
 
                 <StackPanel Grid.Row="7"   Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBox x:Name="LessonNumTextBox" IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"/>
-                    <ScrollBar x:Name="LessonNumScrollBar"   HorizontalAlignment="Right"  ValueChanged="LessonNumScrollBar_OnValueChanged" RenderTransformOrigin="0.5,0.5" >
+                    <ScrollBar x:Name="LessonNumScrollBar"  Minimum="{Binding LessonNumTextBox.text,Mode=TwoWay}" HorizontalAlignment="Right"  ValueChanged="LessonNumScrollBar_OnValueChanged" RenderTransformOrigin="0.5,0.5" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -117,7 +117,7 @@
                 </StackPanel>
                 <TextBox x:Name="SchoolTextBox"  Text="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" />
                 <TextBox x:Name="TeacherNameTextBox" Text="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4"/>
-                <TextBox x:Name="EmailTextBox" MinWidth="170" Width="auto" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Grid.Column="2" TextChanged="EmailTextBox_OnTextChanged"/>
+                <TextBox x:Name="EmailTextBox" MinWidth="170" Width="auto" SelectedText="user@global.com" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="7" Grid.Column="2" LostFocus="EmailTextBox_OnLostFocus"/>
 
             </Grid>
         </Grid>

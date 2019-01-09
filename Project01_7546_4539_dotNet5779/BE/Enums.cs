@@ -23,7 +23,8 @@ namespace BE
         public enum Gender
         {
             [Description("זכר")] male,
-            [Description("נקבה")] female
+            [Description("נקבה")] female,
+            [Description("אחר")] other
         }
 
         public enum User
