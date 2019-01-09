@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PLWPF"
         xmlns:local1="clr-namespace:BE;assembly=BE"
         xmlns:BE="clr-namespace:BE;assembly=BE" Closing="AddOrUpdateTester_OnClosing"
-        mc:Ignorable="d"  WindowStartupLocation="CenterScreen" Closed="AddOrUpdateTester_OnClosed"
+        mc:Ignorable="d"  WindowStartupLocation="CenterScreen" 
         Title="AddOrUpdateTester" MinHeight="400" MinWidth="1000" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <local1:EnumDescriptionConverter x:Key="descConverter"/>
@@ -112,7 +112,20 @@
                 </ComboBox >
                 <TextBox x:Name="phoneNumbersTextBox"   MaxLength="7"    Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }" />
                 <Label Content=":ותק" Grid.Column="1" Grid.Row="2"/>
-                <ComboBox x:Name="seniorityComboBox" DisplayMemberPath="Seniority" ItemsSource="{Binding Seniority, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2"/>
+                <StackPanel Grid.Row="2"   Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBox x:Name="SeniorityTextBox" IsEnabled="False"  Text="{Binding Seniority, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
+                    <ScrollBar x:Name="SeniorityScrollBar"    HorizontalAlignment="Right" Minimum="{Binding Seniority, Mode=OneWay}" ValueChanged="SeniorityScrollBar_OnValueChangedScrollBar" RenderTransformOrigin="0.5,0.5" >
+                        <ScrollBar.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="180"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </ScrollBar.RenderTransform>
+                    </ScrollBar>
+                </StackPanel>
+                <!--<ComboBox x:Name="seniorityComboBox" ItemsSource="{Binding Seniority, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2"/>-->
                 <Label Content=":סוג הרכב" Grid.Column="1"  Grid.Row="3" />
                 <ComboBox x:Name="VehcileTypeComboBox" Grid.Row="3"  ItemsSource="{Binding Source={StaticResource enmVehicle}}" SelectedValue="{Binding VehicleType, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>

@@ -11,7 +11,7 @@ namespace PLWPF
     /// </summary>
     public partial class AddOrUpdateTrainee : Window
     {
-        private static Trainee existTrainee;
+        private static Trainee existTrainee = new Trainee();
         private static Window pWindow = null;
         LicenseType some = new LicenseType();
         static  bool exist = false;
@@ -52,8 +52,11 @@ namespace PLWPF
         {
             try
             {
-        
-                some.LessonNum = int.Parse(LessonNumTextBox.Text); 
+                
+               
+                some.LessonNum = int.Parse(LessonNumTextBox.Text);
+                existTrainee.LicenseType.Find(x => x.VehicleType == some.VehicleType && x.Gear == some.Gear).LessonNum =
+                    some.LessonNum;
                 if (exist)
                 {
                     bl.UpdateTrainee(existTrainee);
@@ -113,8 +116,17 @@ namespace PLWPF
            some = existTrainee.LicenseType.Find(x =>
                 x.Gear.ToString() == GearComboBox.SelectedValue?.ToString() && x.VehicleType.ToString() == VehcileTypeComboBox.SelectedValue?.ToString());
             LessonNumTextBox.Text = some?.LessonNum.ToString();
+            LessonNumScrollBar.Minimum = double.Parse(LessonNumTextBox.Text);
+
         }
 
-        
+
+        private void ValidationPasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (passwordBox.Password != validationPasswordBox.Password)
+            {
+                MessageBox.Show("הסיסמאות אינן תואמות אחת לשניה, נסה שוב");
+            }
+        }
     }
 }

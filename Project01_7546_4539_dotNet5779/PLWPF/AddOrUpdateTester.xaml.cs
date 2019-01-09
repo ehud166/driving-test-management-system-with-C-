@@ -37,6 +37,9 @@ namespace PLWPF
                 pWindow = parent;
                 this.DataContext = existTester;
                 idTextBox.IsEnabled = false;
+                SeniorityScrollBar.Maximum = 50;
+                SeniorityScrollBar.SmallChange = 1;
+
                 if (parent.GetType().ToString() == "PLWPF.TesterMenu")
                 {
                     mySchedule.Build = existTester.Schedule;
@@ -78,7 +81,10 @@ namespace PLWPF
             }
         }
 
-        private void AddOrUpdateTester_OnClosed(object sender, EventArgs e)
+       
+
+
+        private void AddOrUpdateTester_OnClosing(object sender, CancelEventArgs e)
         {
             try
             {
@@ -86,14 +92,15 @@ namespace PLWPF
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-
-        private void AddOrUpdateTester_OnClosing(object sender, CancelEventArgs e)
+        private void SeniorityScrollBar_OnValueChangedScrollBar(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this.Close();
+            SeniorityTextBox.Text = SeniorityScrollBar.Value.ToString();
+            SeniorityScrollBar.Minimum = double.Parse(SeniorityTextBox.Text);
+
         }
     }
     

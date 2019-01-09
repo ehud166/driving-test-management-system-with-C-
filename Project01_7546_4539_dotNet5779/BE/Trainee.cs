@@ -28,7 +28,7 @@ namespace BE
         }
         public Trainee() : base()
         {
-
+            LicenseTypeInitialize();
         }
 
         public Trainee(string id) : base(id)
@@ -36,9 +36,9 @@ namespace BE
             LicenseTypeInitialize();
         }
 
-        private static void LicenseTypeInitialize()
+        private void LicenseTypeInitialize()
         {
-            List<LicenseType> LicenseType = new List<LicenseType>();
+            LicenseType = new List<LicenseType>();
             LicenseType.Add(new LicenseType(Vehicle.maxTrailer, Gear.auto));
             LicenseType.Add(new LicenseType(Vehicle.maxTrailer, Gear.manual));
             LicenseType.Add(new LicenseType(Vehicle.midTrailer, Gear.auto));

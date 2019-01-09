@@ -35,17 +35,20 @@ namespace DAL
              vt.Add(new LicenseType(Vehicle.midTrailer, Gear.auto, 35));
              vt.Add(new LicenseType(Vehicle.maxTrailer, Gear.manual, 25));
              vt.Add(new LicenseType(Vehicle.maxTrailer, Gear.auto, 6));
-            Tester tester1 = new Tester("314784539", "אהוד", "גרשוני", DateTime.Parse("13/02/1970"), Gender.male, "053","0010199", new Address("shakhal", 8, "jerusalem"),"e@global.com","12345678", Vehicle.privateCar, 13, 30, 100);
+            Tester tester1 = new Tester("314784539", "אהוד", "גרשוני", DateTime.Parse("13/02/1970"), Gender.male, "053","0010199", new Address("shakhal", 8, "jerusalem"),"ehud@g.jct.ac.il","1234", Vehicle.privateCar, 13, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester1);
-            Tester tester2 = new Tester("000002121", "דודו", "כהן", DateTime.Parse("30/07/1956"), Gender.male, "053","0010100", new Address("kolombia", 6, "jerusalem"), "e@global.com", "12345678", Vehicle.privateCar, 11, 30, 100);
+            Tester tester2 = new Tester("000002121", "דודו", "כהן", DateTime.Parse("30/07/1956"), Gender.male, "053","0010100", new Address("kolombia", 6, "jerusalem"), "dudu@g.jct.ac.il", "1234", Vehicle.privateCar, 11, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester2);
+            Tester tester3 = new Tester("201057858", "רועי דוד", "מרגלית", DateTime.Parse("06/01/1989"), Gender.male, "053", "1010199", new Address("shakhal", 8, "גלעד"), "roi@global.com", "1234", Vehicle.privateCar, 13, 30, 100);
+            //Console.WriteLine(tester1);
+            Testers.Add(tester3);
 
-            Trainee trainee1 = new Trainee("032577546", "ישי", "בדיחי", DateTime.Parse("30/07/1996"), Gender.male, "052","6608111", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678",vt, "or-yarok", tester1.FirstName + " " + tester1.LastName);
+            Trainee trainee1 = new Trainee("032577546", "ישי", "בדיחי", DateTime.Parse("30/07/1996"), Gender.male, "052","6608111", new Address("kolombia", 7, "jerusalem"), "yishay@g.jct.ac.il", "1234",vt, "or-yarok", tester1.FirstName + " " + tester1.LastName);
             Trainees.Add(trainee1);
             //Console.WriteLine(trainee1);
-            Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), Gender.female, "058","6114147", new Address("kolombia", 7, "jerusalem"), "e@global.com", "12345678", vt, "or-yarok", tester1.FirstName + " " + tester1.LastName);
+            Trainee trainee2 = new Trainee("206026858", "הדס", "גרשוני", DateTime.Parse("17/03/1996"), Gender.female, "058","6114147", new Address("kolombia", 7, "jerusalem"), "hadas@g.jct.ac.il", "1234", vt, "or-yarok", tester1.FirstName + " " + tester1.LastName);
             Trainees.Add(trainee2);
 
             Test checkTest = new Test("032577546", DateTime.Parse("23/12/18 9:0"), new Address("f", 4, "a"), Vehicle.privateCar, Gear.manual);
@@ -141,7 +144,7 @@ namespace DAL
                     x.PhoneAreaCode, x.PhoneNumber,
                     new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password,
                     x.VehicleType,
-                    x.Seniority, x.MaxTestsForWeek, x.MaxDistance, x.Schedule, new List<Test>(x.TesterTests.Select(y =>
+                    x.Seniority, x.MaxTestsForWeek, x.MaxDistance, x.Schedule, new List<Test>(x?.TesterTests.Select(y =>
                         new Test(y.TraineeId, y.TestDateAndTime,
                             new Address(y.TestAddress.StreetName, y.TestAddress.BuildingNumber, y.TestAddress.City),
                             y.VehicleType,
@@ -206,18 +209,18 @@ namespace DAL
         {
             try
             {
-                var v = Tests.Where(itemTest => itemTest.ID == my_test.ID).FirstOrDefault();
-
-                if (v == null)
+                var updateTest = Tests.Where(itemTest => itemTest.ID == my_test.ID).FirstOrDefault();
+                if (updateTest == null)
                     throw new Exception("ERROR:\n" +
                                         "This test does NOT exist\n");
                 
-                Tests.Remove(v);
-                v = new Test(my_test.TraineeId, my_test.TestDateAndTime, my_test.TestAddress, my_test.VehicleType,
+                Tests.Remove(updateTest);
+                updateTest = new Test(my_test.TraineeId, my_test.TestDateAndTime, new Address(my_test.TestAddress.StreetName, my_test.TestAddress.BuildingNumber,
+                        my_test.TestAddress.City, my_test.TestAddress.TemporaryCoordinate), my_test.VehicleType,
                     my_test.Gear, my_test.TestComment, my_test.TestDistance, my_test.TestReverseParking,
                     my_test.TestMirrors, my_test.TestMerge, my_test.TestVinker, my_test.TestResult, my_test.TesterId,
                     my_test.TestComment);
-                Tests.Add(v);
+                Tests.Add(updateTest);
 
             }
             catch (Exception e)
@@ -230,18 +233,24 @@ namespace DAL
         {
             try
             {
-                var v = Testers.Where(itemTester => itemTester.ID == my_tester.ID).FirstOrDefault();
-
-                if (v == null)
+                var updateTester = Testers.Where(itemTester => itemTester.ID == my_tester.ID).FirstOrDefault();
+                
+                if (updateTester == null)
                     throw new Exception("ERROR:\n" +
                                         "This tester does NOT exist\n");
 
-                Testers.Remove(v);
-                v = new Tester(my_tester.ID, my_tester.FirstName, my_tester.LastName, my_tester.Birthday,
-                    my_tester.Gender, my_tester.PhoneAreaCode, my_tester.PhoneNumber, my_tester.Address,my_tester.Email,my_tester.Password, my_tester.VehicleType,
+                Testers.Remove(updateTester);
+                updateTester = new Tester(my_tester.ID, my_tester.FirstName, my_tester.LastName, my_tester.Birthday,
+                    my_tester.Gender, my_tester.PhoneAreaCode, my_tester.PhoneNumber, new Address(my_tester.Address.StreetName, my_tester.Address.BuildingNumber, my_tester.Address.City), my_tester.Email,my_tester.Password, my_tester.VehicleType,
                     my_tester.Seniority, my_tester.MaxTestsForWeek, my_tester.MaxDistance, my_tester.Schedule,
-                    my_tester.TesterTests);
-                Testers.Add(v);
+                    new List<Test>(my_tester?.TesterTests.Select(y =>
+                        new Test(y.TraineeId, y.TestDateAndTime,
+                            new Address(y.TestAddress.StreetName, y.TestAddress.BuildingNumber, y.TestAddress.City),
+                            y.VehicleType,
+                            y.Gear, y.TestComment, y.TestDistance,
+                            y.TestReverseParking, y.TestMirrors, y.TestMerge, y.TestVinker, y.TestResult, y.TesterId,
+                            y.ID))));
+                Testers.Add(updateTester);
             }
             catch (Exception e)
             {

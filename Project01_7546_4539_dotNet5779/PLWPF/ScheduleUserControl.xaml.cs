@@ -39,7 +39,8 @@ namespace PLWPF
                 for (var i = 0; i < ScheduleToggenGrid.Children.Count; i++)
                 {
                     var s = ScheduleToggenGrid.Children[i] as ToggleButton;
-                    s.IsChecked = Build[(DayOfWeek)Grid.GetColumn(s)][9 + Grid.GetRow(s)];
+                    //MessageBox.Show("row" + s.ToString() + "column" + s.ToString() + "checked");
+                    s.IsChecked = Build[(DayOfWeek)(4-Grid.GetColumn(s))][9 + Grid.GetRow(s)];
                 }
 
             }
@@ -65,8 +66,10 @@ namespace PLWPF
         {
             ToggleButton btn = sender as ToggleButton;
             int x = (int)btn.GetValue(Grid.RowProperty)+9;
-            int y = 5-(int)btn.GetValue(Grid.ColumnProperty);
-          //  MessageBox.Show("row" + x.ToString() + "column" + y.ToString()+ "unchecked");
+            int y = 4-(int)btn.GetValue(Grid.ColumnProperty);
+            //  MessageBox.Show("row" + x.ToString() + "column" + y.ToString()+ "unchecked");
+            Build[(DayOfWeek)y][x] = true;
+
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

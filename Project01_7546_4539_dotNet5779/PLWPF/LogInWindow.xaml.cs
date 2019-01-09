@@ -91,7 +91,6 @@ namespace PLWPF
                                 TraineeMenu_window traineeMenuWindow = new TraineeMenu_window(pWindow, traineeDetailes);
                                 traineeMenuWindow.ShowDialog();
                             }
-
                             else
                             {
                                 // if (pWindow==MainWindow.Trainee_Click)
@@ -178,7 +177,7 @@ namespace PLWPF
         {
             try
             {
-                pWindow?.Show();
+                //pWindow?.Show();
             }
             catch (Exception exception)
             {

@@ -73,10 +73,10 @@
                     <TextBox x:Name="phoneNumbersTextBox" HorizontalAlignment="Right" MinWidth="110" Margin="0" Width="auto"  MaxLength="7" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }"/>
                 </StackPanel>
                 <Label Grid.Row="6" Content=":מס' טלפון" Grid.Column="3" />
-                <ComboBox x:Name="AddressSuggestionsCBB" FontSize="20" MinWidth="170" Width="auto" IsEditable="True" Grid.Column="2" Grid.Row="5" ItemsSource="{Binding Address.city}"  Text="{Binding Address.city, Mode=TwoWay}"/>
+                <ComboBox x:Name="AddressSuggestionsCBB" FontSize="20" MinWidth="170" Width="auto" IsEditable="True" Grid.Column="2" Grid.Row="5" ItemsSource="{Binding Address.city, Mode=TwoWay}" />
                 <Label  Content=":כתובת"  Grid.Column="3" Grid.Row="5" />
 
-                <ComboBox x:Name="VehcileTypeComboBox" Grid.Row="1"  ItemsSource="{Binding Source={StaticResource enmVehicle}}"  SelectedValue="{Binding LicenseType[0].VehicleType, Mode=OneWay}" SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
+                <ComboBox x:Name="VehcileTypeComboBox" Grid.Row="1"  ItemsSource="{Binding Source={StaticResource enmVehicle}}"   SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
@@ -92,9 +92,9 @@
                 <Label  Grid.Row="5" Grid.Column="1" Content=  "סיסמא"/>
                 <Label  Grid.Row="6" Grid.Column="1" Content=  "אימות סיסמא"/>
                 <PasswordBox x:Name="passwordBox" Visibility="Visible" Grid.Row="5"  xaml:SecurePassword.Password="{Binding Password}" />
-                <PasswordBox x:Name="validationPasswordBox"  Grid.Row="6"  xaml:SecurePassword.Password="{Binding Password}"/>
+                <PasswordBox x:Name="validationPasswordBox"  Grid.Row="6"  xaml:SecurePassword.Password="{Binding Password}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
 
-                <ComboBox x:Name="GearComboBox"  Grid.Row="2"  ItemsSource="{Binding Source={StaticResource enmGear}}" SelectedValue="{Binding LicenseType[0].Gear, Mode=OneWay}" SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
+                <ComboBox x:Name="GearComboBox"  Grid.Row="2"  ItemsSource="{Binding Source={StaticResource enmGear}}"  SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
@@ -103,8 +103,8 @@
                 </ComboBox>
 
                 <StackPanel Grid.Row="7"   Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBox x:Name="LessonNumTextBox" IsEnabled="False"  Text="{Binding LicenseType[0].LessonNum, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"/>
-                    <ScrollBar x:Name="LessonNumScrollBar"   HorizontalAlignment="Right" Minimum="{Binding LicenseType[0].LessonNum, Mode=OneWay}" ValueChanged="LessonNumScrollBar_OnValueChanged" RenderTransformOrigin="0.5,0.5" >
+                    <TextBox x:Name="LessonNumTextBox" IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"/>
+                    <ScrollBar x:Name="LessonNumScrollBar"   HorizontalAlignment="Right"  ValueChanged="LessonNumScrollBar_OnValueChanged" RenderTransformOrigin="0.5,0.5" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
