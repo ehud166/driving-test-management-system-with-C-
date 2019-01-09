@@ -95,7 +95,6 @@ namespace PLWPF
                 VehicleTypeComboBox.Items.Add("אופנוע");
             }
 
-            setBlackOutDates(DateTime.Now, DateTime.Now.AddDays(32));
 
 
         }
@@ -131,14 +130,14 @@ namespace PLWPF
         private void setBlackOutDates(DateTime start, DateTime end)
         {
             CalendarDateRange XForTheFirst2Days = new CalendarDateRange();
-            XForTheFirst2Days.Start = DateTime.Now;
-            XForTheFirst2Days.End = DateTime.Now.AddDays(1);
+            XForTheFirst2Days.Start = DateTime.Today;
+            XForTheFirst2Days.End = DateTime.Today.AddDays(1);
             testDatePicker.BlackoutDates.Add(XForTheFirst2Days);
             // myTest.TestAddress = new Address("tr", 45, "ff", 4);
             // myTest.VehicleType = Vehicle.maxTrailer;
             //testAdressTextBox.Text = existTrainee.Address.City;
             // myTest.TestAddress.City = testAdressTextBox.Text;
-            DateTime i = start;
+            DateTime i = start.AddDays(2);
             while (i <= end)
             {
                 if (i.DayOfWeek == DayOfWeek.Friday || i.DayOfWeek == DayOfWeek.Saturday)
@@ -158,8 +157,8 @@ namespace PLWPF
         {
             testDatePicker.BlackoutDates.Clear();
             testDatePicker.DisplayDateStart = DateTime.Today;
-            testDatePicker.DisplayDateEnd = DateTime.Now.AddDays(32);
-            setBlackOutDates(DateTime.Now, DateTime.Now.AddDays(32));
+            testDatePicker.DisplayDateEnd = DateTime.Today.AddDays(32);
+            setBlackOutDates(DateTime.Today, DateTime.Today.AddDays(32));
         }
 
         private void testDatePicker_selectedChanged(object sender, SelectionChangedEventArgs e)

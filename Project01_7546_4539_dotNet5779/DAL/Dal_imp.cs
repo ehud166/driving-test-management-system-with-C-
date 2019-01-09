@@ -38,10 +38,10 @@ namespace DAL
             Tester tester1 = new Tester("314784539", "אהוד", "גרשוני", DateTime.Parse("13/02/1970"), Gender.male, "053","0010199", new Address("shakhal", 8, "jerusalem"),"ehud@g.jct.ac.il","1234", Vehicle.privateCar, 13, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester1);
-            Tester tester2 = new Tester("000002121", "דודו", "כהן", DateTime.Parse("30/07/1956"), Gender.male, "053","0010100", new Address("kolombia", 6, "jerusalem"), "dudu@g.jct.ac.il", "1234", Vehicle.privateCar, 11, 30, 100);
+            Tester tester2 = new Tester("000002121", "דודו", "כהן", DateTime.Parse("30/07/1956"), Gender.male, "053","0010100", new Address("kolombia", 6, "jerusalem"), "dudu@g.jct.ac.il", "1234", Vehicle.midTrailer, 11, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester2);
-            Tester tester3 = new Tester("201057858", "רועי דוד", "מרגלית", DateTime.Parse("06/01/1989"), Gender.male, "053", "1010199", new Address("shakhal", 8, "גלעד"), "roi@global.com", "1234", Vehicle.privateCar, 13, 30, 100);
+            Tester tester3 = new Tester("201057858", "רועי דוד", "מרגלית", DateTime.Parse("06/01/1948"), Gender.male, "053", "1010199", new Address("shakhal", 8, "גלעד"), "roi@global.com", "1234", Vehicle.motorcycle, 13, 30, 100);
             //Console.WriteLine(tester1);
             Testers.Add(tester3);
 
