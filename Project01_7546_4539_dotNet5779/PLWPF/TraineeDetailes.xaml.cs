@@ -36,9 +36,7 @@ namespace PLWPF
                 existTrainee = bl.GetTraineeById(newTrainee.ID);
                 pWindow = parent;
                 this.DataContext = existTrainee;
-                //this.testDataGrid.ItemsSource = bl.GetTestsById(existTrainee.ID);
-                TestsDataGrid.DataContext = bl.GetTestsByTraineeId(existTrainee.ID);
-
+                this.TestsDataGrid.ItemsSource = bl.GetTestsByTraineeId(existTrainee.ID);
             }
             catch (Exception exception)
             {
@@ -47,19 +45,7 @@ namespace PLWPF
         }
 
 
-        private void MyTests_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                //this.TestsDataGrid.ItemsSource = bl.GetTestsList();
-                this.DataContext = bl.GetTestsById(existTrainee.ID);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
+      
         private void TraineeDetailes_OnClosed(object sender, EventArgs e)
         {
             try

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using BL;
 using BE;
+using System.Text.RegularExpressions;
 namespace PLWPF
 {
     /// <summary>
@@ -22,6 +23,7 @@ namespace PLWPF
             {
 
                 InitializeComponent();
+                this.prefixPhoneComboBox.SelectedIndex = 0;
                 bl = Bl_imp.GetBl();
                 existTrainee = newTrainee;
                 pWindow = parent;
@@ -113,6 +115,12 @@ namespace PLWPF
             LessonNumTextBox.Text = some?.LessonNum.ToString();
         }
 
-        
+        private void NumberValidationTextBox(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+
     }
 }

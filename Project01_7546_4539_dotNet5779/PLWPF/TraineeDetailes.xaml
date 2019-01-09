@@ -96,28 +96,16 @@
                
             </TabItem>
 
-            <TabItem Header="הטסטים שלי"  Height="20" VerticalAlignment="Top" PreviewMouseDown="MyTests_OnMouseLeftButtonDown">
+            <TabItem Header="הטסטים שלי" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
                 <Grid >
                  
                     <DataGrid x:Name="TestsDataGrid"  AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="testResultColumn" FontWeight="Bold" Binding="{Binding TestResult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="תוצאות הטסט" Width="*"/>
                             <DataGridTextColumn x:Name="gearColumn" Width="*" Binding="{Binding Gear}" Header="גיר" />
-                            <DataGridTextColumn x:Name="iDColumn" Width="*" Binding="{Binding TraineeId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="ת.ז"/>
-                            <DataGridTextColumn x:Name="testCommentColumn" Width="*" Binding="{Binding TestComment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="הערת הבוחן"/>
-                            <DataGridTemplateColumn x:Name="testDateAndTimeColumn"  Header="תאריך ושעה" Width="*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding TestDateAndTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridCheckBoxColumn x:Name="testDistanceColumn" Binding="{Binding TestDistance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="שמירת מרחק" Width="*"/>
-                            <DataGridCheckBoxColumn x:Name="testMergeColumn" Binding="{Binding TestMerge, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="השתלבות" Width="*"/>
-                            <DataGridCheckBoxColumn x:Name="testMirrorsColumn" Binding="{Binding TestMirrors, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="מראות" Width="*"/>
-                            <DataGridCheckBoxColumn x:Name="testResultColumn" Binding="{Binding TestResult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="תוצאות הטסט" Width="*"/>
-                            <DataGridCheckBoxColumn x:Name="testReverseParkingColumn" Binding="{Binding TestReverseParking, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="חנייה  ברוורס" Width="*"/>
-                            <DataGridCheckBoxColumn x:Name="testVinkerColumn" Binding="{Binding TestVinker, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="איתות" Width="*"/>
                             <DataGridTextColumn x:Name="vehicleTypeColumn" Binding="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="סוג הרכב" Width="*"/>
+                            <DataGridTextColumn x:Name="testDateAndTimeColumn"  Header="תאריך ושעה" Width="*" Binding="{Binding TestDateAndTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <DataGridTextColumn x:Name="iDColumn" Width="*" Binding="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="מספר מבחן" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
