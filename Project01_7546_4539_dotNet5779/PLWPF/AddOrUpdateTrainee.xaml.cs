@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
+using System.Windows.Media;
 using BL;
 using BE;
-using System.Text.RegularExpressions;
 namespace PLWPF
 {
     /// <summary>
@@ -12,8 +13,9 @@ namespace PLWPF
     /// </summary>
     public partial class AddOrUpdateTrainee : Window
     {
-        private static Trainee existTrainee;
+        private static Trainee existTrainee = new Trainee();
         private static Window pWindow = null;
+        LicenseType some = new LicenseType();
         static  bool exist = false;
         private IBL bl;
 
@@ -23,7 +25,6 @@ namespace PLWPF
             {
 
                 InitializeComponent();
-                this.prefixPhoneComboBox.SelectedIndex = 0;
                 bl = Bl_imp.GetBl();
                 existTrainee = newTrainee;
                 pWindow = parent;
@@ -36,8 +37,8 @@ namespace PLWPF
                     AddOrUpdateButtonClick.Content = "עדכן";
                 }
 
-                LessonNumScrollBar.ValueChanged += new RoutedPropertyChangedEventHandler<double>(LessonNumScrollBar_OnValueChanged);
-                LessonNumScrollBar.Minimum = 0;
+                //LessonNumScrollBar.ValueChanged += new RoutedPropertyChangedEventHandler<double>(LessonNumScrollBar_OnValueChanged);
+                //LessonNumScrollBar.Minimum = 0;
                 LessonNumScrollBar.Maximum = 100;
                 LessonNumScrollBar.SmallChange = 1;
             }
@@ -54,6 +55,10 @@ namespace PLWPF
             try
             {
                 
+               
+                some.LessonNum = int.Parse(LessonNumTextBox.Text);
+                existTrainee.LicenseType.Find(x => x.VehicleType == some.VehicleType && x.Gear == some.Gear).LessonNum =
+                    some.LessonNum;
                 if (exist)
                 {
                     bl.UpdateTrainee(existTrainee);
@@ -96,23 +101,25 @@ namespace PLWPF
             LessonNumTextBox.Text = LessonNumScrollBar.Value.ToString();
         }
 
-        private void EmailTextBox_OnTextChanged(object sender, TextChangedEventArgs e)//need to uncomment the condition after
-        {
-            bool result = bl.IsValidEmailAddress(EmailTextBox.Text);
-            
-            //if (!result)
-            //{
-            //    MessageBox.Show(result.ToString() + ": email validation error");
-            //}
-
-        }
+     
 
         private void LicenseTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //MessageBox.Show(GearComboBox.SelectedValue.ToString() + VehcileTypeComboBox.SelectedValue.ToString());
-            LicenseType some = existTrainee.LicenseType.Find(x =>
+           some = existTrainee.LicenseType.Find(x =>
                 x.Gear.ToString() == GearComboBox.SelectedValue?.ToString() && x.VehicleType.ToString() == VehcileTypeComboBox.SelectedValue?.ToString());
             LessonNumTextBox.Text = some?.LessonNum.ToString();
+            
+
+        }
+
+
+        private void ValidationPasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (passwordBox.Password != validationPasswordBox.Password)
+            {
+                MessageBox.Show("הסיסמאות אינן תואמות אחת לשניה, נסה שוב");
+            }
         }
 
         private void NumberValidationTextBox(object sender, System.Windows.Input.TextCompositionEventArgs e)
@@ -121,6 +128,17 @@ namespace PLWPF
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            bool result = bl.IsValidEmailAddress(EmailTextBox?.Text);
 
+            if (!result)
+            {
+                EmailTextBox.Clear();
+                EmailTextBox.BorderBrush = Brushes.Red;
+            }
+            else
+            EmailTextBox.BorderBrush = Brushes.LightBlue;
+        }
     }
 }

@@ -51,6 +51,8 @@ namespace BE
             return myEnum.ToString();
         }
 
+        
+
         object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return string.Empty;

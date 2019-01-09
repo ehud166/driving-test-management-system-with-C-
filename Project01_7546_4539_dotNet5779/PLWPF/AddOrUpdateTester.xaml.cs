@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,9 @@ namespace PLWPF
                 pWindow = parent;
                 this.DataContext = existTester;
                 idTextBox.IsEnabled = false;
+                SeniorityScrollBar.Maximum = 50;
+                SeniorityScrollBar.SmallChange = 1;
+
                 if (parent.GetType().ToString() == "PLWPF.TesterMenu")
                 {
                     mySchedule.Build = existTester.Schedule;
@@ -77,7 +81,10 @@ namespace PLWPF
             }
         }
 
-        private void AddOrUpdateTester_OnClosed(object sender, EventArgs e)
+       
+
+
+        private void AddOrUpdateTester_OnClosing(object sender, CancelEventArgs e)
         {
             try
             {
@@ -85,11 +92,16 @@ namespace PLWPF
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        
+        private void SeniorityScrollBar_OnValueChangedScrollBar(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            SeniorityTextBox.Text = SeniorityScrollBar.Value.ToString();
+            SeniorityScrollBar.Minimum = double.Parse(SeniorityTextBox.Text);
+
+        }
     }
     
 }

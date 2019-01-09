@@ -72,8 +72,8 @@ namespace PLWPF
 
         private void Exit_clickButton(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
-            //this.Close();
+            this.Close();
+            pWindow?.Close();
         }
 
         private void MyDetailes_ButtonClick(object sender, RoutedEventArgs e)
@@ -124,7 +124,7 @@ namespace PLWPF
                 if (bl.TraineeHave20Lessons(existTrainee.ID))
                 {
                     this.Hide();
-                    Test_Registar_Window test_Registar_Window = new Test_Registar_Window();
+                    Test_Registar_Window test_Registar_Window = new Test_Registar_Window(this,existTrainee);
                     test_Registar_Window.ShowDialog();
                     //this.Close();
                 }

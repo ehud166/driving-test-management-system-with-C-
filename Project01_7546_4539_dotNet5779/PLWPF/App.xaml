@@ -24,6 +24,31 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
+        <Style x:Key="DGHeaderStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DGCHeaderStyle}"/>
+        </Style>
+
+        <Style x:Key="DGCHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="LightBlue"  />
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="6" />
+            <Setter Property="Width" Value="auto" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style  TargetType="DataGridRow">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="LightGray"  />
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+        </Style>
         <Style TargetType="Window">
             <Setter Property="Foreground" Value="Black" />
             <Setter Property= "SizeToContent" Value="WidthAndHeight"/>
@@ -174,6 +199,7 @@
         <Style TargetType="{x:Type Border}">
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="CornerRadius" Value="7"/>
+            
         </Style>
       
         <Style TargetType="RadioButton">

@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PLWPF"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:PLWPF" 
+        mc:Ignorable="d" Closing="LogInWindow_OnClosing" 
         Title="LogInWindow" Loaded="LogInWindow_OnLoaded" Width="400">
     <Grid Grid.Row="2">
         <Grid.RowDefinitions>
@@ -23,9 +23,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content=".ת.ז" Grid.Column="3" Grid.Row="0" Target="{Binding ElementName=idTextBox}"/>
-            <Label Content="סיסמא" Grid.Column="3" Grid.Row="1" Target="{Binding ElementName=birthdayDatePicker}"/>
-            <TextBox x:Name="idTextBox" Grid.Column="1" Grid.Row="0" MaxLength="9" KeyDown="idTextBox_keyDown"/>
-            <PasswordBox x:Name="PasswordBox"  PasswordChar="*" Grid.Column="1" Grid.Row="1" />
+            <Label x:Name="passwordLabel" Content="סיסמא" Grid.Column="3" Grid.Row="1" Visibility="Hidden" Target="{Binding ElementName=birthdayDatePicker}"/>
+            <TextBox x:Name="idTextBox" Grid.Column="1" Grid.Row="0" MaxLength="9" KeyDown="idTextBox_keyDown" TextChanged="IdTextBox_TextChanged" />
+            <PasswordBox x:Name="PasswordBox" Visibility="Hidden" PasswordChar="*" Grid.Column="1" Grid.Row="1" />
             <!--<Image x:Name="LogIn_ShowPassword"  />-->
             <!--local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding Text, ElementName=plain, Mode=TwoWay}"-->
         </Grid>

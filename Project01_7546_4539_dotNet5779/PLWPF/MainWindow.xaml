@@ -20,7 +20,7 @@
        
             <Button x:Name="Trainee" Content="תלמיד" Grid.Row="1" Click="Trainee_Click"/>
             <Button x:Name="Tester" Content="בוחן" Grid.Row="2"  Click="Tester_Click"/>
-        <Button x:Name="Administrator" Content="אדמיניסטרציה"   Grid.Row="3" />
+        <Button x:Name="Administrator" Content="מנהל"   Grid.Row="3" Click="Manager_OnClick"/>
 
     </Grid>
 </Window>
