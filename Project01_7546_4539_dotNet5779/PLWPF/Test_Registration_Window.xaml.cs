@@ -54,6 +54,7 @@ namespace PLWPF
             try
             {
                 this.Close();
+                pWindow.Close();
             }
             catch (Exception exception)
             {
@@ -61,10 +62,10 @@ namespace PLWPF
             }
         }
 
-        private void Exit_clickButton(object sender, RoutedEventArgs e)
+        private void Back_clickButton(object sender, RoutedEventArgs e)
         {
             this.Close();
-            pWindow?.Close();
+            
         }
 
         private void Test_Registar_Window_OnLoaded(object sender, RoutedEventArgs e)
@@ -101,9 +102,8 @@ namespace PLWPF
 
         private void VehicleTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //MessageBox.Show(VehicleTypeComboBox.SelectedValue.ToString());
             myTest.VehicleType = Hebrew2VT(VehicleTypeComboBox.SelectedValue.ToString());
-
+            GearComboBox.Items.Clear();
             if (existTrainee.LicenseType.Any(x =>
                 VTToHebrew(x.VehicleType) == VehicleTypeComboBox.SelectedValue.ToString() && x.LessonNum >= 20 && x.Gear == Gear.auto))
             {
@@ -155,6 +155,7 @@ namespace PLWPF
 
         private void DatePickerOpened(object sender, RoutedEventArgs e)
         {
+            myTest.Gear = Hebrew2GT(GearComboBox.SelectedValue.ToString());
             testDatePicker.BlackoutDates.Clear();
             testDatePicker.DisplayDateStart = DateTime.Today;
             testDatePicker.DisplayDateEnd = DateTime.Today.AddDays(32);
@@ -168,6 +169,7 @@ namespace PLWPF
             bool[] hours = new bool[6];
             DateTime dateTime = new DateTime();
             dateTime = myTest.TestDateAndTime;
+            testHourComboBox.Items.Clear();
             foreach (var item in myRelevantTesters)
             {
                 for (int i = 0; i < 6; i++)
@@ -186,23 +188,24 @@ namespace PLWPF
                         testHourComboBox.Items.Add(string.Format("{0}:00", i + 9));
                     }
             }
-
-
-
-
-
-
-
         }
 
-        private void GearComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+       
+      
+        private void testAddressComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            myTest.Gear = Hebrew2GT(GearComboBox.SelectedValue.ToString());
+            myTest.TestAddress.City = testAddressComboBox.Text.ToString();
         }
 
-        private void testAdressTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            myTest.TestAddress.City = testAdressTextBox.Text.ToString();
+            DateTime newDateTime = DateTime.Parse(testDatePicker.Text);
+            newDateTime.AddHours(testHourComboBox.SelectedIndex + 9);
+            Test newTest = new Test(existTrainee.ID,newDateTime,myTest.TestAddress,myTest.VehicleType,myTest.Gear);
+            Tester newTester = myRelevantTesters.Find(x => bl.FreeTester(x, newDateTime));
+            newTest.TesterId = newTester.ID;
+            newTester.TesterTests.Add(newTest);
+            bl.AddTest(newTest);
         }
     }
 }

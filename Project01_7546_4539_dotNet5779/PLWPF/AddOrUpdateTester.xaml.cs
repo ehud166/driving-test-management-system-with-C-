@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 using BL;
 using BE;
 
@@ -32,6 +33,11 @@ namespace PLWPF
             try
             {
                 InitializeComponent();
+                //tester can't set his own seniority,only manager can
+                this.SeniorityScrollBar.Visibility = Visibility.Hidden;
+                this.SeniorityLabel.Visibility = Visibility.Hidden;
+                this.SeniorityTextBox.Visibility = Visibility.Hidden;
+
                 bl = Bl_imp.GetBl();
                 existTester = newTester;
                 pWindow = parent;
@@ -101,6 +107,40 @@ namespace PLWPF
             SeniorityTextBox.Text = SeniorityScrollBar.Value.ToString();
             SeniorityScrollBar.Minimum = double.Parse(SeniorityTextBox.Text);
 
+        }
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        private void phoneNumbersTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (phoneNumbersTextBox.Text.Length < 7)
+            {
+                phoneNumbersTextBox.Clear();
+            }
+        }
+        private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            bool result = bl.IsValidEmailAddress(EmailTextBox?.Text);
+
+            if (!result)
+            {
+                EmailTextBox.Clear();
+                EmailTextBox.BorderBrush = Brushes.Red;
+            }
+            else
+                EmailTextBox.BorderBrush = Brushes.LightBlue;
+        }
+
+        private void maxTestsForWeekScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            maxTestsForWeekTextBox.Text = maxTestsForWeekScrollBar.Value.ToString();
+        }
+
+        private void maxDistanceScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            maxDistanceTextBox.Text = (maxDistanceScrollBar.Value).ToString();
         }
     }
     

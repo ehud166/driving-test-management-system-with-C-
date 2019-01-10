@@ -64,7 +64,7 @@
                             <Label x:Name="phoneNumbersTextBox"   Style="{StaticResource MyTextStyle}"  MinWidth="10" Margin="0" Width="auto"  ContentStringFormat="-{0}" Content="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                     </StackPanel>
                     <Label Grid.Row="5" Content=":מס' טלפון" Grid.Column="3"  />
-                        <Label x:Name="AddressSuggestionsCBB"   Style="{StaticResource MyTextStyle}" Width="240" Grid.Row="3" Grid.Column="2" />
+                        <Label x:Name="AddressSuggestionsCBB"   Style="{StaticResource MyTextStyle}" Width="240" Grid.Row="3" Grid.Column="2" Content="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                     <Label Grid.Row="3" Content=":כתובת" Grid.Column="3" />
                         <ComboBox x:Name="VehcileTypeComboBox"   Style="{StaticResource MyTextStyle}" Grid.Row="3"  Width="240" ItemsSource="{Binding Source={StaticResource enmVehicle}}" SelectedValue="{Binding LicenseType[0].VehicleType, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
                         <ComboBox.ItemTemplate>
@@ -95,7 +95,6 @@
 
             <TabItem Header="הטסטים שלי">
                 <Grid >
-
                     <DataGrid x:Name="TestsDataGrid"  AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="testResultColumn" FontWeight="Bold" Binding="{Binding TestResult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="תוצאות הטסט" Width="*"/>

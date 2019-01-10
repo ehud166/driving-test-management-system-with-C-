@@ -16,9 +16,9 @@
         <TextBlock x:Name="textBox" Text="תפריט מנהל" />
 
 
-        <Button x:Name="Trainee" Content="תלמיד" Grid.Row="1"/>
-        <Button x:Name="Tester" Content="בוחן" Grid.Row="2" />
-        <Button x:Name="Administrator" Content="רשומות"   Grid.Row="3" />
+        <Button x:Name="Trainee" Content="רשימת התלמידים" Grid.Row="1" Click="Trainee_Click"/>
+        <Button x:Name="Tester" Content="רשימת הבוחנים" Grid.Row="2" />
+        <Button x:Name="Administrator" Content="רשימת הטסטים"   Grid.Row="3" />
 
     </Grid>
 </Window>

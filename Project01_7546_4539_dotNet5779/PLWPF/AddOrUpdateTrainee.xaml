@@ -40,11 +40,11 @@
                 <Label  Grid.Column="3" Content="מספר זהות" />
                 <TextBox x:Name="idTextBox" Grid.Column="2" Text="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                 <Label  Grid.Row="1"   Grid.Column="3" Content=":שם משפחה"/>
-                <TextBox x:Name="lastNameTextBox"  Text="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Grid.Column="2"  />
+                <TextBox x:Name="lastNameTextBox"  Text="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Grid.Column="2"  PreviewTextInput="AlphabeticValidation_OnPreviewTextInput"/>
                 <Label Grid.Row="2"  Grid.Column="3" Content=":שם פרטי"/>
-                <TextBox x:Name="firstNameTextBox" Text="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Grid.Column="2" />
+                <TextBox x:Name="firstNameTextBox" Text="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Grid.Column="2" PreviewTextInput="AlphabeticValidation_OnPreviewTextInput"/>
                 <Label  Grid.Row="3"  Grid.Column="3" Content=":תאריך לידה"/>
-                <DatePicker x:Name="birthdayDatePicker" SelectedDate="{Binding Birthday, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="3" Grid.Column="2"/>
+                <DatePicker x:Name="birthdayDatePicker" SelectedDate="{Binding Birthday, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true  }"  Grid.Row="3" Grid.Column="2"/>
                 <Label Content=":מין" Grid.Row="4" Grid.Column="3"/>
                 <ComboBox x:Name="GenderComboBox" Grid.Row="4" Grid.Column="2" ItemsSource="{Binding Source={StaticResource enmGender}}" SelectedValue="{Binding Gender}" >
                     <ComboBox.ItemTemplate>
@@ -53,8 +53,8 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <ComboBox x:Name="prefixPhoneComboBox"  HorizontalAlignment="Right"  MinWidth="20" Margin="0" Width="auto" Text="{Binding PhoneAreaCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}">
+                <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Height="57" Margin="0,0,0.333,0" Grid.RowSpan="2" VerticalAlignment="Top">
+                    <ComboBox x:Name="prefixPhoneComboBox" SelectedIndex="0"  HorizontalAlignment="Right"  MinWidth="65" Margin="0" Width="auto" Text="{Binding PhoneAreaCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true   ,TargetNullValue=052 }">
                     <ComboBoxItem Content="02"/>
                     <ComboBoxItem Content="03"/>
                     <ComboBoxItem Content="04"/>
@@ -70,31 +70,31 @@
                     <ComboBoxItem Content="059"/>
                     <ComboBoxItem Content="058"/>
                 </ComboBox >
-                    <TextBox x:Name="phoneNumbersTextBox" HorizontalAlignment="Right" MinWidth="110" Margin="0" Width="auto"  MaxLength="7" PreviewTextInput="NumberValidationTextBox" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }"/>
+                    <TextBox x:Name="phoneNumbersTextBox"  HorizontalAlignment="Right" MinWidth="110" Margin="0" Width="auto"  MaxLength="7" PreviewTextInput="NumberValidationTextBox" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }" LostFocus="phoneNumbersTextBox_LostFocus"/>
                 </StackPanel>
                 <Label Grid.Row="6" Content=":מס' טלפון" Grid.Column="3" />
-                <ComboBox x:Name="AddressSuggestionsCBB" FontSize="20" MinWidth="170" Width="auto" IsEditable="True" Grid.Column="2" Grid.Row="5" ItemsSource="{Binding Address.city, Mode=TwoWay}" />
+                <ComboBox x:Name="AddressSuggestionsCBB" FontSize="20" MinWidth="170" Width="auto" IsEditable="True" Grid.Column="2" Grid.Row="5" Text="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                 <Label  Content=":כתובת"  Grid.Column="3" Grid.Row="5" />
 
-                <ComboBox x:Name="VehcileTypeComboBox" Grid.Row="1"  ItemsSource="{Binding Source={StaticResource enmVehicle}}"   SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
+                <ComboBox x:Name="VehcileTypeComboBox" Grid.Row="4"  ItemsSource="{Binding Source={StaticResource enmVehicle} }"   SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Label  Grid.Row="1" Content=":סוג הרכב" Grid.Column="1" />
-                <Label  Grid.Row="2" Grid.Column="1" Content=":גיר"/>
-                <Label  Grid.Row="3" Grid.Column="1" Content=":בית הספר לנהיגה" />
-                <Label  Grid.Row="4" Grid.Column="1" Content=":מורה הנהיגה" />
+                <Label  x:Name="VehicleLabel" Grid.Row="4" Content=":סוג הרכב" Grid.Column="1" />
+                <Label  x:Name="GearLabel"  Grid.Row="5" Grid.Column="1" Content=":גיר"/>
+                <Label  Grid.Row="0" Grid.Column="1" Content=":בית הספר לנהיגה" />
+                <Label  Grid.Row="1" Grid.Column="1" Content=":מורה הנהיגה" />
                 <Label  Grid.Row="7" Grid.Column="3" Content=":דואר אלקטרוני "/>
                 <Label  Grid.Row="7" Grid.Column="1" Content=  "מספר השיעורים"/>
                 <Label  Grid.Row="5" Grid.Column="1" Content=  "סיסמא"/>
                 <Label  Grid.Row="6" Grid.Column="1" Content=  "אימות סיסמא"/>
-                <PasswordBox x:Name="passwordBox" Visibility="Visible" Grid.Row="5"  xaml:SecurePassword.Password="{Binding Password}" />
-                <PasswordBox x:Name="validationPasswordBox"  Grid.Row="6"  xaml:SecurePassword.Password="{Binding Password}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
+                <PasswordBox x:Name="passwordBox" Visibility="Visible" Grid.Row="5"  xaml:SecurePassword.Password="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+                <PasswordBox x:Name="validationPasswordBox"  Grid.Row="6"  xaml:SecurePassword.Password="{Binding Password, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
 
-                <ComboBox x:Name="GearComboBox"  Grid.Row="2"  ItemsSource="{Binding Source={StaticResource enmGear}}"  SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
+                <ComboBox x:Name="GearComboBox"  Grid.Row="5"  ItemsSource="{Binding Source={StaticResource enmGear}}"  SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
@@ -102,7 +102,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <StackPanel Grid.Row="7"   Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel x:Name="LessonNumStackPanel" Grid.Row="6"   Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBox x:Name="LessonNumTextBox" IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"/>
                     <ScrollBar x:Name="LessonNumScrollBar"  Minimum="{Binding LessonNumTextBox.text,Mode=TwoWay}" HorizontalAlignment="Right"  ValueChanged="LessonNumScrollBar_OnValueChanged" RenderTransformOrigin="0.5,0.5" >
                         <ScrollBar.RenderTransform>
@@ -115,9 +115,9 @@
                         </ScrollBar.RenderTransform>
                     </ScrollBar>
                 </StackPanel>
-                <TextBox x:Name="SchoolTextBox"  Text="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" />
-                <TextBox x:Name="TeacherNameTextBox" Text="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4"/>
-                <TextBox x:Name="EmailTextBox" MinWidth="170" Width="auto" SelectedText="user@global.com" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="7" Grid.Column="2" LostFocus="EmailTextBox_OnLostFocus"/>
+                <TextBox x:Name="SchoolTextBox"  Text="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" />
+                <TextBox x:Name="TeacherNameTextBox" Text="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1"/>
+                <TextBox x:Name="EmailTextBox"  MinWidth="170" Width="auto" SelectedText="user@global.com" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true ,TargetNullValue=user@global.com }"  Grid.Row="7" Grid.Column="2" LostFocus="EmailTextBox_OnLostFocus"/>
 
             </Grid>
         </Grid>
@@ -146,18 +146,18 @@
                         <DataTrigger Binding="{Binding ElementName=AddressSuggestionsCBB, Path=Text.Length}" Value="0">
                             <Setter Property="Button.IsEnabled" Value="False"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=VehcileTypeComboBox, Path=Text.Length}" Value="0">
+                        <!--<DataTrigger Binding="{Binding ElementName=VehcileTypeComboBox, Path=Text.Length}" Value="0">
                             <Setter Property="Button.IsEnabled" Value="False"/>
-                        </DataTrigger>
+                        </DataTrigger>-->
                         <DataTrigger Binding="{Binding ElementName=SchoolTextBox, Path=Text.Length}" Value="0">
                             <Setter Property="Button.IsEnabled" Value="False"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=TeacherNameTextBox, Path=Text.Length}" Value="0">
                             <Setter Property="Button.IsEnabled" Value="False"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=LessonNumTextBox, Path=Text.Length}" Value="0">
+                        <!--<DataTrigger Binding="{Binding ElementName=LessonNumTextBox, Path=Text.Length}" Value="0">
                             <Setter Property="Button.IsEnabled" Value="False"/>
-                        </DataTrigger>
+                        </DataTrigger>-->
                     </Style.Triggers>
                 </Style>
             </Button.Style>

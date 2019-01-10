@@ -609,10 +609,17 @@ namespace BL
 
         public bool IsValidEmailAddress(string s)
         {
-            Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
-            return regex.IsMatch(s);
+            return Regex.IsMatch(s, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
         }
 
+        public bool IsValidNumber(string s)
+        {
+            return Regex.IsMatch(s, "[^0-9]+");
+        }
+        public bool IsValidAlphabetic(string s)
+        {
+            return Regex.IsMatch(s, "^[a-zA-Z ]");
+        }
 
 
         #region delegates

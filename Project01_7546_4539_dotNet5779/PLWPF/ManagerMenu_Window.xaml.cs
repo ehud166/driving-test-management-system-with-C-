@@ -39,5 +39,11 @@ namespace PLWPF
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Trainee_Click(object sender, RoutedEventArgs e)
+        {
+            ManagerControler_window managerControler_Window = new ManagerControler_window(this);
+            managerControler_Window.ShowDialog();
+        }
     }
 }

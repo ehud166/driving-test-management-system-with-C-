@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
          xmlns:local1="clr-namespace:BE;assembly=BE" 
          WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:PLWPF"
@@ -12,7 +13,7 @@
         <local1:EnumDescriptionConverter x:Key="descConverter"/>
        
     </Window.Resources>
-    <Grid Background="FloralWhite">
+    <Grid>
         <Grid.RowDefinitions >
             <RowDefinition/>
             <RowDefinition/>
@@ -24,7 +25,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="יציאה" Margin="20,5,5,5" Click="Exit_clickButton"/>
+            <Button Content="חזור" Margin="20,5,5,5" Click="Back_clickButton"/>
             <Button Content="תפריט ראשי" Grid.Column="1" Margin="5" Click="BackToMainWindow_clickButton"/>
 
         </Grid>
@@ -41,25 +42,25 @@
                 <RowDefinition/>
 
             </Grid.RowDefinitions >
-            <TextBox x:Name="testAdressTextBox" Grid.Row="2" TextChanged="testAdressTextBox_TextChanged">
-                <TextBox.Resources>
+            <ComboBox x:Name="testAddressComboBox" Grid.Row="2" IsEditable="True" Text="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="testAddressComboBox_OnSelectionChanged">
+                <ComboBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <DatePicker x:Name="testDatePicker" Grid.Row="3" CalendarOpened="DatePickerOpened" SelectedDateChanged="testDatePicker_selectedChanged" />
+            <DatePicker x:Name="testDatePicker" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="3" Text="בחר תאריך" CalendarOpened="DatePickerOpened" SelectedDateChanged="testDatePicker_selectedChanged" />
             <ComboBox x:Name="testHourComboBox" Grid.Row="4"/>
 
 
-            <ComboBox x:Name="VehicleTypeComboBox" Width="250"  SelectionChanged="VehicleTypeComboBox_OnSelectionChanged">
+            <ComboBox x:Name="VehicleTypeComboBox" MinWidth="170" Width="auto"  SelectionChanged="VehicleTypeComboBox_OnSelectionChanged">
                 <!--<ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource descConverter}}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>-->
             </ComboBox>
-            <ComboBox x:Name="GearComboBox" Grid.Row="1"   IsEnabled="False" SelectionChanged="GearComboBox_SelectionChanged" >
+            <ComboBox x:Name="GearComboBox" Grid.Row="1"   IsEnabled="False" >
                 <!--<ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
@@ -74,6 +75,6 @@
 
         </Grid>
         <Label Content="הרשם לטסט" Grid.Row="3" HorizontalAlignment="Center"/>
-        <Button Content="אישור" Grid.Row="2" Margin="15" FontSize="36" FontWeight="Heavy"/>
+        <Button Content="אישור" Grid.Row="2" Margin="15" FontSize="36" FontWeight="Heavy" Click="Button_Click"/>
     </Grid>
 </Window>

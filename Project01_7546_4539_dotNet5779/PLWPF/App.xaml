@@ -213,6 +213,7 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="BorderThickness" Value="2"/>
             
+            
         </Style>
 
         <Style TargetType="DatePicker">
@@ -226,6 +227,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="BorderThickness" Value="2"/>
+            
         </Style>
 
         <Style TargetType="Label">
@@ -262,8 +264,7 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="FlowDirection" Value="RightToLeft"/>
-
-
         </Style>
+        
     </Application.Resources>
 </Application>
