@@ -148,5 +148,18 @@ namespace PLWPF
             else
             EmailTextBox.BorderBrush = Brushes.LightBlue;
         }
+
+        private void phoneNumbersTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (phoneNumbersTextBox.Text.Length < 7)
+                phoneNumbersTextBox.Clear();
+        }
+        private void AlphabeticValidation_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!bl.IsValidAlphabetic(e?.Text))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

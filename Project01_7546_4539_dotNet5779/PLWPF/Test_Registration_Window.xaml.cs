@@ -65,7 +65,6 @@ namespace PLWPF
         private void Back_clickButton(object sender, RoutedEventArgs e)
         {
             this.Close();
-            
         }
 
         private void Test_Registar_Window_OnLoaded(object sender, RoutedEventArgs e)

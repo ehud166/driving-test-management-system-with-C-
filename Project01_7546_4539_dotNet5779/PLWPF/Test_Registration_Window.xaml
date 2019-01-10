@@ -47,8 +47,8 @@
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
-                </TextBox.Resources>
-            </TextBox>
+                    </ComboBox.Resources>
+            </ComboBox>
             <DatePicker x:Name="testDatePicker" Grid.Row="3" CalendarOpened="DatePickerOpened" SelectedDateChanged="testDatePicker_selectedChanged" />
             <ComboBox x:Name="testHourComboBox" Grid.Row="4"/>
 
