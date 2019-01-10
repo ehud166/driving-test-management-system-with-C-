@@ -29,11 +29,13 @@ namespace BE
         public Trainee() : base()
         {
             LicenseTypeInitialize();
+            Address = new Address();
         }
 
         public Trainee(string id) : base(id)
         {
             LicenseTypeInitialize();
+            Address = new Address();
         }
 
         private void LicenseTypeInitialize()

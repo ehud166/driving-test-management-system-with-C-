@@ -77,7 +77,6 @@ namespace PLWPF
                 }
 
                 this.Close();
-
             }
             catch (Exception exception)
             {

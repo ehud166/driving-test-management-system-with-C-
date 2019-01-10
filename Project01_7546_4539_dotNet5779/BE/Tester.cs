@@ -36,12 +36,12 @@ namespace BE
 
         public Tester()
         {
-
+            Address = new Address();
         }
 
         public Tester(string id) : base(id)
         {
-
+            Address = new Address();
         }
 
         //properties
