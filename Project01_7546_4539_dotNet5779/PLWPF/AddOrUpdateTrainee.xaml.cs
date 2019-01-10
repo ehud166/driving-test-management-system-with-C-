@@ -134,10 +134,8 @@ namespace PLWPF
 
         private void NumberValidationTextBox(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            if (!bl.IsValidNumber(e?.Text))
-            {
-                e.Handled = true;
-            }
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
@@ -148,23 +146,7 @@ namespace PLWPF
                 EmailTextBox.BorderBrush = Brushes.Red;
             }
             else
-                EmailTextBox.BorderBrush = Brushes.LightBlue;
-        }
-
-        private void phoneNumbersTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (phoneNumbersTextBox.Text.Length < 7)
-            {
-                phoneNumbersTextBox.Clear();
-            }
-        }
-
-        private void AlphabeticValidation_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (!bl.IsValidAlphabetic(e?.Text))
-            {
-                e.Handled = true;
-            }
+            EmailTextBox.BorderBrush = Brushes.LightBlue;
         }
     }
 }

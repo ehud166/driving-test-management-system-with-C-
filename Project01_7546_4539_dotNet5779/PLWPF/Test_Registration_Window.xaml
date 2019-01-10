@@ -49,7 +49,7 @@
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <DatePicker x:Name="testDatePicker" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="3" Text="בחר תאריך" CalendarOpened="DatePickerOpened" SelectedDateChanged="testDatePicker_selectedChanged" />
+            <DatePicker x:Name="testDatePicker" Grid.Row="3" CalendarOpened="DatePickerOpened" SelectedDateChanged="testDatePicker_selectedChanged" />
             <ComboBox x:Name="testHourComboBox" Grid.Row="4"/>
 
 
