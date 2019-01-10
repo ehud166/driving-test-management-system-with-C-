@@ -199,10 +199,10 @@ namespace PLWPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DateTime newDateTime = DateTime.Parse(testDatePicker.Text);
-            newDateTime.AddHours(testHourComboBox.SelectedIndex + 9);
+            DateTime newDateTime = DateTime.Parse(testDatePicker.Text).AddHours(testHourComboBox.SelectedIndex + 9);
             Test newTest = new Test(existTrainee.ID,newDateTime,myTest.TestAddress,myTest.VehicleType,myTest.Gear);
             Tester newTester = myRelevantTesters.Find(x => bl.FreeTester(x, newDateTime));
+            MessageBox.Show(newTester.ToString());
             newTest.TesterId = newTester.ID;
             newTester.TesterTests.Add(newTest);
             bl.AddTest(newTest);

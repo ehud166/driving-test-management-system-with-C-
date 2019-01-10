@@ -16,6 +16,13 @@ namespace BE
             City = city;
             TemporaryCoordinate = r.Next(100);
         }
+        public Address()
+        {
+            StreetName = "";
+            BuildingNumber = 0;
+            City = "";
+            TemporaryCoordinate = r.Next(100);
+        }
 
         //properties
         public string StreetName { get; set; }
