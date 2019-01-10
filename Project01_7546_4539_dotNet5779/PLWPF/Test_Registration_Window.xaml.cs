@@ -154,8 +154,9 @@ namespace PLWPF
 
         private void DatePickerOpened(object sender, RoutedEventArgs e)
         {
+
+            testDatePicker.SelectedDate=null;
             myTest.Gear = Hebrew2GT(GearComboBox.SelectedValue.ToString());
-            testDatePicker.BlackoutDates.Clear();
             testDatePicker.DisplayDateStart = DateTime.Today;
             testDatePicker.DisplayDateEnd = DateTime.Today.AddDays(32);
             setBlackOutDates(DateTime.Today, DateTime.Today.AddDays(32));
