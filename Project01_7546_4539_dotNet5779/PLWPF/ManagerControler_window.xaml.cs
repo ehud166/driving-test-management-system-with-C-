@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -33,6 +34,12 @@ namespace PLWPF
                 InitializeComponent();
                 bl = Bl_imp.GetBl();
                 this.TestsDataGrid.ItemsSource = bl.GetTestsList();
+                this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
+                this.TestersDataGrid.ItemsSource = bl.GetTestersList();
+                // this.TraineesDataGrid.DataContextChanged += 
+                TraineeEditUserControl.TraineeDeleted += TraineeEditUserControl_TraineeDeleted;
+                TesterEditUserControl.TesterDeleted += TesterEditUserControl_TraineeDeleted;
+                TraineeEditUserControl.TraineeEdited += TraineeEditUserControl_TraineeEdited;
             }
             catch (Exception exception)
             {
@@ -41,16 +48,58 @@ namespace PLWPF
 
         }
 
+        private void TraineeEditUserControl_TraineeDeleted(object sender, EventArgs e)
+        {
+            this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
+        }
+        private void TesterEditUserControl_TraineeDeleted(object sender, EventArgs e)
+        {
+            this.TestersDataGrid.ItemsSource = bl.GetTestersList();
+        }
+        private void TraineeEditUserControl_TraineeEdited(object sender, EventArgs e)
+        {
+            this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
+
+        }
+
+
         private void TestsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DataGrid gd = (DataGrid)sender;
-            DataRowView row_selected = gd.SelectedItems as DataRowView;
-            if (row_selected != null)
-            {
-                Trainee trainee = new Trainee();
-                MessageBox.Show(row_selected["TraineeId"].ToString());
-                trainee= bl.GetTraineeById(row_selected["TraineeId"].ToString());
+            //this.TesterEditUserControl.Visibility = Visibility.Collapsed;
+            //this.TraineeEditUserControl.Visibility = Visibility.Collapsed;
+            //this.TestEditUserControl.Visibility = Visibility.Visible;
+            Test test = TestsDataGrid.SelectedItem as Test;
+            this.TestEditUserControl.DataContext = test;
+
+
+        }
+
+        private void TraineesDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           // this.TestEditUserControl.Visibility = Visibility.Collapsed;
+           //this.TesterEditUserControl.Visibility = Visibility.Collapsed;
+           // this.TraineeEditUserControl.Visibility = Visibility.Visible;
+            Trainee trainee = TraineesDataGrid.SelectedItem as Trainee;
+            this.TraineeEditUserControl.DataContext = trainee;
+        }
+
+       
+
+        private void TestersDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //this.TraineeEditUserControl.Visibility = Visibility.Collapsed;
+            //this.TestEditUserControl.Visibility = Visibility.Collapsed;
+            //this.TesterEditUserControl.Visibility = Visibility.Visible;
+            Tester tester = TestersDataGrid.SelectedItem as Tester;
+            if (tester != null) { 
+           this.TesterEditUserControl.DataContext = tester;
             }
         }
+
+     
     }
+
+
+
 }
+

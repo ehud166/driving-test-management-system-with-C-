@@ -91,6 +91,15 @@
     <Compile Include="ScheduleUserControl.xaml.cs">
       <DependentUpon>ScheduleUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestEditUserControl.xaml.cs">
+      <DependentUpon>TestEditUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TesterEditUserControl.xaml.cs">
+      <DependentUpon>TesterEditUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TraineeEditUserControl.xaml.cs">
+      <DependentUpon>TraineeEditUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TesterMenu.xaml.cs">
       <DependentUpon>TesterMenu.xaml</DependentUpon>
     </Compile>
@@ -136,6 +145,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScheduleUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestEditUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TesterEditUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TraineeEditUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

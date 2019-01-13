@@ -4,35 +4,80 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
+        xmlns:local1="clr-namespace:BE;assembly=BE"
+    
+    
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.ManagerControler_window"
         mc:Ignorable="d"
-        Title="ManagerControler_window" Height="450" Width="800">
+    
+        Title="ManagerControler_window" WindowState="Maximized">
+    <Grid>
 
-    <TabControl x:Name="tabControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="{Binding Mode=OneWay}">
+        <TabControl x:Name="tabControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="{Binding Mode=OneWay}">
 
-        <TabItem Header="רשימת התלמידים"/>
-
-        <TabItem Header="רשימת הבוחנים"/>
-
-
-        <TabItem Header="רשימת הטסטים">
+            <TabItem x:Name="traineeHeader" Header="רשימת התלמידים">
                 <Grid >
-                <DataGrid x:Name="TestsDataGrid"  AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="TestsDataGrid_SelectionChanged" EnableRowVirtualization="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="TraineesDataGrid"   AutoGenerateColumns="False" IsReadOnly="True" EnableRowVirtualization="True" SelectionChanged="TraineesDataGrid_SelectionChanged">
                         <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="testResultColumn" FontWeight="Bold" Binding="{Binding TestResult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="תוצאות הטסט" Width="*"/>
-                            <DataGridTextColumn x:Name="gearColumn" Width="*" Binding="{Binding Gear}" Header="גיר" />
-                            <DataGridTextColumn x:Name="vehicleTypeColumn" Binding="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="סוג הרכב" Width="*"/>
-                            <DataGridTextColumn x:Name="testDateAndTimeColumn"  Header="תאריך ושעה" Width="*" Binding="{Binding TestDateAndTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            <DataGridTextColumn x:Name="testerId" Header="ת.ז. בוחן"  Width="*" Binding="{Binding TesterId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            <DataGridTextColumn x:Name="traineeId" Header="ת.ז. תלמיד"  Width="*" Binding="{Binding TraineeId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            <DataGridTextColumn x:Name="iDColumn" Width="*" Binding="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="מספר מבחן" />
+                            <DataGridTextColumn x:Name="firstNameColumn"  Header="שם פרטי" Width="*" Binding="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <DataGridTextColumn x:Name="lastNameColumn" Header="שם משפחה" Binding="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="*"/>
+                            <DataGridTextColumn x:Name="iDColumn" Width="*" Binding="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header=".ת.ז" />
                         </DataGrid.Columns>
                     </DataGrid>
+                    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden"  IsEnabled="True"
+                VerticalScrollBarVisibility="Hidden">
+                        <local:TraineeEditUserControl x:Name="TraineeEditUserControl"/>
+                    </ScrollViewer>
                 </Grid>
-           </TabItem>
+            </TabItem>
+
+            <TabItem Header="רשימת הבוחנים">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="TestersDataGrid"  AutoGenerateColumns="False" IsReadOnly="True" EnableRowVirtualization="True" SelectionChanged="TestersDataGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="testerfirstNameColumn"  Header="שם פרטי" Width="*" Binding="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <DataGridTextColumn x:Name="testerlastNameColumn" Header="שם משפחה" Binding="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="*"/>
+                            <DataGridTextColumn x:Name="testeriDColumn" Width="*" Binding="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header=".ת.ז" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden" 
+                VerticalScrollBarVisibility="Hidden">
+                        <local:TesterEditUserControl x:Name="TesterEditUserControl" />
+
+                    </ScrollViewer>
+
+                </Grid>
+            </TabItem>
 
 
-
-
-    </TabControl>
+            <TabItem Header="רשימת הטסטים">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="TestsDataGrid"  AutoGenerateColumns="False" SelectionChanged="TestsDataGrid_SelectionChanged" EnableRowVirtualization="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="testDateAndTimeColumn"  Header="תאריך ושעה" Width="2*" Binding="{Binding TestDateAndTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <DataGridTextColumn x:Name="testerId" Header="ת.ז. בוחן"  Width="*" Binding="{Binding TesterId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <DataGridTextColumn x:Name="traineeId" Header="ת.ז. תלמיד"  Width="*" Binding="{Binding TraineeId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <DataGridTextColumn x:Name="traineeiDColumn" Width="*" Binding="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="מ. מבחן" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden" 
+                VerticalScrollBarVisibility="Hidden">
+                        <local:TestEditUserControl x:Name="TestEditUserControl"/>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </Window>

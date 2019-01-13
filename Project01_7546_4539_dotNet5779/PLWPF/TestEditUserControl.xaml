@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="PLWPF.TestEditUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PLWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button x:Name="UpdateTest_Button" Content="עדכן תוצאות טסט" Grid.Row="1"/>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="מספר מבחן" Grid.Column="3"/>
+            <Label Content="ת.ז. בוחן"  Grid.Column="3" Grid.Row="1"/>
+            <Label Content="ת.ז. תלמיד"  Grid.Column="3"  Grid.Row="2"/>
+            <Label Content="סוג הרכב"  Grid.Column="3"  Grid.Row="3"/>
+            <Label Content="שמירת מרחק"  Grid.Column="3"  Grid.Row="4"/>
+            <Label Content="חנייה ברוורס"  Grid.Column="1"/>
+            <Label Content="מראות"  Grid.Column="1"  Grid.Row="1"/>
+            <Label Content="איתות"  Grid.Column="1"  Grid.Row="2"/>
+            <Label Content="השתלבות"  Grid.Column="1"  Grid.Row="3"/>
+            <Label Content="ציון הטסט"  Grid.Column="1"  Grid.Row="4"/>
+            <ToggleButton x:Name="testDistance" Grid.Column="2" Grid.Row="4" Content="{Binding TestDistance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <ToggleButton x:Name="testReverseParking"  Content="{Binding TestReverseParking, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <ToggleButton x:Name="testMirrors" Grid.Row="1"  Content="{Binding TestMirrors, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <ToggleButton x:Name="testVinker" Grid.Row="2"  Content="{Binding TestVinker, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <ToggleButton x:Name="testMerge" Grid.Row="3"  Content="{Binding TestMerge, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <ToggleButton x:Name="testResult"  Grid.Row="4"  Content="{Binding TestResult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <Label x:Name="iD" Grid.Column="2" Content="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <Label x:Name="testerId" Grid.Column="2" Grid.Row="1"  Content="{Binding TesterId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <Label x:Name="traineeId" Grid.Column="2" Grid.Row="2"  Content="{Binding TraineeId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <Label x:Name="vehicleType" Grid.Column="2" Grid.Row="3" Content="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <!--ID = iD;
+            TesterId = testerId;
+            TraineeId = traineeId;
+            TestDateAndTime = testDateAndTime;
+            TestAddress = testAddress;
+            VehicleType = vehicleType;
+            Gear = gear;
+            TestDistance = testDistance;
+            TestReverseParking = testReverseParking;
+            TestMirrors = testMirrors;
+            TestVinker = testVinker;
+            TestMerge = testMerge;
+            TestResult = testResult;
+            TestComment = testComment;-->
+        </Grid>
+    </Grid>
+</UserControl>
