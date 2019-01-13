@@ -14,7 +14,14 @@ namespace BE
             StreetName = streetName;
             BuildingNumber = buildingNumber;
             City = city;
-            TemporaryCoordinate = r.Next(100);
+            if (temporaryCoordinate == 0)
+            {
+                TemporaryCoordinate = r.Next(100);
+            }
+            else
+            {
+                TemporaryCoordinate = temporaryCoordinate;
+            }
         }
         public Address()
         {

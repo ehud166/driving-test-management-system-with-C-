@@ -103,7 +103,7 @@
                 </ComboBox>
 
                 <StackPanel x:Name="LessonNumStackPanel" Grid.Row="6"   Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBox x:Name="LessonNumTextBox"  IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"/>
+                    <TextBox x:Name="LessonNumTextBox"  IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" Text="0" TextChanged="LessonNumTextBox_OnTextChanged"/>
                     <ScrollBar x:Name="LessonNumScrollBar"  Minimum="{Binding LessonNumTextBox.text,Mode=TwoWay}" HorizontalAlignment="Right"  ValueChanged="LessonNumScrollBar_OnValueChanged" RenderTransformOrigin="0.5,0.5" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>

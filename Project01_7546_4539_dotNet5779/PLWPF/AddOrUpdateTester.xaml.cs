@@ -32,16 +32,18 @@ namespace PLWPF
         {
             try
             {
+                existTester = newTester;
+                pWindow = parent;
+                this.DataContext = existTester;
                 InitializeComponent();
                 //tester can't set his own seniority,only manager can
                 this.SeniorityScrollBar.Visibility = Visibility.Hidden;
                 this.SeniorityLabel.Visibility = Visibility.Hidden;
                 this.SeniorityTextBox.Visibility = Visibility.Hidden;
 
+
                 bl = Bl_imp.GetBl();
-                existTester = newTester;
-                pWindow = parent;
-                this.DataContext = existTester;
+                mySchedule.Build = existTester.Schedule;
                 idTextBox.IsEnabled = false;
                 SeniorityScrollBar.Maximum = 50;
                 SeniorityScrollBar.SmallChange = 1;

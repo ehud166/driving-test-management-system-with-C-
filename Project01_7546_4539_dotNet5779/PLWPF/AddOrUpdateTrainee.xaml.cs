@@ -28,12 +28,12 @@ namespace PLWPF
                 InitializeComponent();
 
                 // trainee can't update this details, only manager can
-                this.VehicleLabel.Visibility = Visibility.Hidden;
-                this.VehcileTypeComboBox.Visibility = Visibility.Hidden;
-                this.LessonNumLabel.Visibility = Visibility.Hidden;
-                this.LessonNumStackPanel.Visibility = Visibility.Hidden;
-                this.GearLabel.Visibility = Visibility.Hidden;
-                this.GearComboBox.Visibility = Visibility.Hidden;
+                //this.VehicleLabel.Visibility = Visibility.Hidden;
+                //this.VehcileTypeComboBox.Visibility = Visibility.Hidden;
+                //this.LessonNumLabel.Visibility = Visibility.Hidden;
+                //this.LessonNumStackPanel.Visibility = Visibility.Hidden;
+                //this.GearLabel.Visibility = Visibility.Hidden;
+                //this.GearComboBox.Visibility = Visibility.Hidden;
 
 
 
@@ -66,9 +66,12 @@ namespace PLWPF
         {
             try
             {
-                some.LessonNum = int.Parse(LessonNumTextBox.Text);
-                existTrainee.LicenseType.Find(x => x.VehicleType == some.VehicleType && x.Gear == some.Gear).LessonNum =
-                    some.LessonNum;
+                if (LessonNumTextBox.Text != "0")
+                {
+                    existTrainee.LicenseType.Find(x => x.VehicleType == some?.VehicleType && x.Gear == some?.Gear).LessonNum =
+                   some.LessonNum;
+                }
+               
                 if (exist)
                 {
                     bl.UpdateTrainee(existTrainee);
@@ -160,6 +163,11 @@ namespace PLWPF
             {
                 e.Handled = true;
             }
+        }
+
+        private void LessonNumTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            some.LessonNum = int.Parse(LessonNumTextBox.Text);
         }
     }
 }

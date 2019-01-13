@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static BE.Enums;
@@ -18,6 +19,7 @@ namespace BE
             TestAddress = testAddress;
             VehicleType = vehicleType;
             Gear = gear;
+
             TestDistance = testDistance;
             TestReverseParking = testReverseParking;
             TestMirrors = testMirrors;
@@ -49,11 +51,6 @@ namespace BE
         public string TestComment { get; set; }
 
         //ToString
-        //public override string ToString()
-        //{
-        //    return this.ToStringProperty();
-        //}
-
         public override string ToString()
         {
             return string.Format("   {0}: {1}\n   {2}: {3}\n   {4}: {5}\n   {6}: {7}\n   {8}: {9}\n   {10}: {11}\n   {12}: {13}\n   {14}: {15}\n   {16}: {17}\n   {18}: {19}\n   {20}: {21}\n   {22}: {23}\n   {24}: {25}\n   {26}: {27}\n",
@@ -64,7 +61,13 @@ namespace BE
          "test merge",  TestMerge.ToString(), "test result",  TestResult.ToString(), "test comment",  TestComment.ToString());
         }
 
-
+        public  bool Equals(Test a)
+        {
+            return (this.VehicleType == a.VehicleType && this.TestAddress.StreetName == a.TestAddress.StreetName &&
+                    this.TraineeId == a.TraineeId && this.Gear == a.Gear && this.ID == a.ID &&
+                    this.TestDateAndTime == a.TestDateAndTime && this.TesterId == TesterId);
+        }
+        
 
 
 
