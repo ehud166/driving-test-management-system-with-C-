@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -37,6 +38,18 @@ namespace PLWPF
             {
                 MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void testDistance_Checked(object sender, RoutedEventArgs e)
+        {
+            var x = this.DataContext as Test;
+            x.TestDistance = true;
+        }
+
+        private void testDistance_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var x = this.DataContext as Test;
+            x.TestDistance = false;
         }
     }
 }

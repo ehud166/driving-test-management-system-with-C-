@@ -1,0 +1,26 @@
+﻿<Window x:Class="PLWPF.UpdateTest_window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLWPF"
+        mc:Ignorable="d"
+        Title="UpdateTest_window" Height="450" Width="800" WindowState="Maximized" Closing="Window_Closing">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="TestsDataGrid"  AutoGenerateColumns="False" SelectionChanged="TestsDataGrid_SelectionChanged" EnableRowVirtualization="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="testDateAndTimeColumn"  Header="תאריך ושעה" Width="2*" Binding="{Binding TestDateAndTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <DataGridTextColumn x:Name="traineeId" Header="ת.ז. תלמיד"  Width="*" Binding="{Binding TraineeId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <DataGridTextColumn x:Name="traineeiDColumn" Width="*" Binding="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="מ. מבחן" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden" 
+                VerticalScrollBarVisibility="Hidden">
+            <local:TestEditUserControl x:Name="TestEditUserControl"/>
+        </ScrollViewer>
+    </Grid>
+</Window>

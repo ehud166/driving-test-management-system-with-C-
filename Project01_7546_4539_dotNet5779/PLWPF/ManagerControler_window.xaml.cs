@@ -38,7 +38,6 @@ namespace PLWPF
                 this.TestsDataGrid.ItemsSource = bl.GetTestsList();
                 this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
                 this.TestersDataGrid.ItemsSource = bl.GetTestersList();
-                // this.TraineesDataGrid.DataContextChanged += 
                 TraineeEditUserControl.TraineeDeleted += TraineeEditUserControl_TraineeDeleted;
                 TesterEditUserControl.TesterDeleted += TesterEditUserControl_TraineeDeleted;
                 TraineeEditUserControl.TraineeEdited += TraineeEditUserControl_TraineeEdited;
@@ -67,9 +66,7 @@ namespace PLWPF
 
         private void TestsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //this.TesterEditUserControl.Visibility = Visibility.Collapsed;
-            //this.TraineeEditUserControl.Visibility = Visibility.Collapsed;
-            //this.TestEditUserControl.Visibility = Visibility.Visible;
+         
             Test test = TestsDataGrid.SelectedItem as Test;
             this.TestEditUserControl.DataContext = test;
 
@@ -78,9 +75,6 @@ namespace PLWPF
 
         private void TraineesDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           // this.TestEditUserControl.Visibility = Visibility.Collapsed;
-           //this.TesterEditUserControl.Visibility = Visibility.Collapsed;
-           // this.TraineeEditUserControl.Visibility = Visibility.Visible;
             Trainee trainee = TraineesDataGrid.SelectedItem as Trainee;
             this.TraineeEditUserControl.DataContext = trainee;
         }
@@ -89,9 +83,7 @@ namespace PLWPF
 
         private void TestersDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //this.TraineeEditUserControl.Visibility = Visibility.Collapsed;
-            //this.TestEditUserControl.Visibility = Visibility.Collapsed;
-            //this.TesterEditUserControl.Visibility = Visibility.Visible;
+         
             Tester tester = TestersDataGrid.SelectedItem as Tester;
             if (tester != null) { 
            this.TesterEditUserControl.DataContext = tester;
@@ -110,6 +102,15 @@ namespace PLWPF
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        //private void (object sender, SelectionChangedEventArgs e)
+        //{
+        //    foreach (var courentKey in bl.GroupTestersByVehicle())
+        //    {
+        //        grouping.Items.Add(courentKey.Key.ToString());
+              
+        //    }
+        //}
     }
 
 

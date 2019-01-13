@@ -94,5 +94,34 @@ namespace PLWPF
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Hide();
+                UpdateTest_window updateTest_Window = new UpdateTest_window(this, existTester);
+                updateTest_Window.ShowDialog();
+                //this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.RemoveTester(existTester.ID);
+                MessageBox.Show("הוסרת מהמערכת בהצלחה");
+                this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

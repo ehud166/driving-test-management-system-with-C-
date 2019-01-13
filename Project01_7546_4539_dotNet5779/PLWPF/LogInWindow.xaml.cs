@@ -64,6 +64,7 @@ namespace PLWPF
                             else
                             {
                                 MessageBox.Show("!!!אין לך הרשאת מנהל");
+                                this.Close();
                             }
                             break;
                         case "tester":

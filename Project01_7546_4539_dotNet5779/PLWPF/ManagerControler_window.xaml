@@ -75,6 +75,13 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
+            <!--<TabItem>
+                <Grid>
+                    <ComboBox x:Name="grouping" SelectionChanged="grouping_SelectionChanged"/>
+
+
+                </Grid>
+            </TabItem>-->
         </TabControl>
     </Grid>
 </Window>

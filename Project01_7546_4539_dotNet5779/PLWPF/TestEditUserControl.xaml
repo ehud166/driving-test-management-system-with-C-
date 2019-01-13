@@ -37,7 +37,7 @@
             <Label Content="איתות"  Grid.Column="1"  Grid.Row="2"/>
             <Label Content="השתלבות"  Grid.Column="1"  Grid.Row="3"/>
             <Label Content="ציון הטסט"  Grid.Column="1"  Grid.Row="4"/>
-            <ToggleButton x:Name="testDistance" Grid.Column="2" Grid.Row="4" Content="{Binding TestDistance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <ToggleButton x:Name="testDistance" Grid.Column="2" Grid.Row="4" Content="{Binding TestDistance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" ToggleButton.Unchecked="testDistance_Unchecked" ToggleButton.Checked="testDistance_Checked"/>
             <ToggleButton x:Name="testReverseParking"  Content="{Binding TestReverseParking, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
             <ToggleButton x:Name="testMirrors" Grid.Row="1"  Content="{Binding TestMirrors, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
             <ToggleButton x:Name="testVinker" Grid.Row="2"  Content="{Binding TestVinker, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
