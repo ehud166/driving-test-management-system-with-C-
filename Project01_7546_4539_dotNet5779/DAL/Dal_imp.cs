@@ -142,11 +142,11 @@ namespace DAL
             List<Tester> copyTesters = new List<Tester>();
             copyTesters = Testers.Select(x => new Tester(x.ID, x.FirstName, x.LastName, x.Birthday, x.Gender,
                     x.PhoneAreaCode, x.PhoneNumber,
-                    new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password,
+                    new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City, x.Address.TemporaryCoordinate), x.Email, x.Password,
                     x.VehicleType,
                     x.Seniority, x.MaxTestsForWeek, x.MaxDistance, x.Schedule, new List<Test>(x?.TesterTests.Select(y =>
                         new Test(y.TraineeId, y.TestDateAndTime,
-                            new Address(y.TestAddress.StreetName, y.TestAddress.BuildingNumber, y.TestAddress.City),
+                            new Address(y.TestAddress.StreetName, y.TestAddress.BuildingNumber, y.TestAddress.City,y.TestAddress.TemporaryCoordinate),
                             y.VehicleType,
                             y.Gear, y.TestComment, y.TestDistance,
                             y.TestReverseParking, y.TestMirrors, y.TestMerge, y.TestVinker, y.TestResult, y.TesterId,
@@ -158,7 +158,7 @@ namespace DAL
         {
             List<Test> copyTests = new List<Test>();
             copyTests = Tests.Select(x => new Test(x.TraineeId, x.TestDateAndTime,
-                new Address(x.TestAddress.StreetName, x.TestAddress.BuildingNumber, x.TestAddress.City), x.VehicleType,
+                new Address(x.TestAddress.StreetName, x.TestAddress.BuildingNumber, x.TestAddress.City,x.TestAddress.TemporaryCoordinate), x.VehicleType,
                 x.Gear, x.TestComment, x.TestDistance,
                 x.TestReverseParking, x.TestMirrors, x.TestMerge, x.TestVinker, x.TestResult, x.TesterId,
                 x.ID)).ToList();
@@ -168,7 +168,7 @@ namespace DAL
         {
             List<Trainee> copyTrainees = new List<Trainee>();
             copyTrainees = Trainees.Select(x => new Trainee(x.ID, x.FirstName, x.LastName, x.Birthday, x.Gender, x.PhoneAreaCode, x.PhoneNumber,
-                new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password, new List<LicenseType>(x?.LicenseType.Select(y => new LicenseType(y.VehicleType, y.Gear, y.LessonNum)).ToList()), 
+                new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City, x.Address.TemporaryCoordinate), x.Email, x.Password, new List<LicenseType>(x?.LicenseType.Select(y => new LicenseType(y.VehicleType, y.Gear, y.LessonNum)).ToList()), 
                 x.DrivingSchool, x.TeacherName)).ToList();
             return copyTrainees;
         }
@@ -241,11 +241,11 @@ namespace DAL
 
                 Testers.Remove(updateTester);
                 updateTester = new Tester(my_tester.ID, my_tester.FirstName, my_tester.LastName, my_tester.Birthday,
-                    my_tester.Gender, my_tester.PhoneAreaCode, my_tester.PhoneNumber, new Address(my_tester.Address.StreetName, my_tester.Address.BuildingNumber, my_tester.Address.City), my_tester.Email,my_tester.Password, my_tester.VehicleType,
+                    my_tester.Gender, my_tester.PhoneAreaCode, my_tester.PhoneNumber, new Address(my_tester.Address.StreetName, my_tester.Address.BuildingNumber, my_tester.Address.City, my_tester.Address.TemporaryCoordinate), my_tester.Email,my_tester.Password, my_tester.VehicleType,
                     my_tester.Seniority, my_tester.MaxTestsForWeek, my_tester.MaxDistance, my_tester.Schedule,
                     new List<Test>(my_tester?.TesterTests.Select(y =>
                         new Test(y.TraineeId, y.TestDateAndTime,
-                            new Address(y.TestAddress.StreetName, y.TestAddress.BuildingNumber, y.TestAddress.City),
+                            new Address(y.TestAddress.StreetName, y.TestAddress.BuildingNumber, y.TestAddress.City,y.TestAddress.TemporaryCoordinate),
                             y.VehicleType,
                             y.Gear, y.TestComment, y.TestDistance,
                             y.TestReverseParking, y.TestMirrors, y.TestMerge, y.TestVinker, y.TestResult, y.TesterId,
@@ -272,7 +272,7 @@ namespace DAL
                 v = new Trainee(my_trainee.ID, my_trainee.FirstName, my_trainee.LastName, my_trainee.Birthday,
                     my_trainee.Gender, my_trainee.PhoneAreaCode, my_trainee.PhoneNumber,
                     new Address(my_trainee.Address.StreetName, my_trainee.Address.BuildingNumber,
-                        my_trainee.Address.City), my_trainee.Email, my_trainee.Password,
+                        my_trainee.Address.City,my_trainee.Address.TemporaryCoordinate), my_trainee.Email, my_trainee.Password,
                     new List<LicenseType>(my_trainee.LicenseType
                         .Select(y => new LicenseType(y.VehicleType, y.Gear, y.LessonNum)).ToList()),
                     my_trainee.DrivingSchool, my_trainee.TeacherName);

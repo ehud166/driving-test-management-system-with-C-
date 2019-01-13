@@ -12,6 +12,7 @@
             <RowDefinition Height="1.5*"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Image x:Name="logInImage"  Source="mini_project_5779_images/loginimage.png"/>
         <Grid Row="1" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
