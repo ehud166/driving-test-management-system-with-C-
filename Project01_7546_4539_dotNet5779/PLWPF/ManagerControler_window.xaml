@@ -5,12 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         xmlns:local1="clr-namespace:BE;assembly=BE"
-    
-    
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.ManagerControler_window"
         mc:Ignorable="d"
-    
-        Title="ManagerControler_window" WindowState="Maximized">
+        Title="ManagerControler_window" WindowState="Maximized" Closing="ManagerControler_window_OnClosing">
     <Grid>
 
         <TabControl x:Name="tabControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="{Binding Mode=OneWay}">

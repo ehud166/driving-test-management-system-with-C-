@@ -26,7 +26,7 @@
             <Label Content=".ת.ז" Grid.Column="3" Grid.Row="0" Target="{Binding ElementName=idTextBox}"/>
             <Label x:Name="passwordLabel" Content="סיסמא" Grid.Column="3" Grid.Row="1" Visibility="Hidden" Target="{Binding ElementName=birthdayDatePicker}"/>
             <TextBox x:Name="idTextBox" Grid.Column="1" Grid.Row="0" MaxLength="9" KeyDown="idTextBox_keyDown" TextChanged="IdTextBox_TextChanged" />
-            <PasswordBox x:Name="PasswordBox" Visibility="Hidden" PasswordChar="*" Grid.Column="1" Grid.Row="1" />
+            <PasswordBox x:Name="PasswordBox" Visibility="Hidden" Grid.Column="1" Grid.Row="1" />
             <!--<Image x:Name="LogIn_ShowPassword"  />-->
             <!--local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding Text, ElementName=plain, Mode=TwoWay}"-->
         </Grid>

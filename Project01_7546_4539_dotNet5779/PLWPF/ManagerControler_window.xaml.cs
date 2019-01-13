@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,7 @@ namespace PLWPF
 
                 InitializeComponent();
                 bl = Bl_imp.GetBl();
+                pWindow = parent;
                 this.TestsDataGrid.ItemsSource = bl.GetTestsList();
                 this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
                 this.TestersDataGrid.ItemsSource = bl.GetTestersList();
@@ -96,7 +98,18 @@ namespace PLWPF
             }
         }
 
-     
+
+        private void ManagerControler_window_OnClosing(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                pWindow?.Show();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 
 

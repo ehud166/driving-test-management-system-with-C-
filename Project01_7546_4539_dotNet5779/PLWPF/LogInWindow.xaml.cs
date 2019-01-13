@@ -58,8 +58,8 @@ namespace PLWPF
                             Manager managerDetails = bl.GetManagerById(id);
                             if (managerDetails != null && PasswordBox.Password == managerDetails.Password)
                             {
-                                ManagerMenu_Window managerMenu_Window = new ManagerMenu_Window(pWindow, managerDetails);
-                                managerMenu_Window.ShowDialog();
+                                ManagerControler_window managerControler_window = new ManagerControler_window(pWindow);
+                                managerControler_window.ShowDialog();
                             }
                             else
                             {
