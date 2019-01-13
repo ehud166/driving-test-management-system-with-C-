@@ -128,6 +128,7 @@ namespace PLWPF
 
         private void setBlackOutDates(DateTime start, DateTime end)
         {
+            testDatePicker.BlackoutDates.Clear();
             CalendarDateRange XForTheFirst2Days = new CalendarDateRange();
             XForTheFirst2Days.Start = DateTime.Today;
             XForTheFirst2Days.End = DateTime.Today.AddDays(1);
@@ -144,8 +145,8 @@ namespace PLWPF
                 else
                 {
                     myTest.TestDateAndTime = i;
-                    List <Tester> my_relevantTesters = bl.RelevantTesters(myTest);
-                    if (my_relevantTesters.Count() == 0)
+                    myRelevantTesters = bl.RelevantTesters(myTest);
+                    if (myRelevantTesters.Count() == 0)
                         testDatePicker.BlackoutDates.Add(new CalendarDateRange(i));
                 }
                 i = i.AddDays(1);
@@ -165,7 +166,7 @@ namespace PLWPF
         private void testDatePicker_selectedChanged(object sender, SelectionChangedEventArgs e)
         {
             myTest.TestDateAndTime = testDatePicker.SelectedDate.Value;
-            List<Tester> myRelevantTesters = bl.RelevantTesters(myTest);
+            myRelevantTesters = bl.RelevantTesters(myTest);
             bool[] hours = new bool[6];
             DateTime dateTime = new DateTime();
             dateTime = myTest.TestDateAndTime;
@@ -199,13 +200,22 @@ namespace PLWPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DateTime newDateTime = DateTime.Parse(testDatePicker.Text);
-            newDateTime.AddHours(testHourComboBox.SelectedIndex + 9);
+            //MessageBox.Show(testHourComboBox.SelectedIndex.ToString());
+            //MessageBox.Show(testDatePicker.Text.ToString());
+            
+            DateTime newDateTime = DateTime.Parse(testDatePicker.Text).AddHours(testHourComboBox.SelectedIndex + 9);
             Test newTest = new Test(existTrainee.ID,newDateTime,myTest.TestAddress,myTest.VehicleType,myTest.Gear);
-            Tester newTester = myRelevantTesters.Find(x => bl.FreeTester(x, newDateTime));
+            Tester newTester = myRelevantTesters.Find(x => bl.FreeTester(x, newDateTime) == true);
+            Address a = new Address(testAddressComboBox.Text,0,"",50);
+            newTest.TestAddress = a;
             newTest.TesterId = newTester.ID;
-            newTester.TesterTests.Add(newTest);
             bl.AddTest(newTest);
+            Test newTestAdded = bl.GetTestsList().Find(x => x.Equals(newTest));
+            newTester.TesterTests.Add(newTestAdded);
+            bl.UpdateTester(newTester);
+            //MessageBox.Show(newTestAdded.ToString());
+            //MessageBox.Show(bl.GetTesterById(newTestAdded.TesterId).TesterTests.Find(x=>x.Equals(newTest)).ToString());
+
         }
     }
 }

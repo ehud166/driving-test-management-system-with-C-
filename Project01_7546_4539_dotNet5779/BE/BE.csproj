@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="EnumDescriptionConverter.cs" />
+    <Compile Include="GoogleAPIFunc.cs" />
     <Compile Include="HoursPerDay.cs" />
     <Compile Include="LicenseType.cs" />
     <Compile Include="Manager.cs" />

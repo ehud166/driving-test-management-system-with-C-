@@ -76,23 +76,22 @@ namespace BL
                 //if (q)
                 //{//now the trainee past the conditions and we need to find tester (including check id for trainee but not necessary to check tester because it checked on AddTester)
 
-                    //if (relevantTester != null)
-                    //{
-                    //    my_test.TesterId = relevantTester.ID;
-                    //    relevantTester.TesterTests.Add(my_test);
-                    //    dal.UpdateTester(relevantTester); 
+                //if (relevantTester != null)
+                //{
+                //    my_test.TesterId = relevantTester.ID;
+                //    relevantTester.TesterTests.Add(my_test);
 
-                    //    dal.AddTest(my_test);
-                    //}
-                    //else//not found free tester
-                    //{
-                    //    var listOfRelevantTesters =
-                    //        GetListOfTestersAtTraineeArea(GetListByVehicleType(my_test),
-                    //            my_test.TestAddress);
+                dal.AddTest(my_test);
+                //}
+                //else//not found free tester
+                //{
+                //    var listOfRelevantTesters =
+                //        GetListOfTestersAtTraineeArea(GetListByVehicleType(my_test),
+                //            my_test.TestAddress);
 
-                    //    OfferFreeDateForTest(listOfRelevantTesters);
+                //    OfferFreeDateForTest(listOfRelevantTesters);
 
-                    //}
+                //}
 
                 //}
             }
