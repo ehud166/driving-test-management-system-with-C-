@@ -81,7 +81,7 @@ namespace PLWPF
                 {
                     //LicenseType a = new LicenseType(Enums.Vehicle.motorcycle, Enums.Gear.manual, 30);
                     //existTrainee.LicenseType = new List<LicenseType>();
-                    //existTrainee.LicenseType.Add(a);
+                    //existTrainee.LicenseType.Add(a);ex
                     //Address b = new Address("yu", 5, "gerusalem");
                     //existTrainee.Address = b;
                     bl.AddTrainee(existTrainee);
@@ -111,7 +111,8 @@ namespace PLWPF
 
         private void LessonNumScrollBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            LessonNumTextBox.Text = LessonNumScrollBar.Value.ToString();
+            int a = (int) LessonNumScrollBar.Value;
+            LessonNumTextBox.Text = a.ToString();
         }
 
 
@@ -121,7 +122,8 @@ namespace PLWPF
             //MessageBox.Show(GearComboBox.SelectedValue.ToString() + VehcileTypeComboBox.SelectedValue.ToString());
             some = existTrainee.LicenseType.Find(x =>
                  x.Gear.ToString() == GearComboBox.SelectedValue?.ToString() && x.VehicleType.ToString() == VehcileTypeComboBox.SelectedValue?.ToString());
-            LessonNumTextBox.Text = some?.LessonNum.ToString();
+            if(some !=null)
+            LessonNumTextBox.Text = some.LessonNum.ToString();
 
 
         }
@@ -167,7 +169,8 @@ namespace PLWPF
 
         private void LessonNumTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            some.LessonNum = int.Parse(LessonNumTextBox.Text);
+            var a = LessonNumTextBox.Text == null? 0:int.Parse(LessonNumTextBox.Text);
+            some.LessonNum = a;
         }
     }
 }

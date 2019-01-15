@@ -10,7 +10,7 @@ namespace BE
 {
     public class Test
     {
-        public Test( string traineeId, DateTime testDateAndTime, Address testAddress, Vehicle? vehicleType, Gear? gear , string testComment = "", bool ? testDistance = null, bool? testReverseParking = null, bool? testMirrors = null, bool? testMerge = null, bool? testVinker = null, bool? testResult = null, string testerId = null, string iD = null)
+        public Test( string traineeId, DateTime testDateAndTime, Address testAddress, Vehicle? vehicleType, Gear? gear , string testComment = "", Result ? testDistance = null, Result? testReverseParking = null, Result? testMirrors = null, Result? testMerge = null, Result? testVinker = null, Result? testResult = null, string testerId = null, string iD = null)
         {
             ID = iD;
             TesterId = testerId;
@@ -31,7 +31,7 @@ namespace BE
 
         public Test()
         {
-
+            TestAddress = new Address();
         }
 
         public string ID { get; set; }
@@ -42,12 +42,12 @@ namespace BE
         public Vehicle? VehicleType { get; set; }
         public Gear? Gear { get; set; }
         //test results
-        public bool? TestDistance { get; set; }
-        public bool? TestReverseParking { get; set; }
-        public bool? TestMirrors { get; set; }
-        public bool? TestVinker { get; set; }
-        public bool? TestMerge { get; set; }
-        public bool? TestResult { get; set; }
+        public Result? TestDistance { get; set; }
+        public Result? TestReverseParking { get; set; }
+        public Result? TestMirrors { get; set; }
+        public Result? TestVinker { get; set; }
+        public Result? TestMerge { get; set; }
+        public Result? TestResult { get; set; }
         public string TestComment { get; set; }
 
         //ToString

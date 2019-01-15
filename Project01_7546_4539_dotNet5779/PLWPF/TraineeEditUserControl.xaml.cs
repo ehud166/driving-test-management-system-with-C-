@@ -26,21 +26,20 @@ namespace PLWPF
         private static Trainee existTrainee = new Trainee();
     //    private static Window pWindow = null;
         LicenseType some = new LicenseType();
-
         static bool exist = false;
         private IBL bl;
-        public event EventHandler<EventArgs> TraineeDeleted;
         public event EventHandler<EventArgs> TraineeEdited;
 
         public TraineeEditUserControl()
         {
-            bl = Bl_imp.GetBl();
+            
 
             try
             {
-
                 InitializeComponent();
-
+                bl = Bl_imp.GetBl();
+                LessonNumScrollBar.Maximum = 100;
+                LessonNumScrollBar.SmallChange = 1;
             }
             catch (Exception e)
             {
@@ -57,8 +56,10 @@ namespace PLWPF
         }
         private void LessonNumScrollBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            LessonNumTextBox.Text = LessonNumScrollBar.Value.ToString();
+            int a = (int)LessonNumScrollBar.Value;
+            LessonNumTextBox.Text = a.ToString();
         }
+        
 
 
 
@@ -110,7 +111,7 @@ namespace PLWPF
                 MessageBox.Show(this.firstNameTextBox.Text+" "+ this.lastNameTextBox.Text+" "+"הוסר/ה מהמערכת בהצלחה");
                 Trainee trainee = new Trainee();
                 this.DataContext = trainee;
-                TraineeDeleted?.Invoke(this, new EventArgs());
+                TraineeEdited?.Invoke(this, new EventArgs());
             }
             catch (Exception exception)
             {
@@ -125,13 +126,12 @@ namespace PLWPF
 
         private void UpdateButtonClick_Click(object sender, RoutedEventArgs e)
         {
-            bl.UpdateTrainee(bl.GetTraineeById(this.idTextBox.Text));
-            TraineeEdited?.Invoke(this, new EventArgs());
+            existTrainee = this.DataContext as Trainee;
             bl.UpdateTrainee(existTrainee);
-                MessageBox.Show(existTrainee.FirstName + " עודכן בהצלחה");
-            
-            
+            MessageBox.Show(existTrainee.FirstName + " עודכן בהצלחה");
+            TraineeEdited?.Invoke(this, new EventArgs());
         }
+
     }
 }
 

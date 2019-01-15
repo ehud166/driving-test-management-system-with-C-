@@ -27,7 +27,6 @@ namespace PLWPF
             try
             {
                 InitializeComponent();
-                //GoogleAPIFunc a = new GoogleAPIFunc();
                 IBL bl = Bl_imp.GetBl();
                
             }

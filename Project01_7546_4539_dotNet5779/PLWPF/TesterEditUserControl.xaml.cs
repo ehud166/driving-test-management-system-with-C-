@@ -24,15 +24,25 @@ namespace PLWPF
     public partial class TesterEditUserControl : UserControl
     {
         private IBL bl;
-        public event EventHandler<EventArgs> TesterDeleted;
+        private static Tester existTester;
+        public event EventHandler<EventArgs> TesterEdited;
         public TesterEditUserControl()
         {
-            bl = Bl_imp.GetBl();
-
+            
+            
             try
             {
-
+                
                 InitializeComponent();
+                bl = Bl_imp.GetBl();
+                existTester = new Tester();
+                SeniorityScrollBar.Maximum = 50;
+                SeniorityScrollBar.SmallChange = 1;
+                maxDistanceScrollBar.Maximum = 300;
+                maxDistanceScrollBar.SmallChange = 1;
+                maxTestsForWeekScrollBar.Maximum = 30;
+                maxTestsForWeekScrollBar.SmallChange = 1;
+
 
             }
             catch (Exception e)
@@ -121,8 +131,8 @@ namespace PLWPF
                 bl.RemoveTester(this.idTextBox.Text);
                 MessageBox.Show(this.firstNameTextBox.Text + " " + this.lastNameTextBox.Text + " " + "הוסר/ה מהמערכת בהצלחה");
                 Tester tester = new Tester();
-                TesterDeleted?.Invoke(this, new EventArgs());
                 this.DataContext = tester;
+                TesterEdited?.Invoke(this, new EventArgs());
             }
             catch (Exception exception)
             {
@@ -132,7 +142,10 @@ namespace PLWPF
 
         private void UpdateButtonClick_Click(object sender, RoutedEventArgs e)
         {
-
+            existTester = this.DataContext as Tester;
+            bl.UpdateTester(existTester);
+            MessageBox.Show(existTester.FirstName + " עודכן בהצלחה");
+            TesterEdited?.Invoke(this, new EventArgs());
         }
     }
 }

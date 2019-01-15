@@ -47,6 +47,11 @@ namespace PLWPF
                 idTextBox.IsEnabled = false;
                 SeniorityScrollBar.Maximum = 50;
                 SeniorityScrollBar.SmallChange = 1;
+                maxDistanceScrollBar.Maximum = 300;
+                maxDistanceScrollBar.SmallChange = 1;
+                maxTestsForWeekScrollBar.Maximum = 30;
+                maxTestsForWeekScrollBar.SmallChange = 1;
+
 
                 if (parent.GetType().ToString() == "PLWPF.TesterMenu")
                 {
@@ -103,12 +108,7 @@ namespace PLWPF
             }
         }
 
-        private void SeniorityScrollBar_OnValueChangedScrollBar(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            SeniorityTextBox.Text = SeniorityScrollBar.Value.ToString();
-            SeniorityScrollBar.Minimum = double.Parse(SeniorityTextBox.Text);
-
-        }
+        
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -133,7 +133,12 @@ namespace PLWPF
             else
                 EmailTextBox.BorderBrush = Brushes.LightBlue;
         }
+        private void SeniorityScrollBar_OnValueChangedScrollBar(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            SeniorityTextBox.Text = SeniorityScrollBar.Value.ToString();
+            SeniorityScrollBar.Minimum = double.Parse(SeniorityTextBox.Text);
 
+        }
         private void maxTestsForWeekScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             maxTestsForWeekTextBox.Text = maxTestsForWeekScrollBar.Value.ToString();

@@ -42,30 +42,40 @@
                 <RowDefinition/>
 
             </Grid.RowDefinitions >
-            <ComboBox x:Name="testAddressComboBox" Grid.Row="2" IsEditable="True" Text="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="testAddressComboBox_OnSelectionChanged">
+            <ComboBox x:Name="testAddressComboBox" Grid.Row="2" IsEnabled="False" IsEditable="True" Text="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="testAddressComboBox_OnSelectionChanged">
                 <ComboBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                     </ComboBox.Resources>
             </ComboBox>
-            <DatePicker x:Name="testDatePicker" Grid.Row="3" CalendarOpened="DatePickerOpened" SelectedDateChanged="testDatePicker_selectedChanged" />
+            <DatePicker x:Name="testDatePicker" Grid.Row="3" CalendarOpened="DatePickerOpened" SelectedDateChanged="testDatePicker_selectedChanged" >
+                <!--<DatePicker.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=testAddressComboBox, Path=Text.Length}" Value="0">
+                                <Setter Property="DatePicker.IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=GearComboBox, Path=Text.Length}" Value="0">
+                                <Setter Property="DatePicker.IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=VehicleTypeComboBox, Path=Text.Length}" Value="false">
+                                <Setter Property="DatePicker.IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            </Style.Triggers>
+                    </Style>
+                </DatePicker.Style>-->
+                </DatePicker>
+
+
             <ComboBox x:Name="testHourComboBox" Grid.Row="4"/>
 
 
-            <ComboBox x:Name="VehicleTypeComboBox" MinWidth="170" Width="auto"  SelectionChanged="VehicleTypeComboBox_OnSelectionChanged">
-                <!--<ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource descConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>-->
+            <ComboBox x:Name="VehicleTypeComboBox" MinWidth="170" Width="auto"   SelectionChanged="VehicleTypeComboBox_OnSelectionChanged">
+                
             </ComboBox>
             <ComboBox x:Name="GearComboBox" Grid.Row="1"   IsEnabled="False" >
-                <!--<ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource descConverter}}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>-->
+               
             </ComboBox>
             <Label x:Name="testAdressLable" Content=":כתובת" Grid.Column="1" Grid.Row="2"/>
             <Label x:Name="testDateLable" Content=":תאריך"  Grid.Row="3" Grid.Column="1"/>
@@ -75,6 +85,28 @@
 
         </Grid>
         <Label Content="הרשם לטסט" Grid.Row="3" HorizontalAlignment="Center"/>
-        <Button Content="אישור" Grid.Row="2" Margin="15" FontSize="36" FontWeight="Heavy" Click="Button_Click"/>
+        <Button Content="אישור" Grid.Row="2" Margin="15" FontSize="36" FontWeight="Heavy" Click="Button_Click">
+            <!--<Button.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=testAddressComboBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=GearComboBox, Path=Text.Length}" Value="0">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=VehicleTypeComboBox, Path=Text.Length}" Value="false">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=testDatePicker, Path=SelectedDate.HasValue}" Value="false">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=testHourComboBox, Path=Text.Length}" Value="false">
+                            <Setter Property="Button.IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>-->
+            </Button>
     </Grid>
 </Window>

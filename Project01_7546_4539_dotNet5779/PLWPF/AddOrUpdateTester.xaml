@@ -117,7 +117,7 @@
                 <Label x:Name="SeniorityLabel" Content=":ותק" Grid.Column="1" Grid.Row="5"/>
                 <StackPanel Grid.Row="5"   Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBox x:Name="SeniorityTextBox" IsEnabled="False"  Text="{Binding Seniority, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
-                    <ScrollBar x:Name="SeniorityScrollBar"   Height="40" BorderBrush="LightBlue"  HorizontalAlignment="Right" Minimum="{Binding Seniority, Mode=OneWay}" ValueChanged="SeniorityScrollBar_OnValueChangedScrollBar" RenderTransformOrigin="0.5,0.5" >
+                    <ScrollBar x:Name="SeniorityScrollBar"   Height="40" BorderBrush="LightBlue"  HorizontalAlignment="Right" Value="{Binding Seniority, Mode=OneWay}" ValueChanged="SeniorityScrollBar_OnValueChangedScrollBar" RenderTransformOrigin="0.5,0.5" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -138,8 +138,8 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <StackPanel Grid.Row="3"   Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBox x:Name="maxDistanceTextBox" IsEnabled="False"  Text="{Binding MaxDistance, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
-                    <ScrollBar x:Name="maxDistanceScrollBar" Background="LightBlue"  Height="40" HorizontalAlignment="Right" Minimum="{Binding Seniority, Mode=OneWay}"  RenderTransformOrigin="0.5,0.5" ValueChanged="maxDistanceScrollBar_ValueChanged" >
+                    <TextBox x:Name="maxDistanceTextBox" IsEnabled="False"  Text="{Binding MaxDistance, Mode=TwoWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
+                    <ScrollBar x:Name="maxDistanceScrollBar" Background="LightBlue"  Height="40" HorizontalAlignment="Right" Value="{Binding MaxDistance, Mode=TwoWay}"  RenderTransformOrigin="0.5,0.5" ValueChanged="maxDistanceScrollBar_ValueChanged" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -152,7 +152,7 @@
                 </StackPanel>
                 <StackPanel Grid.Row="4"   Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBox x:Name="maxTestsForWeekTextBox" IsEnabled="False"  Text="{Binding MaxTest, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
-                    <ScrollBar x:Name="maxTestsForWeekScrollBar" Height="40"   HorizontalAlignment="Right" Minimum="{Binding Seniority, Mode=OneWay}" RenderTransformOrigin="0.5,0.5" ValueChanged="maxTestsForWeekScrollBar_ValueChanged" >
+                    <ScrollBar x:Name="maxTestsForWeekScrollBar" Height="40"   HorizontalAlignment="Right" Value="{Binding MaxTest, Mode=OneWay}" RenderTransformOrigin="0.5,0.5" ValueChanged="maxTestsForWeekScrollBar_ValueChanged" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>

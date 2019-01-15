@@ -11,6 +11,10 @@ using System.Text;
 using System.Threading.Tasks;
 using static BE.Enums;
 using System.Text.RegularExpressions;
+using System.Net;
+using System.Xml;
+using System.Windows;
+using System.IO;
 
 namespace BL
 {
@@ -72,32 +76,10 @@ namespace BL
         {
             try
             {
-                //bool q = TraineeConditionsForTest(my_test.TraineeId, my_test.VehicleType, my_test.Gear);
-                //if (q)
-                //{//now the trainee past the conditions and we need to find tester (including check id for trainee but not necessary to check tester because it checked on AddTester)
-
-                //if (relevantTester != null)
-                //{
-                //    my_test.TesterId = relevantTester.ID;
-                //    relevantTester.TesterTests.Add(my_test);
-
                 dal.AddTest(my_test);
-                //}
-                //else//not found free tester
-                //{
-                //    var listOfRelevantTesters =
-                //        GetListOfTestersAtTraineeArea(GetListByVehicleType(my_test),
-                //            my_test.TestAddress);
-
-                //    OfferFreeDateForTest(listOfRelevantTesters);
-
-                //}
-
-                //}
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
                 throw;
             }
 
@@ -112,22 +94,24 @@ namespace BL
             {
                 hours[i] = 9 + i;
             }
+
             var relevantTesters = (from tester in dal.GetTestersList()
-                                   let listOfRelevantTesters = GetListOfTestersAtTraineeArea(
-                                       GetListByVehicleType(my_test), my_test.TestAddress) //get a list of tester match the condition to test 
-                                   from item in listOfRelevantTesters
-                                   from someHour in hours
-                                   where FreeTester(item, my_test.TestDateAndTime.AddHours(someHour)) && FreeTesterAtThisWeek(item, my_test.TestDateAndTime.AddHours(someHour)) //now find free tester
-                                   select item
+                    let listOfRelevantTesters = GetListOfTestersAtTraineeArea(
+                        GetListByVehicleType(my_test),
+                        my_test.TestAddress.StreetName) //get a list of tester match the condition to test 
+                    from item in listOfRelevantTesters
+                    from someHour in hours//check for every hour in this day maybe the tester will free at the next hour
+                    where FreeTester(item, my_test.TestDateAndTime.AddHours(someHour)) &&
+                          FreeTesterAtThisWeek(item, my_test.TestDateAndTime.AddHours(someHour)) //now find free tester
+                    select item
                 ).ToList();
             return relevantTesters;
         }
 
-        public bool TraineeConditionsForTest(String id,Vehicle vehicle,Gear gear)
+        public bool TraineeConditionsForTest(Test my_test)
         {
-            return CheckIdValidation(id) && TraineeHave20LessonsForSpecificLicense(id,vehicle,gear) &&
-                    NotExistTestIn7Days(id, vehicle, gear) && !PassedForThisType(id, vehicle, gear) &&
-                    !TraineeTryingToSignTwice(id, vehicle, gear);
+            return NotExistTestIn7Days(my_test) && !PassedForThisType(my_test.TraineeId, my_test.VehicleType, my_test.Gear) &&
+                    !TraineeTryingToSignTwice(my_test.TraineeId, my_test.VehicleType, my_test.Gear);
         }
 
 
@@ -293,11 +277,7 @@ namespace BL
             //need to update the field num of test and func to check if tester fill all
             if (ResultMeetingCriteria(my_test) && TheTesterFillAll(my_test))
             {
-                if (my_test.TestResult == true)//if trainee pass the test we can remove him from traineesList
-                {
-                    dal.RemoveTrainee(my_test.TraineeId);
-                }
-                dal.UpdateTest(my_test);
+                dal.UpdateTestInfo(my_test);
             }
         }
 
@@ -365,10 +345,10 @@ namespace BL
             }
             return result;
         }
-        public IEnumerable<IGrouping<bool?, Test>> GroupTestByResult(bool toSort = false)
+        public IEnumerable<IGrouping<Result?, Test>> GroupTestByResult(bool toSort = false)
         {
 
-            IEnumerable<IGrouping<bool?, Test>> result =
+            IEnumerable<IGrouping<Result?, Test>> result =
                 from test in dal.GetTestsList()
                 group test by test.TestResult;
             //to sort condition by school name
@@ -417,7 +397,7 @@ namespace BL
         /// </summary>
         /// <param name="myTrainee"></param>
         /// <returns>true if he does</returns>
-        public bool DeservingToLicense(Trainee myTrainee) => dal.GetTestsList().Any(item => item.TraineeId == myTrainee.ID && item.TestResult == true);
+        public bool DeservingToLicense(Trainee myTrainee) => dal.GetTestsList().Any(item => item.TraineeId == myTrainee.ID && item.TestResult == Result.pass);
 
 
         /// <summary>
@@ -451,18 +431,7 @@ namespace BL
             return d1 == d2;
         }
 
-        /// <summary>
-        /// list from tester at trainee area
-        /// temporary
-        /// </summary>
-        /// <param name="copyTesters"></param>
-        /// <param name="myAddress"></param>
-        /// <returns>relvant tester list</returns>
-        private List<Tester> GetListOfTestersAtTraineeArea(List<Tester> copyTesters, Address myAddress)//חייב לתקן שיחפש מרחק נכון
-        {
-            return copyTesters;
-            //return copyTesters.Where(item => Math.Abs(item.Address.TemporaryCoordinate-myAddress.TemporaryCoordinate) <= item.MaxDistance).ToList();
-        }
+        
 
 
         /// <summary>
@@ -512,10 +481,10 @@ namespace BL
         /// </summary>
         /// <param name="my_test"></param>
         /// <returns>true if not</returns>
-        private bool NotExistTestIn7Days(String id, Vehicle vehicle, Gear gear)
+        private bool NotExistTestIn7Days(Test myTest)
         {
             var v = (from item in GetTestsList()
-                    where item.TraineeId == id &&  item.Gear == gear && item.VehicleType == vehicle && (item.TestDateAndTime.AddMinutes(1) - DateTime.Now).Days < 7// adding minute to round the lossing miliseconds at running time
+                    where item.TraineeId == myTest.TraineeId &&  item.Gear == myTest.Gear && item.VehicleType == myTest.VehicleType && (myTest.TestDateAndTime - item.TestDateAndTime.AddMinutes(1)).Days < 7// adding minute to round the lossing miliseconds at running time
                     select item).FirstOrDefault();
             return v==null? true : throw new Exception("ERROR:\n" +
                                              "This Test are too early (haven't pass 7 days from this trainee last test\n");
@@ -529,10 +498,10 @@ namespace BL
         /// <returns>true if does</returns>
         private bool TheTesterFillAll(Test my_test)
         {
-            foreach (var property in my_test.GetType().GetProperties())
-            {
-                if (property.GetValue(my_test,null) == null) throw new Exception("ERROR: you need to fill all fields of test");
-            }
+            //foreach (var property in my_test.GetType().GetProperties())
+            //{
+            //    if (property.GetValue(my_test,null) == null) throw new Exception("ERROR: you need to fill all fields of test");
+            //}
 
             return true;
         }
@@ -546,21 +515,21 @@ namespace BL
         private bool ResultMeetingCriteria(Test my_test)
         {
             int count = 0;
-            if (my_test.TestDistance == true) count++;
-            if (my_test.TestMirrors == true) count++;
-            if (my_test.TestVinker == true) count++;
-            if (my_test.TestReverseParking == true) count++;
-            if (my_test.TestMerge == true) count++;
+            if (my_test.TestDistance == Result.pass) count++;
+            if (my_test.TestMirrors == Result.pass) count++;
+            if (my_test.TestVinker == Result.pass) count++;
+            if (my_test.TestReverseParking == Result.pass) count++;
+            if (my_test.TestMerge == Result.pass) count++;
             if (count < 4)
             {
-                if (my_test.TestResult == true)
+                if (my_test.TestResult == Result.pass)
                 {
                     throw new Exception("WARNING: the trainee failed in more then one condition, please consider your result\n");
                 }
             }
             else
             {
-                if (my_test.TestResult == false)
+                if (my_test.TestResult == Result.failed)
                 {
                     throw new Exception("WARNING: the trainee succeed in 4/5 condition, please consider your result\n");
                 }
@@ -577,7 +546,7 @@ namespace BL
         /// <param name="vType"></param>
         /// <param name="gType"></param>
         /// <returns>true if he does</returns>
-        private bool TraineeTryingToSignTwice(string id,Vehicle vehicle,Gear gear) => dal.GetTestsList()
+        private bool TraineeTryingToSignTwice(string id,Vehicle? vehicle,Gear? gear) => dal.GetTestsList()
                     .Any(x => x.TraineeId == id && GetTraineeById(id).LicenseType.Any(y => y.Gear == gear && y.VehicleType == vehicle) && x.TestResult == null);
 
 
@@ -617,7 +586,7 @@ namespace BL
         }
         public bool IsValidAlphabetic(string s)
         {
-            return Regex.IsMatch(s, "^[a-zA-Z ]");
+            return Regex.IsMatch(s, "^[a-zA-Zא-ת ]");
         }
 
 
@@ -641,7 +610,7 @@ namespace BL
 
         private bool TraineePass(Test myTest)
         {
-            if (myTest.TestResult == true)
+            if (myTest.TestResult == Result.pass)
             {
                 return true;
             }
@@ -657,13 +626,13 @@ namespace BL
         }
         private bool SuccessInParking(Test myTest)
         {
-            if (myTest.TestReverseParking == true)
+            if (myTest.TestReverseParking == Result.pass)
             {
                 return true;
             }
             return false;
         }
-        private bool PassedForThisType(string id, Vehicle vehicle, Gear gear)
+        private bool PassedForThisType(string id, Vehicle? vehicle, Gear? gear)
         {
             var conditionCheck = (from test in dal.GetTestsList()
                                   let x= GetTraineeById(id)
@@ -671,7 +640,7 @@ namespace BL
                      (( test.VehicleType == Type.VehicleType &&  //case a: same vehicle and (same gear or manual gear)
                       (test.Gear == Type.Gear || test.Gear == Gear.manual ))|| 
                        ((test.VehicleType == Vehicle.maxTrailer || test.VehicleType == Vehicle.midTrailer) && Type.VehicleType == Vehicle.privateCar)) //case b: he has track license and want to test for private
-                       && test.TestResult == true)//pass the test
+                       && test.TestResult == Result.pass)//pass the test
                                   select test).Count();
             return conditionCheck == 0 ? false : throw new Exception("dear trainee: you have already driver license for this type of test\n");
         }
@@ -708,7 +677,69 @@ namespace BL
         private int GetNumOfTraineeTests(string id, Vehicle vType, Gear gType) => dal.GetTestsList()
             .Where(x => x.TraineeId == id && x.VehicleType == vType && x.Gear == gType).Count();
 
-        
+
+
+
+
+        #region Distance Calculation:
+
+        private int MapQuestAPIFunc(string origin = "גולומב 3 ירושלים", string destination = "ברוך דובדבני 40 ירושלים", string KEY = "UMfSGjPW5zSRsIIoUl26GdXDUCWYLuIg")
+        {
+            double distInMiles = 0;
+           string url = @"https://www.mapquestapi.com/directions/v2/route" +
+                         @"?key=" + KEY +
+                         @"&from=" + origin +
+                         @"&to=" + destination +
+                         @"&outFormat=xml" +
+                         @"&ambiguities=ignore&routeType=fastest&doReverseGeocode=false" +
+                         @"&enhancedNarrative=false&avoidTimedConditions=false";
+            //request from MapQuest service the distance between the 2 addresses
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            WebResponse response = request.GetResponse();
+            Stream dataStream = response.GetResponseStream();
+            StreamReader sreader = new StreamReader(dataStream);
+            string responsereader = sreader.ReadToEnd();
+            response.Close();
+            //the response is given in an XML format
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.LoadXml(responsereader);
+            if (xmldoc.GetElementsByTagName("statusCode")[0].ChildNodes[0].InnerText == "0")
+            //we have the expected answer
+            {
+                //display the returned distance
+                XmlNodeList distance = xmldoc.GetElementsByTagName("distance");
+                distInMiles = Convert.ToDouble(distance[0].ChildNodes[0].InnerText);
+                MessageBox.Show("Distance In KM: " + distInMiles * 1.609344);
+                //display the returned driving time
+                XmlNodeList formattedTime = xmldoc.GetElementsByTagName("formattedTime");
+                string fTime = formattedTime[0].ChildNodes[0].InnerText;
+                MessageBox.Show("Driving Time: " + fTime);
+            }
+            else if (xmldoc.GetElementsByTagName("statusCode")[0].ChildNodes[0].InnerText == "402")
+            //we have an answer that an error occurred, one of the addresses is not found
+            {
+                MessageBox.Show("an error occurred, one of the addresses is not found. try again.");
+            }
+            else //busy network or other error...
+            {
+                MessageBox.Show("We have'nt got an answer, maybe the net is busy...");
+            }
+            return (int)(distInMiles * 1.609344);
+        }
+
+        /// <summary>
+        /// list from tester at trainee area
+        /// </summary>
+        /// <param name="copyTesters"></param>
+        /// <param name="myAddress"></param>
+        /// <returns>relvant tester list</returns>
+        private List<Tester> GetListOfTestersAtTraineeArea(List<Tester> copyTesters, string testAddress)//חייב לתקן שיחפש מרחק נכון
+        {
+            return copyTesters.Where(item => MapQuestAPIFunc(item.Address.StreetName, testAddress) <= item.MaxDistance).ToList();
+        }
+       
+        #endregion
+
     }
 
 }

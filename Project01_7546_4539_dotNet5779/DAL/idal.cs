@@ -70,7 +70,13 @@ namespace DAL
         /// tester can update the test results
         /// </summary>
         /// <param name="my_test"></param>
-        void UpdateTest(Test my_test);
+        void UpdateTestInfo(Test my_test);
+
+        /// <summary>
+        /// remove test from dal.tests list if test are filling the conditions
+        /// </summary>
+        /// <param name="my_test"></param>
+        void RemoveTest(Test my_test);
 
         //-----------------------------------------------------------------------------------------
         //string getters list

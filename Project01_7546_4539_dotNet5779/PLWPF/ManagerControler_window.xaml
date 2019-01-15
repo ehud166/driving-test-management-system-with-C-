@@ -8,9 +8,12 @@
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.ManagerControler_window"
         mc:Ignorable="d"
         Title="ManagerControler_window" WindowState="Maximized" Closing="ManagerControler_window_OnClosing">
+    <Window.Resources>
+        <local1:EnumDescriptionConverter x:Key="descConverter"/>
+    </Window.Resources>
     <Grid>
 
-        <TabControl x:Name="tabControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="{Binding Mode=OneWay}">
+        <TabControl x:Name="tabControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="{Binding Mode=OneWay}" SelectionChanged="TabControl_SelectionChanged">
 
             <TabItem x:Name="traineeHeader" Header="רשימת התלמידים">
                 <Grid >
@@ -25,9 +28,9 @@
                             <DataGridTextColumn x:Name="iDColumn" Width="*" Binding="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header=".ת.ז" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden"  IsEnabled="True"
+                    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden"
                 VerticalScrollBarVisibility="Hidden">
-                        <local:TraineeEditUserControl x:Name="TraineeEditUserControl"/>
+                        <local:TraineeEditUserControl x:Name="TraineeEditUserControl" Grid.Column="1"/>
                     </ScrollViewer>
                 </Grid>
             </TabItem>
@@ -47,7 +50,7 @@
                     </DataGrid>
                     <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden" 
                 VerticalScrollBarVisibility="Hidden">
-                        <local:TesterEditUserControl x:Name="TesterEditUserControl" />
+                        <local:TesterEditUserControl x:Name="TesterEditUserControl" Grid.Column="1"/>
 
                     </ScrollViewer>
 
@@ -59,10 +62,11 @@
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <DataGrid x:Name="TestsDataGrid"  AutoGenerateColumns="False" SelectionChanged="TestsDataGrid_SelectionChanged" EnableRowVirtualization="True">
                         <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="testResultColumn"  Header="סטטוס" Width="*" Binding="{Binding TestResult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true,Converter={StaticResource descConverter}}"/>
                             <DataGridTextColumn x:Name="testDateAndTimeColumn"  Header="תאריך ושעה" Width="2*" Binding="{Binding TestDateAndTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             <DataGridTextColumn x:Name="testerId" Header="ת.ז. בוחן"  Width="*" Binding="{Binding TesterId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             <DataGridTextColumn x:Name="traineeId" Header="ת.ז. תלמיד"  Width="*" Binding="{Binding TraineeId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
@@ -71,7 +75,7 @@
                     </DataGrid>
                     <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden" 
                 VerticalScrollBarVisibility="Hidden">
-                        <local:TestEditUserControl x:Name="TestEditUserControl"/>
+                        <local:TestEditUserControl x:Name="TestEditUserControl" Grid.Column="1"/>
                     </ScrollViewer>
                 </Grid>
             </TabItem>

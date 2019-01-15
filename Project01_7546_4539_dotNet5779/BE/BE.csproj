@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GoogleMapsAPI.NET">
+      <HintPath>..\PLWPF\packages\GoogleMapsAPI.NET.1.0.0\lib\net40\GoogleMapsAPI.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\PLWPF\packages\Newtonsoft.Json.8.0.3\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +50,6 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="EnumDescriptionConverter.cs" />
-    <Compile Include="GoogleAPIFunc.cs" />
     <Compile Include="HoursPerDay.cs" />
     <Compile Include="LicenseType.cs" />
     <Compile Include="Manager.cs" />

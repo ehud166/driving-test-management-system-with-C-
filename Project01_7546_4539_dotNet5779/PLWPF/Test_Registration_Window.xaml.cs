@@ -22,7 +22,7 @@ namespace PLWPF
     /// </summary>
     public partial class Test_Registar_Window : Window
     {
-        private static Window pWindow = null;
+        private static Window pWindow;
         private static Trainee existTrainee;
         private static IBL bl = Bl_imp.GetBl();
         private static List<Tester> myRelevantTesters = new List<Tester>();
@@ -31,10 +31,15 @@ namespace PLWPF
 
         public Test_Registar_Window(Window parent, Trainee newTrainee)
         {
+            existTrainee = new Trainee();
+            bl = Bl_imp.GetBl();
+            myRelevantTesters = new List<Tester>();
+            myTest = new Test();
             InitializeComponent();
             pWindow = parent;
             existTrainee = newTrainee;
             this.DataContext = existTrainee;
+            myTest.TestAddress.StreetName = existTrainee.Address.StreetName;
         }
 
 
@@ -54,7 +59,6 @@ namespace PLWPF
             try
             {
                 this.Close();
-                pWindow.Close();
             }
             catch (Exception exception)
             {
@@ -69,57 +73,50 @@ namespace PLWPF
 
         private void Test_Registar_Window_OnLoaded(object sender, RoutedEventArgs e)
         {
-            //VehcileTypeComboBox.Text =  existTrainee.LicenseType.FindAll(x => x?.VehicleType == Vehicle.maxTrailer ).ToString();
-            //List<Vehicle> a = new List<Vehicle>();
-            //a.Add(Vehicle.maxTrailer);
-            //a.Add(Vehicle.midTrailer);
-            //MessageBox.Show(VehcileTypeComboBox.SelectedIndex.ToString());
-            //String s = (this.VehcileTypeComboBox.SelectedValue).ToString();
-
-
-
-            if (existTrainee.LicenseType.Any(x => x?.VehicleType == Vehicle.maxTrailer && x.LessonNum >= 20))
+            bool[] vehicleAvailable = new bool[4] {false, false, false, false};
+            foreach (var licenseType in existTrainee.LicenseType)
             {
-                VehicleTypeComboBox.Items.Add("משאית כבדה");
-            }
-            if (existTrainee.LicenseType.Any(x => x?.VehicleType == Vehicle.midTrailer && x.LessonNum >= 20))
-            {
-                VehicleTypeComboBox.Items.Add("משאית קלה");
-            }
-            if (existTrainee.LicenseType.Any(x => x?.VehicleType == Vehicle.privateCar && x.LessonNum >= 20))
-            {
-                VehicleTypeComboBox.Items.Add("רכב פרטי");
-            }
-            if (existTrainee.LicenseType.Any(x => x?.VehicleType == Vehicle.motorcycle && x.LessonNum >= 20))
-            {
-                VehicleTypeComboBox.Items.Add("אופנוע");
-            }
+                vehicleAvailable[(int)licenseType.VehicleType] = true;
 
-
-
+                //switch (licenseType.VehicleType)
+                //{
+                //    case Vehicle.maxTrailer:
+                //        vehicleAvailable[3] = true;
+                //        break;
+                //    case Vehicle.midTrailer:
+                //        vehicleAvailable[2] = true;
+                //        break;
+                //    case Vehicle.motorcycle:
+                //        vehicleAvailable[1] = true;
+                //        break;
+                //    case Vehicle.privateCar:
+                //        vehicleAvailable[0] = true;
+                //        break;
+                //}
+            }
+            for (int i = 0; i < vehicleAvailable.Length; i++)
+            {
+                if (vehicleAvailable[i])
+                {
+                    VehicleTypeComboBox.Items.Add(VT2Hebrew((Vehicle) i));
+                }
+            }
         }
 
         private void VehicleTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            bool[] gearAvailable = new bool[2] { false, false};
             myTest.VehicleType = Hebrew2VT(VehicleTypeComboBox.SelectedValue.ToString());
             GearComboBox.Items.Clear();
-            if (existTrainee.LicenseType.Any(x =>
-                VTToHebrew(x.VehicleType) == VehicleTypeComboBox.SelectedValue.ToString() && x.LessonNum >= 20 && x.Gear == Gear.auto))
+            foreach (var licenseType in existTrainee.LicenseType)
             {
-                if (!GearComboBox.Items.Contains("אוטומט"))
-                {
-                    GearComboBox.Items.Add("אוטומט");
-                    GearComboBox.IsEnabled = true;
-                }
-               
+                gearAvailable[(int) licenseType.Gear] = true;
             }
-
-            if (existTrainee.LicenseType.Any(x =>
-               VTToHebrew(x.VehicleType) == VehicleTypeComboBox.SelectedValue.ToString() && x.LessonNum >= 20 && x.Gear == Gear.manual))
+            for (int i = 0; i < gearAvailable.Length; i++)
             {
-                if (!GearComboBox.Items.Contains("ידני"))
+                if (gearAvailable[i])
                 {
-                    GearComboBox.Items.Add("ידני");
+                    GearComboBox.Items.Add(Gear2Hebrew((Gear)i));
                     GearComboBox.IsEnabled = true;
                 }
             }
@@ -133,10 +130,7 @@ namespace PLWPF
             XForTheFirst2Days.Start = DateTime.Today;
             XForTheFirst2Days.End = DateTime.Today.AddDays(1);
             testDatePicker.BlackoutDates.Add(XForTheFirst2Days);
-            // myTest.TestAddress = new Address("tr", 45, "ff", 4);
-            // myTest.VehicleType = Vehicle.maxTrailer;
-            //testAdressTextBox.Text = existTrainee.Address.City;
-            // myTest.TestAddress.City = testAdressTextBox.Text;
+            
             DateTime i = start.AddDays(2);
             while (i <= end)
             {
@@ -145,9 +139,12 @@ namespace PLWPF
                 else
                 {
                     myTest.TestDateAndTime = i;
-                    myRelevantTesters = bl.RelevantTesters(myTest);
-                    if (myRelevantTesters.Count() == 0)
-                        testDatePicker.BlackoutDates.Add(new CalendarDateRange(i));
+                    if (bl.TraineeConditionsForTest(myTest))//check every iteration maybe on the next day the trainee will fill the condition
+                    {
+                        myRelevantTesters = bl.RelevantTesters(myTest);
+                        if (myRelevantTesters.Count() == 0)
+                            testDatePicker.BlackoutDates.Add(new CalendarDateRange(i));
+                    }
                 }
                 i = i.AddDays(1);
             }
@@ -195,7 +192,7 @@ namespace PLWPF
       
         private void testAddressComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            myTest.TestAddress.City = testAddressComboBox.Text.ToString();
+            myTest.TestAddress.StreetName = testAddressComboBox.Text.ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -206,9 +203,10 @@ namespace PLWPF
             DateTime newDateTime = DateTime.Parse(testDatePicker.Text).AddHours(testHourComboBox.SelectedIndex + 9);
             Test newTest = new Test(existTrainee.ID,newDateTime,myTest.TestAddress,myTest.VehicleType,myTest.Gear);
             Tester newTester = myRelevantTesters.Find(x => bl.FreeTester(x, newDateTime) == true);
-            Address a = new Address(testAddressComboBox.Text,0,"",50);
+            Address a = new Address(testAddressComboBox.Text);
             newTest.TestAddress = a;
             newTest.TesterId = newTester.ID;
+            newTest.TestComment = "goodluck";
             bl.AddTest(newTest);
             Test newTestAdded = bl.GetTestsList().Find(x => x.Equals(newTest));
             newTester.TesterTests.Add(newTestAdded);

@@ -38,9 +38,9 @@ namespace PLWPF
                 this.TestsDataGrid.ItemsSource = bl.GetTestsList();
                 this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
                 this.TestersDataGrid.ItemsSource = bl.GetTestersList();
-                TraineeEditUserControl.TraineeDeleted += TraineeEditUserControl_TraineeDeleted;
-                TesterEditUserControl.TesterDeleted += TesterEditUserControl_TraineeDeleted;
                 TraineeEditUserControl.TraineeEdited += TraineeEditUserControl_TraineeEdited;
+                TesterEditUserControl.TesterEdited += TesterEditUserControl_TesterEdited;
+                TestEditUserControl.TestEdited += TestEditUserControl_TestEdited;
             }
             catch (Exception exception)
             {
@@ -49,18 +49,21 @@ namespace PLWPF
 
         }
 
-        private void TraineeEditUserControl_TraineeDeleted(object sender, EventArgs e)
+
+        private void TesterEditUserControl_TesterEdited(object sender, EventArgs e)
         {
             this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
         }
-        private void TesterEditUserControl_TraineeDeleted(object sender, EventArgs e)
+
+
+        private void TestEditUserControl_TestEdited(object sender, EventArgs e)
         {
-            this.TestersDataGrid.ItemsSource = bl.GetTestersList();
+            this.TestersDataGrid.ItemsSource = bl.GetTraineeList();
         }
+
         private void TraineeEditUserControl_TraineeEdited(object sender, EventArgs e)
         {
-            this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
-
+            this.TestsDataGrid.ItemsSource = bl.GetTraineeList();
         }
 
 
@@ -69,8 +72,6 @@ namespace PLWPF
          
             Test test = TestsDataGrid.SelectedItem as Test;
             this.TestEditUserControl.DataContext = test;
-
-
         }
 
         private void TraineesDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -79,7 +80,7 @@ namespace PLWPF
             this.TraineeEditUserControl.DataContext = trainee;
         }
 
-       
+
 
         private void TestersDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -87,6 +88,8 @@ namespace PLWPF
             Tester tester = TestersDataGrid.SelectedItem as Tester;
             if (tester != null) { 
            this.TesterEditUserControl.DataContext = tester;
+           this.TesterEditUserControl.mySchedule.Build = tester.Schedule;
+
             }
         }
 
@@ -103,12 +106,17 @@ namespace PLWPF
             }
         }
 
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
         //private void (object sender, SelectionChangedEventArgs e)
         //{
         //    foreach (var courentKey in bl.GroupTestersByVehicle())
         //    {
         //        grouping.Items.Add(courentKey.Key.ToString());
-              
+
         //    }
         //}
     }

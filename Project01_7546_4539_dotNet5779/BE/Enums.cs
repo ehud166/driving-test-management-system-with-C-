@@ -8,7 +8,7 @@ namespace BE
     {
         public enum Vehicle
         {
-            [Description("רכב פרטי")] privateCar = 1,
+            [Description("רכב פרטי")] privateCar,
             [Description("אופנוע")] motorcycle,
             [Description("משאית קלה עד 15 טון")] midTrailer,
             [Description("משאית כבדה מעל 15 טון")] maxTrailer
@@ -16,7 +16,7 @@ namespace BE
 
         public enum Gear
         {
-            [Description("ידני")] manual = 1,
+            [Description("ידני")] manual,
             [Description("אוטומט")] auto
         }
 
@@ -35,16 +35,23 @@ namespace BE
             exit
         }
 
-        public static string VTToHebrew(Vehicle myVehicle)
+        public enum Result
+        {
+            [Description("אין ציון")] noGrade,
+            [Description("עבר")] pass,
+            [Description("נכשל")] failed
+        }
+
+        public static string VT2Hebrew(Vehicle myVehicle)
         {
             if (myVehicle == Vehicle.privateCar)
                 return ("רכב פרטי");
             if (myVehicle == Vehicle.motorcycle)
                 return ("אופנוע");
             if (myVehicle == Vehicle.midTrailer)
-                return ("משאית קלה");
+                return ("משאית קלה עד 15 טון");
             if (myVehicle == Vehicle.maxTrailer)
-                return ("משאית כבדה");
+                return ("משאית כבדה מעל 15 טון");
             return "";
         }
 
@@ -59,15 +66,14 @@ namespace BE
                 case "אופנוע":
                     vehicle = Vehicle.motorcycle;
                     break;
-                case "משאית קלה":
+                case "משאית קלה עד 15 טון":
                     vehicle = Vehicle.midTrailer;
                     break;
-                case "משאית כבדה":
+                case "משאית כבדה מעל 15 טון":
                     vehicle = Vehicle.maxTrailer;
                     break;
                 default:
                     break;
-
             }
             return vehicle;
         }
@@ -87,7 +93,15 @@ namespace BE
 
             }
             return gear;
+        }
 
+        public static string Gear2Hebrew(Gear myGear)
+        {
+            if (myGear == Gear.auto)
+                return ("אוטומט");
+            if (myGear == Gear.manual)
+                return ("ידני");
+            return "";
         }
     }
 }

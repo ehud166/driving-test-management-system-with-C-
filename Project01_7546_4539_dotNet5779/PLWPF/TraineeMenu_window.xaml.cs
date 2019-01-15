@@ -34,7 +34,6 @@ namespace PLWPF
                 bl = Bl_imp.GetBl();
                 pWindow = parent;
                 existTrainee = trainee;
-                header_textBlock.Text = string.Format("שלום, " + existTrainee.FirstName);
             }
             catch (Exception exception)
             {
@@ -137,5 +136,10 @@ namespace PLWPF
 
         }
 
+        private void TraineeMenu_window_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            header_textBlock.Text = string.Format("שלום, " + existTrainee.FirstName);
+
+        }
     }
 }

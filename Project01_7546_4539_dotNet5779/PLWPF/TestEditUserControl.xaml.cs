@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using BL;
 using BE;
+using static BE.Enums;
 
 namespace PLWPF
 {
@@ -25,14 +26,17 @@ namespace PLWPF
     public partial class TestEditUserControl : UserControl
     {
         private IBL bl;
+        private Test existTest = new Test();
+        public event EventHandler<EventArgs> TestEdited;
 
         public TestEditUserControl()
         {
-            bl = Bl_imp.GetBl();
+            
 
             try
             {
                 InitializeComponent();
+                bl = Bl_imp.GetBl();
             }
             catch (Exception e)
             {
@@ -40,16 +44,34 @@ namespace PLWPF
             }
         }
 
-        private void testDistance_Checked(object sender, RoutedEventArgs e)
+        private void toggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            var x = this.DataContext as Test;
-            x.TestDistance = true;
+            var x = sender as ToggleButton;
+           // x.Foreground = Brushes.Green;
+            x.Content = "עבר";
         }
 
-        private void testDistance_Unchecked(object sender, RoutedEventArgs e)
+        private void toggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            var x = this.DataContext as Test;
-            x.TestDistance = false;
+            var x = sender as ToggleButton;
+          //  x.Foreground = Brushes.Red;
+            x.Content = "נכשל";
+        }
+
+        private void UpdateTest_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                existTest = this.DataContext as Test;
+                bl.UpdateTest(existTest);
+                MessageBox.Show(testDistance.Content.ToString());
+                TestEdited?.Invoke(this, new EventArgs());
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
     }
 }

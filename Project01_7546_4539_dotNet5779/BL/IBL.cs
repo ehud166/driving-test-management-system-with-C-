@@ -139,7 +139,7 @@ namespace BL
         /// </summary>
         /// <param name="toSort">order to sort the group list</param>
         /// <returns>Ienumarable for the group</returns>
-        IEnumerable<IGrouping<bool?, Test>> GroupTestByResult(bool toSort = false);
+        IEnumerable<IGrouping<Result?, Test>> GroupTestByResult(bool toSort = false);
 
 
         //adding to IBL to help find existing tester/test/trainee
@@ -182,7 +182,7 @@ namespace BL
         bool IsValidNumber(string s);
         bool IsValidAlphabetic(string s);
         bool TraineeHave20Lessons(String id);
-        bool TraineeConditionsForTest(String id,Vehicle vehicle,Gear gear);
+        bool TraineeConditionsForTest(Test my_test);
         List<Tester> RelevantTesters(Test my_test);
         bool FreeTester(Tester optionalTester, DateTime checkDateTime);
         //------------------------------------------------------------------------------------
