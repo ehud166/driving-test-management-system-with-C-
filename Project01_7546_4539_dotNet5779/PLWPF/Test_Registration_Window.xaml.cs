@@ -3,7 +3,9 @@ using BL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,6 +41,7 @@ namespace PLWPF
             pWindow = parent;
             existTrainee = newTrainee;
             this.DataContext = existTrainee;
+            myTest.TraineeId = newTrainee.ID;
             myTest.TestAddress.StreetName = existTrainee.Address.StreetName;
         }
 
@@ -76,23 +79,11 @@ namespace PLWPF
             bool[] vehicleAvailable = new bool[4] {false, false, false, false};
             foreach (var licenseType in existTrainee.LicenseType)
             {
-                vehicleAvailable[(int)licenseType.VehicleType] = true;
-
-                //switch (licenseType.VehicleType)
-                //{
-                //    case Vehicle.maxTrailer:
-                //        vehicleAvailable[3] = true;
-                //        break;
-                //    case Vehicle.midTrailer:
-                //        vehicleAvailable[2] = true;
-                //        break;
-                //    case Vehicle.motorcycle:
-                //        vehicleAvailable[1] = true;
-                //        break;
-                //    case Vehicle.privateCar:
-                //        vehicleAvailable[0] = true;
-                //        break;
-                //}
+                
+                if (licenseType.LessonNum>= 20 && bl.TraineeConditionsForTest(existTrainee.ID,licenseType.VehicleType,licenseType.Gear))
+                {
+                    vehicleAvailable[(int) licenseType.VehicleType] = true;
+                }
             }
             for (int i = 0; i < vehicleAvailable.Length; i++)
             {
@@ -110,7 +101,10 @@ namespace PLWPF
             GearComboBox.Items.Clear();
             foreach (var licenseType in existTrainee.LicenseType)
             {
-                gearAvailable[(int) licenseType.Gear] = true;
+                if (licenseType.LessonNum >= 20 && bl.TraineeConditionsForTest(existTrainee.ID, licenseType.VehicleType, licenseType.Gear))
+                {
+                    gearAvailable[(int) licenseType.Gear] = true;
+                }
             }
             for (int i = 0; i < gearAvailable.Length; i++)
             {
@@ -139,11 +133,33 @@ namespace PLWPF
                 else
                 {
                     myTest.TestDateAndTime = i;
-                    if (bl.TraineeConditionsForTest(myTest))//check every iteration maybe on the next day the trainee will fill the condition
+                    if (bl.NotExistTestIn7Days(myTest))//check every iteration maybe on the next day the trainee will fill the condition
                     {
                         myRelevantTesters = bl.RelevantTesters(myTest);
-                        if (myRelevantTesters.Count() == 0)
-                            testDatePicker.BlackoutDates.Add(new CalendarDateRange(i));
+                        Thread mapQuestThread = new Thread(() =>
+                        {
+                            int ERRORS = 0;
+                            while (ERRORS++<=3)//3 trying
+                            {
+                                try
+                                {
+                                    myRelevantTesters = bl.GetListOfTestersAtTraineeArea(myRelevantTesters,
+                                        myTest.TestAddress.StreetName);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show(e.Message);
+                                    Thread.Sleep(2000); //Sleep for 2 sec
+                                }
+                                Action act = () =>
+                                {
+                                    if (myRelevantTesters.Count() == 0)
+                                        testDatePicker.BlackoutDates.Add(new CalendarDateRange(i));
+                                };
+                                Dispatcher.BeginInvoke(act);
+                            }
+                        });
+                        mapQuestThread.Start();
                     }
                 }
                 i = i.AddDays(1);
@@ -152,7 +168,6 @@ namespace PLWPF
 
         private void DatePickerOpened(object sender, RoutedEventArgs e)
         {
-
             testDatePicker.SelectedDate=null;
             myTest.Gear = Hebrew2GT(GearComboBox.SelectedValue.ToString());
             testDatePicker.DisplayDateStart = DateTime.Today;
@@ -164,6 +179,7 @@ namespace PLWPF
         {
             myTest.TestDateAndTime = testDatePicker.SelectedDate.Value;
             myRelevantTesters = bl.RelevantTesters(myTest);
+            testHourComboBox.IsEnabled = true;
             bool[] hours = new bool[6];
             DateTime dateTime = new DateTime();
             dateTime = myTest.TestDateAndTime;
@@ -172,24 +188,25 @@ namespace PLWPF
             {
                 for (int i = 0; i < 6; i++)
                 {
-                    if(bl.FreeTester(item, myTest.TestDateAndTime.AddHours(i + 9)))
+                    if (bl.FreeTester(item, myTest.TestDateAndTime.AddHours(i + 9)))
                     {
-                            hours[i] = true;
+                        hours[i] = true;
                     }
                 }
-            }
+            } //after filter the relevant tester we are filter the relevant hours
 
             for (int i = 0; i < 6; i++)
             {
-                    if (hours[i] == true)
-                    {
-                        testHourComboBox.Items.Add(string.Format("{0}:00", i + 9));
-                    }
-            }
+                if (hours[i] == true)
+                {
+                    testHourComboBox.Items.Add(string.Format("{0}:00", i + 9));
+                }
+            } //then adding to combo
+
         }
 
-       
-      
+
+
         private void testAddressComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             myTest.TestAddress.StreetName = testAddressComboBox.Text.ToString();

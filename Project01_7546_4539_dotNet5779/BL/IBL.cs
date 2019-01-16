@@ -177,12 +177,15 @@ namespace BL
 
         Manager GetManagerById(string id);
 
+
+        List<Tester> GetListOfTestersAtTraineeArea(List<Tester> relevantTesters, string testAddress);
         bool CheckIdValidation(string id);
         bool IsValidEmailAddress(string s);
         bool IsValidNumber(string s);
         bool IsValidAlphabetic(string s);
         bool TraineeHave20Lessons(String id);
-        bool TraineeConditionsForTest(Test my_test);
+        bool NotExistTestIn7Days(Test myTest);
+        bool TraineeConditionsForTest(string id, Vehicle vehicle, Gear gear);
         List<Tester> RelevantTesters(Test my_test);
         bool FreeTester(Tester optionalTester, DateTime checkDateTime);
         //------------------------------------------------------------------------------------

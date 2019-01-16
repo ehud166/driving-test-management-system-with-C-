@@ -96,10 +96,8 @@ namespace BL
             }
 
             var relevantTesters = (from tester in dal.GetTestersList()
-                    let listOfRelevantTesters = GetListOfTestersAtTraineeArea(
-                        GetListByVehicleType(my_test),
-                        my_test.TestAddress.StreetName) //get a list of tester match the condition to test 
-                    from item in listOfRelevantTesters
+                    let listOfRelevantTesters = GetListByVehicleType(my_test) //get a list of tester match the condition to test 
+                    from item in listOfRelevantTesters //testers fills the pre condition
                     from someHour in hours//check for every hour in this day maybe the tester will free at the next hour
                     where FreeTester(item, my_test.TestDateAndTime.AddHours(someHour)) &&
                           FreeTesterAtThisWeek(item, my_test.TestDateAndTime.AddHours(someHour)) //now find free tester
@@ -108,10 +106,10 @@ namespace BL
             return relevantTesters;
         }
 
-        public bool TraineeConditionsForTest(Test my_test)
+        public bool TraineeConditionsForTest(string id, Vehicle vehicle, Gear gear)
         {
-            return NotExistTestIn7Days(my_test) && !PassedForThisType(my_test.TraineeId, my_test.VehicleType, my_test.Gear) &&
-                    !TraineeTryingToSignTwice(my_test.TraineeId, my_test.VehicleType, my_test.Gear);
+            return !PassedForThisType(id, vehicle, gear) &&
+                    !TraineeTryingToSignTwice(id, vehicle, gear);
         }
 
 
@@ -481,13 +479,14 @@ namespace BL
         /// </summary>
         /// <param name="my_test"></param>
         /// <returns>true if not</returns>
-        private bool NotExistTestIn7Days(Test myTest)
+        public bool NotExistTestIn7Days(Test myTest)
         {
             var v = (from item in GetTestsList()
                     where item.TraineeId == myTest.TraineeId &&  item.Gear == myTest.Gear && item.VehicleType == myTest.VehicleType && (myTest.TestDateAndTime - item.TestDateAndTime.AddMinutes(1)).Days < 7// adding minute to round the lossing miliseconds at running time
                     select item).FirstOrDefault();
-            return v==null? true : throw new Exception("ERROR:\n" +
-                                             "This Test are too early (haven't pass 7 days from this trainee last test\n");
+            return v == null ? true : false; 
+                //throw new Exception("ERROR:\n" +
+                  //                           "This Test are too early (haven't pass 7 days from this trainee last test\n");
         }
 
 
@@ -498,10 +497,10 @@ namespace BL
         /// <returns>true if does</returns>
         private bool TheTesterFillAll(Test my_test)
         {
-            //foreach (var property in my_test.GetType().GetProperties())
-            //{
-            //    if (property.GetValue(my_test,null) == null) throw new Exception("ERROR: you need to fill all fields of test");
-            //}
+            foreach (var property in my_test.GetType().GetProperties())
+            {
+                if (property.GetValue(my_test, null) == null) throw new Exception("ERROR: you need to fill all fields of test");
+            }
 
             return true;
         }
@@ -547,7 +546,7 @@ namespace BL
         /// <param name="gType"></param>
         /// <returns>true if he does</returns>
         private bool TraineeTryingToSignTwice(string id,Vehicle? vehicle,Gear? gear) => dal.GetTestsList()
-                    .Any(x => x.TraineeId == id && GetTraineeById(id).LicenseType.Any(y => y.Gear == gear && y.VehicleType == vehicle) && x.TestResult == null);
+                    .Any(x => x.TraineeId == id && GetTraineeById(id).LicenseType.Any(y => y.Gear == gear && y.VehicleType == vehicle) && x.TestResult == Result.noGrade);
 
 
         /// <summary>
@@ -642,7 +641,8 @@ namespace BL
                        ((test.VehicleType == Vehicle.maxTrailer || test.VehicleType == Vehicle.midTrailer) && Type.VehicleType == Vehicle.privateCar)) //case b: he has track license and want to test for private
                        && test.TestResult == Result.pass)//pass the test
                                   select test).Count();
-            return conditionCheck == 0 ? false : throw new Exception("dear trainee: you have already driver license for this type of test\n");
+            return conditionCheck == 0 ? false : true;
+                //throw new Exception("dear trainee: you have already driver license for this type of test\n");
         }
         //---------------------------------------------------
         #endregion
@@ -685,46 +685,54 @@ namespace BL
 
         private int MapQuestAPIFunc(string origin = "גולומב 3 ירושלים", string destination = "ברוך דובדבני 40 ירושלים", string KEY = "UMfSGjPW5zSRsIIoUl26GdXDUCWYLuIg")
         {
-            double distInMiles = 0;
-           string url = @"https://www.mapquestapi.com/directions/v2/route" +
-                         @"?key=" + KEY +
-                         @"&from=" + origin +
-                         @"&to=" + destination +
-                         @"&outFormat=xml" +
-                         @"&ambiguities=ignore&routeType=fastest&doReverseGeocode=false" +
-                         @"&enhancedNarrative=false&avoidTimedConditions=false";
-            //request from MapQuest service the distance between the 2 addresses
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            WebResponse response = request.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            StreamReader sreader = new StreamReader(dataStream);
-            string responsereader = sreader.ReadToEnd();
-            response.Close();
-            //the response is given in an XML format
-            XmlDocument xmldoc = new XmlDocument();
-            xmldoc.LoadXml(responsereader);
-            if (xmldoc.GetElementsByTagName("statusCode")[0].ChildNodes[0].InnerText == "0")
-            //we have the expected answer
+            try
             {
-                //display the returned distance
-                XmlNodeList distance = xmldoc.GetElementsByTagName("distance");
-                distInMiles = Convert.ToDouble(distance[0].ChildNodes[0].InnerText);
-                MessageBox.Show("Distance In KM: " + distInMiles * 1.609344);
-                //display the returned driving time
-                XmlNodeList formattedTime = xmldoc.GetElementsByTagName("formattedTime");
-                string fTime = formattedTime[0].ChildNodes[0].InnerText;
-                MessageBox.Show("Driving Time: " + fTime);
+                double distInMiles = -1;
+                string url = @"https://www.mapquestapi.com/directions/v2/route" +
+                             @"?key=" + KEY +
+                             @"&from=" + origin +
+                             @"&to=" + destination +
+                             @"&outFormat=xml" +
+                             @"&ambiguities=ignore&routeType=fastest&doReverseGeocode=false" +
+                             @"&enhancedNarrative=false&avoidTimedConditions=false";
+                //request from MapQuest service the distance between the 2 addresses
+                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
+                WebResponse response = request.GetResponse();
+                Stream dataStream = response.GetResponseStream();
+                StreamReader sreader = new StreamReader(dataStream);
+                string responsereader = sreader.ReadToEnd();
+                response.Close();
+                //the response is given in an XML format
+                XmlDocument xmldoc = new XmlDocument();
+                xmldoc.LoadXml(responsereader);
+                if (xmldoc.GetElementsByTagName("statusCode")[0].ChildNodes[0].InnerText == "0")
+                    //we have the expected answer
+                {
+                    //display the returned distance
+                    XmlNodeList distance = xmldoc.GetElementsByTagName("distance");
+                    distInMiles = Convert.ToDouble(distance[0].ChildNodes[0].InnerText);
+                    //MessageBox.Show("Distance In KM: " + distInMiles * 1.609344);
+                    //display the returned driving time
+                    XmlNodeList formattedTime = xmldoc.GetElementsByTagName("formattedTime");
+                    string fTime = formattedTime[0].ChildNodes[0].InnerText;
+                    //MessageBox.Show("Driving Time: " + fTime);
+                }
+                else if (xmldoc.GetElementsByTagName("statusCode")[0].ChildNodes[0].InnerText == "402")
+                    //we have an answer that an error occurred, one of the addresses is not found
+                {
+                    throw new Exception("an error occurred, one of the addresses is not found. try again.");
+                }
+                else //busy network or other error...
+                {
+                    throw new Exception("We have'nt got an answer, maybe the net is busy...");
+                }
+                //MessageBox.Show("Distance In KM: " + distInMiles * 1.609344);
+                return distInMiles == -1 ? 100000 : (int) (distInMiles * 1.609344);
             }
-            else if (xmldoc.GetElementsByTagName("statusCode")[0].ChildNodes[0].InnerText == "402")
-            //we have an answer that an error occurred, one of the addresses is not found
+            catch
             {
-                MessageBox.Show("an error occurred, one of the addresses is not found. try again.");
+                throw;
             }
-            else //busy network or other error...
-            {
-                MessageBox.Show("We have'nt got an answer, maybe the net is busy...");
-            }
-            return (int)(distInMiles * 1.609344);
         }
 
         /// <summary>
@@ -733,9 +741,16 @@ namespace BL
         /// <param name="copyTesters"></param>
         /// <param name="myAddress"></param>
         /// <returns>relvant tester list</returns>
-        private List<Tester> GetListOfTestersAtTraineeArea(List<Tester> copyTesters, string testAddress)//חייב לתקן שיחפש מרחק נכון
+        public List<Tester> GetListOfTestersAtTraineeArea(List<Tester> relevantTesters, string testAddress)//חייב לתקן שיחפש מרחק נכון
         {
-            return copyTesters.Where(item => MapQuestAPIFunc(item.Address.StreetName, testAddress) <= item.MaxDistance).ToList();
+            try
+            {
+            return relevantTesters.Where(item => MapQuestAPIFunc(item.Address.StreetName, testAddress) <= item.MaxDistance).ToList();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
        
         #endregion

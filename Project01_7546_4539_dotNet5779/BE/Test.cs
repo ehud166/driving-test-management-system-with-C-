@@ -10,7 +10,11 @@ namespace BE
 {
     public class Test
     {
-        public Test( string traineeId, DateTime testDateAndTime, Address testAddress, Vehicle? vehicleType, Gear? gear , string testComment = "", Result ? testDistance = null, Result? testReverseParking = null, Result? testMirrors = null, Result? testMerge = null, Result? testVinker = null, Result? testResult = null, string testerId = null, string iD = null)
+        public Test(string traineeId, DateTime testDateAndTime, Address testAddress, Vehicle? vehicleType, Gear? gear,
+            string testComment = "", Result? testDistance = Result.noGrade, Result? testReverseParking = Result.noGrade,
+            Result? testMirrors = Result.noGrade, Result? testMerge = Result.noGrade,
+            Result? testVinker = Result.noGrade, Result? testResult = Result.noGrade, string testerId = null,
+            string iD = null)
         {
             ID = iD;
             TesterId = testerId;
@@ -32,6 +36,12 @@ namespace BE
         public Test()
         {
             TestAddress = new Address();
+            TestDistance = Result.noGrade;
+            TestReverseParking = Result.noGrade;
+            TestMirrors = Result.noGrade;
+            TestVinker = Result.noGrade;
+            TestMerge = Result.noGrade;
+            TestResult = Result.noGrade;
         }
 
         public string ID { get; set; }

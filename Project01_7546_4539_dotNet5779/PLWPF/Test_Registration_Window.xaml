@@ -42,7 +42,7 @@
                 <RowDefinition/>
 
             </Grid.RowDefinitions >
-            <ComboBox x:Name="testAddressComboBox" Grid.Row="2" IsEnabled="False" IsEditable="True" Text="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="testAddressComboBox_OnSelectionChanged">
+            <ComboBox x:Name="testAddressComboBox" Grid.Row="2" IsEditable="True" Text="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="testAddressComboBox_OnSelectionChanged">
                 <ComboBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -68,7 +68,7 @@
                 </DatePicker>
 
 
-            <ComboBox x:Name="testHourComboBox" Grid.Row="4"/>
+            <ComboBox x:Name="testHourComboBox" Grid.Row="4" IsEnabled="False"/>
 
 
             <ComboBox x:Name="VehicleTypeComboBox" MinWidth="170" Width="auto"   SelectionChanged="VehicleTypeComboBox_OnSelectionChanged">

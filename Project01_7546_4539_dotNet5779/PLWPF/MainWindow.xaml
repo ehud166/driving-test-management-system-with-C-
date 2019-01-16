@@ -15,10 +15,9 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="textBox" Text="ברוכים הבאים למערכת המגניבה שלנו" />
+        <TextBlock x:Name="textBox" Text="ממשק ניהול למערכת לימודי הנהיגה" />
 
-       
-            <Button x:Name="Trainee" Content="תלמיד" Grid.Row="1" Click="Trainee_Click"/>
+        <Button x:Name="Trainee" Content="תלמיד" Grid.Row="1" Click="Trainee_Click"/>
             <Button x:Name="Tester" Content="בוחן" Grid.Row="2"  Click="Tester_Click"/>
         <Button x:Name="Administrator" Content="מנהל"   Grid.Row="3" Click="Manager_OnClick"/>
 
