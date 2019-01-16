@@ -73,7 +73,7 @@
                     <TextBox x:Name="phoneNumbersTextBox"  HorizontalAlignment="Right" MinWidth="110" Margin="0" Width="auto"  MaxLength="7" PreviewTextInput="NumberValidationTextBox" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }" LostFocus="phoneNumbersTextBox_LostFocus"/>
                 </StackPanel>
                 <Label Grid.Row="6" Content=":מס' טלפון" Grid.Column="3" />
-                <ComboBox x:Name="AddressSuggestionsCBB" FontSize="20" MinWidth="170" Width="auto" IsEditable="True" Grid.Column="2" Grid.Row="5" Text="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+                <TextBox x:Name="AddressSuggestionsCBB" FontSize="20" MinWidth="170" Width="auto" Grid.Column="2" Grid.Row="5" Text="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                 <Label  Content=":כתובת"  Grid.Column="3" Grid.Row="5" />
 
                 <ComboBox x:Name="VehcileTypeComboBox" Grid.Row="4"  ItemsSource="{Binding Source={StaticResource enmVehicle} }"   SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
@@ -91,7 +91,7 @@
                 <Label x:Name="LessonNumLabel"  Grid.Row="6" Grid.Column="1" Content=  "מספר השיעורים"/>
                 <Label  Grid.Row="2" Grid.Column="1" Content=  "סיסמא"/>
                 <Label  Grid.Row="3" Grid.Column="1" Content=  "אימות סיסמא"/>
-                <PasswordBox x:Name="passwordBox" Visibility="Visible" Grid.Row="2"  xaml:SecurePassword.Password="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+                <PasswordBox x:Name="passwordBox" Grid.Row="2"  xaml:SecurePassword.Password="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                 <PasswordBox x:Name="validationPasswordBox"  Grid.Row="3"  xaml:SecurePassword.Password="{Binding Password, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
 
                 <ComboBox x:Name="GearComboBox"  Grid.Row="5"  ItemsSource="{Binding Source={StaticResource enmGear}}"  SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >

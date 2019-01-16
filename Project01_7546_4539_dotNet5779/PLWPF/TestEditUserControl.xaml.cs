@@ -28,7 +28,7 @@ namespace PLWPF
         private IBL bl;
         private Test existTest = new Test();
         public event EventHandler<EventArgs> TestEdited;
-
+        
         public TestEditUserControl()
         {
             
@@ -37,12 +37,15 @@ namespace PLWPF
             {
                 InitializeComponent();
                 bl = Bl_imp.GetBl();
+                this.DataContext = existTest;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        
 
         private void toggleButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -72,6 +75,11 @@ namespace PLWPF
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
            
+        }
+
+        public void TestEditUserControl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            
         }
     }
 }

@@ -46,6 +46,7 @@ namespace PLWPF
         {
             Test test = TestsDataGrid.SelectedItem as Test;
             this.TestEditUserControl.DataContext = test;
+            this.TestEditUserControl.TestEditUserControl_OnDataContextChanged(sender,new DependencyPropertyChangedEventArgs());
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

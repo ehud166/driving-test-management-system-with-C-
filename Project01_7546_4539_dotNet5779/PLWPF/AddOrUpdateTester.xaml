@@ -7,6 +7,7 @@
         xmlns:local1="clr-namespace:BE;assembly=BE"
         xmlns:BE="clr-namespace:BE;assembly=BE" Closing="AddOrUpdateTester_OnClosing"
         mc:Ignorable="d"  WindowStartupLocation="CenterScreen" 
+        xmlns:xaml="clr-namespace:PLWPF"
         Title="AddOrUpdateTester" MinHeight="500" MinWidth="1000" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <local1:EnumDescriptionConverter x:Key="descConverter"/>
@@ -40,8 +41,8 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="סיסמא" Grid.Column="1"/>
                     <Label Content="אימות סיסמא" Grid.Column="1" Grid.Row="1"/>
-                    <PasswordBox x:Name="passwordBox" />
-                    <PasswordBox x:Name="validationPasswordBox" Grid.Row="1"/>
+                    <PasswordBox x:Name="passwordBox" xaml:SecurePassword.Password="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+                    <PasswordBox x:Name="validationPasswordBox" Grid.Row="1" xaml:SecurePassword.Password="{Binding Password, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
                 </Grid>
             </Grid>
             <Grid x:Name="grid1" Grid.Column="1"  >
@@ -60,13 +61,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Label Content=":כתובת" Grid.Column="3" Grid.Row="5" />
-                <ComboBox x:Name="addressComboBox"   SelectedItem="{Binding Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5"  Grid.Column="2">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                <TextBox x:Name="addressComboBox"   Text="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5"  Grid.Column="2"/>
                 <Label Content=":תאריך לידה" Grid.Column="3"  Grid.Row="3"/>
                 <DatePicker x:Name="birthdayDatePicker"  SelectedDate="{Binding Birthday, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, TargetNullValue=01.01.1990}" Grid.Column="2" Grid.Row="3"/>
                 <Label Content=":שם פרטי" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center"/>
@@ -151,8 +146,8 @@
                     </ScrollBar>
                 </StackPanel>
                 <StackPanel Grid.Row="4"   Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBox x:Name="maxTestsForWeekTextBox" IsEnabled="False"  Text="{Binding MaxTest, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
-                    <ScrollBar x:Name="maxTestsForWeekScrollBar" Height="40"   HorizontalAlignment="Right" Value="{Binding MaxTest, Mode=OneWay}" RenderTransformOrigin="0.5,0.5" ValueChanged="maxTestsForWeekScrollBar_ValueChanged" >
+                    <TextBox x:Name="maxTestsForWeekTextBox" IsEnabled="False"  Text="{Binding MaxTestsForWeek, Mode=TwoWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
+                    <ScrollBar x:Name="maxTestsForWeekScrollBar" Height="40"   HorizontalAlignment="Right" Value="{Binding MaxTestsForWeek, Mode=TwoWay}" RenderTransformOrigin="0.5,0.5" ValueChanged="maxTestsForWeekScrollBar_ValueChanged" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>

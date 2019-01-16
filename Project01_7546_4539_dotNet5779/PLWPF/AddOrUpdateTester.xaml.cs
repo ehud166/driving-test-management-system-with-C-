@@ -148,6 +148,14 @@ namespace PLWPF
         {
             maxDistanceTextBox.Text = (maxDistanceScrollBar.Value).ToString();
         }
+
+        private void ValidationPasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (passwordBox.Password != validationPasswordBox.Password)
+            {
+                MessageBox.Show("הסיסמאות אינן תואמות אחת לשניה, נסה שוב");
+            }
+        }
     }
     
 }
