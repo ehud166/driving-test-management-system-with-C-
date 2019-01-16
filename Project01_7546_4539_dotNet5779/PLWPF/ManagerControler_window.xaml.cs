@@ -52,18 +52,18 @@ namespace PLWPF
 
         private void TesterEditUserControl_TesterEdited(object sender, EventArgs e)
         {
-            this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
+            this.TestersDataGrid.ItemsSource = bl.GetTestersList();
         }
 
 
         private void TestEditUserControl_TestEdited(object sender, EventArgs e)
         {
-            this.TestersDataGrid.ItemsSource = bl.GetTraineeList();
+            this.TestsDataGrid.ItemsSource = bl.GetTestsList();
         }
 
         private void TraineeEditUserControl_TraineeEdited(object sender, EventArgs e)
         {
-            this.TestsDataGrid.ItemsSource = bl.GetTraineeList();
+            this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
         }
 
 
@@ -111,14 +111,11 @@ namespace PLWPF
 
         }
 
-        //private void (object sender, SelectionChangedEventArgs e)
-        //{
-        //    foreach (var courentKey in bl.GroupTestersByVehicle())
-        //    {
-        //        grouping.Items.Add(courentKey.Key.ToString());
+        private void GroupTraineesByTeacher_Click(object sender, RoutedEventArgs e)
+        {
+            this.TraineesDataGrid.DataContext = bl.GroupTraineesByTeacher();
+        }
 
-        //    }
-        //}
     }
 
 

@@ -319,7 +319,7 @@ namespace BL
             }
             return result;
         }
-        public IEnumerable<IGrouping<string, Trainee>> GroupTraineesByTester(bool toSort = false)
+        public IEnumerable<IGrouping<string, Trainee>> GroupTraineesByTeacher(bool toSort = false)
         {
             IEnumerable<IGrouping<string, Trainee>> result =
                 from trainee in dal.GetTraineeList()
