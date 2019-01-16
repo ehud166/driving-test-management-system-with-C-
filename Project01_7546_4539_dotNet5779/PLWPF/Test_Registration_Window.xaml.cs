@@ -103,7 +103,7 @@ namespace PLWPF
             {
                 if (licenseType.LessonNum >= 20 && bl.TraineeConditionsForTest(existTrainee.ID, licenseType.VehicleType, licenseType.Gear))
                 {
-                    gearAvailable[(int) licenseType.Gear] = true;
+                    gearAvailable[(int)licenseType.Gear] = true;
                 }
             }
             for (int i = 0; i < gearAvailable.Length; i++)
@@ -168,6 +168,7 @@ namespace PLWPF
 
         private void DatePickerOpened(object sender, RoutedEventArgs e)
         {
+            myTest.TestAddress.StreetName = testAddressComboBox.Text.ToString();
             testDatePicker.SelectedDate=null;
             myTest.Gear = Hebrew2GT(GearComboBox.SelectedValue.ToString());
             testDatePicker.DisplayDateStart = DateTime.Today;

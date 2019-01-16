@@ -92,6 +92,7 @@ namespace BL
             int[] hours = new int[6];
             for (int i = 0; i < 6; i++)
             {
+
                 hours[i] = 9 + i;
             }
 
@@ -546,7 +547,7 @@ namespace BL
         /// <param name="gType"></param>
         /// <returns>true if he does</returns>
         private bool TraineeTryingToSignTwice(string id,Vehicle? vehicle,Gear? gear) => dal.GetTestsList()
-                    .Any(x => x.TraineeId == id && GetTraineeById(id).LicenseType.Any(y => y.Gear == gear && y.VehicleType == vehicle) && x.TestResult == Result.noGrade);
+                    .Any(x => x.TraineeId == id && x.VehicleType == vehicle  && x.Gear == gear && x.TestResult == Result.noGrade);
 
 
         /// <summary>
@@ -683,10 +684,11 @@ namespace BL
 
         #region Distance Calculation:
 
-        private int MapQuestAPIFunc(string origin = "גולומב 3 ירושלים", string destination = "ברוך דובדבני 40 ירושלים", string KEY = "UMfSGjPW5zSRsIIoUl26GdXDUCWYLuIg")
+        private int MapQuestAPIFunc(string origin = "גולומב 3 ירושלים", string destination = "ברוך דובדבני 40 ירושלים", string KEY = "ChaOUuCetMBgfIa1rbu6VBKs2KlKqUGo")
         {
             try
             {
+                //MessageBox.Show(origin + "\n" + destination);
                 double distInMiles = -1;
                 string url = @"https://www.mapquestapi.com/directions/v2/route" +
                              @"?key=" + KEY +
@@ -726,7 +728,7 @@ namespace BL
                 {
                     throw new Exception("We have'nt got an answer, maybe the net is busy...");
                 }
-                //MessageBox.Show("Distance In KM: " + distInMiles * 1.609344);
+                MessageBox.Show("Distance In KM: " + distInMiles * 1.609344);
                 return distInMiles == -1 ? 100000 : (int) (distInMiles * 1.609344);
             }
             catch
