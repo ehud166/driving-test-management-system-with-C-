@@ -59,17 +59,22 @@ namespace PLWPF
             int a = (int)LessonNumScrollBar.Value;
             LessonNumTextBox.Text = a.ToString();
         }
-        
+
 
 
 
         private void LicenseTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             some = existTrainee.LicenseType.Find(x =>
-                 x.Gear.ToString() == GearComboBox.SelectedValue?.ToString() && x.VehicleType.ToString() == VehcileTypeComboBox.SelectedValue?.ToString());
-            LessonNumTextBox.Text = some?.LessonNum.ToString();
+                x.Gear.ToString() == GearComboBox.SelectedValue?.ToString() && x.VehicleType.ToString() == VehcileTypeComboBox.SelectedValue?.ToString());
+            if (some != null)
+                LessonNumTextBox.Text = some.LessonNum.ToString();
+        }
 
-
+        private void LessonNumTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var a = LessonNumTextBox.Text == null ? 0 : int.Parse(LessonNumTextBox.Text);
+            some.LessonNum = a;
         }
 
         private void NumberValidationTextBox(object sender, System.Windows.Input.TextCompositionEventArgs e)
@@ -103,7 +108,7 @@ namespace PLWPF
             }
         }
 
-        private void DeleteTraineButtonClick_Click(object sender, RoutedEventArgs e)
+        private void DeleteTraineeButtonClick_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -132,6 +137,31 @@ namespace PLWPF
             TraineeEdited?.Invoke(this, new EventArgs());
         }
 
+        private void TraineeeTestButtonClick_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (bl.TraineeHave20Lessons(existTrainee.ID))
+                {
+                   
+                    Test_Registar_Window test_Registar_Window = new Test_Registar_Window(null, existTrainee);
+                    test_Registar_Window.ShowDialog();
+                    //this.Close();
+                }
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+
+        private void TraineeEditUserControl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            existTrainee = this.DataContext as Trainee;
+        }
     }
+    
 }
 

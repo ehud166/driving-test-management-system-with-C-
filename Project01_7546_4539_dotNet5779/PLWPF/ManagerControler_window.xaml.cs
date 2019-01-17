@@ -41,6 +41,7 @@ namespace PLWPF
                 TraineeEditUserControl.TraineeEdited += TraineeEditUserControl_TraineeEdited;
                 TesterEditUserControl.TesterEdited += TesterEditUserControl_TesterEdited;
                 TestEditUserControl.TestEdited += TestEditUserControl_TestEdited;
+                
             }
             catch (Exception exception)
             {
@@ -106,16 +107,17 @@ namespace PLWPF
             }
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+     
 
         private void GroupTraineesByTeacher_Click(object sender, RoutedEventArgs e)
         {
             this.TraineesDataGrid.DataContext = bl.GroupTraineesByTeacher();
         }
 
+        private void TabControl_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+                this.TestsDataGrid.ItemsSource = bl.GetTestsList();
+        }
     }
 
 

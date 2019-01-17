@@ -154,5 +154,11 @@ namespace PLWPF
             MessageBox.Show(existTester.FirstName + " עודכן בהצלחה");
             TesterEdited?.Invoke(this, new EventArgs());
         }
+
+        private void TesterEditUserControl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            
+                existTester = this.DataContext as Tester;
+        }
     }
 }

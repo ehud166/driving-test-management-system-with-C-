@@ -11,7 +11,7 @@
         Title="Test_Registration_Window" MinHeight="450" MinWidth="450" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <local1:EnumDescriptionConverter x:Key="descConverter"/>
-       
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions >
@@ -47,7 +47,7 @@
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
-                    </ComboBox.Resources>
+                </ComboBox.Resources>
             </ComboBox>
             <DatePicker x:Name="testDatePicker" Grid.Row="3" CalendarOpened="DatePickerOpened" SelectedDateChanged="testDatePicker_selectedChanged" >
                 <!--<DatePicker.Style>
@@ -65,17 +65,17 @@
                             </Style.Triggers>
                     </Style>
                 </DatePicker.Style>-->
-                </DatePicker>
+            </DatePicker>
 
 
             <ComboBox x:Name="testHourComboBox" Grid.Row="4" IsEnabled="False"/>
 
 
             <ComboBox x:Name="VehicleTypeComboBox" MinWidth="170" Width="auto"   SelectionChanged="VehicleTypeComboBox_OnSelectionChanged" DropDownOpened="VehicleTypeComboBox_OnDropDownOpened">
-                
+
             </ComboBox>
             <ComboBox x:Name="GearComboBox" Grid.Row="1"   IsEnabled="False" >
-               
+
             </ComboBox>
             <Label x:Name="testAdressLable" Content=":כתובת" Grid.Column="1" Grid.Row="2"/>
             <Label x:Name="testDateLable" Content=":תאריך"  Grid.Row="3" Grid.Column="1"/>
@@ -85,7 +85,7 @@
 
         </Grid>
         <Label Content="הרשם לטסט" Grid.Row="3" HorizontalAlignment="Center"/>
-        <Button Content="אישור" Grid.Row="2" Margin="15" FontSize="36" FontWeight="Heavy" Click="Button_Click">
+        <Button Content="אישור" Grid.Row="2" Margin="15,0,15.333,15" FontSize="36" FontWeight="Heavy" Click="Button_Click" Height="57" VerticalAlignment="Bottom">
             <!--<Button.Style>
                 <Style>
                     <Style.Triggers>
@@ -107,6 +107,6 @@
                     </Style.Triggers>
                 </Style>
             </Button.Style>-->
-            </Button>
+        </Button>
     </Grid>
 </Window>

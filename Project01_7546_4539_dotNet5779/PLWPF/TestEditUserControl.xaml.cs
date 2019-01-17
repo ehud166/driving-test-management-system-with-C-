@@ -77,7 +77,7 @@ namespace PLWPF
                 #endregion
 
                 bl.UpdateTest(existTest);
-                MessageBox.Show(bl.GetTestsById(iD.Content.ToString()).ToString());
+                //MessageBox.Show(bl.GetTestsById(iD.Content.ToString()).ToString());
                 TestEdited?.Invoke(this, new EventArgs());
             }
             catch (Exception exception)

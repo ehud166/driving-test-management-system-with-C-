@@ -216,7 +216,7 @@ namespace DAL
                         my_test.TestAddress.City), my_test.VehicleType,
                     my_test.Gear, my_test.TestComment, my_test.TestDistance, my_test.TestReverseParking,
                     my_test.TestMirrors, my_test.TestMerge, my_test.TestVinker, my_test.TestResult, my_test.TesterId,
-                    my_test.TestComment);
+                    my_test.ID);
                 Tests.Add(updateTest);
 
             }

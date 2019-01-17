@@ -13,7 +13,7 @@
     </Window.Resources>
     <Grid>
 
-        <TabControl x:Name="tabControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="{Binding Mode=OneWay}" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl x:Name="tabControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="TabControl_OnSelectionChanged">
 
             <TabItem x:Name="traineeHeader" Header="רשימת התלמידים">
                 <Grid >
@@ -65,7 +65,7 @@
             </TabItem>
 
 
-            <TabItem Header="רשימת הטסטים">
+            <TabItem Header="רשימת הטסטים" >
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

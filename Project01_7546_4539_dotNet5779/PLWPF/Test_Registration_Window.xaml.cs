@@ -230,7 +230,7 @@ namespace PLWPF
             Address a = new Address(testAddressComboBox.Text);
             newTest.TestAddress = a;
             newTest.TesterId = newTester.ID;
-            newTest.TestComment = "goodluck";
+            newTest.TestComment = "!!!בהצלחה";
             bl.AddTest(newTest);
             Test newTestAdded = bl.GetTestsList().Find(x => x.Equals(newTest));
             newTester.TesterTests.Add(newTestAdded);
