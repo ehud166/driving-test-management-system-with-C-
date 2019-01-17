@@ -62,6 +62,7 @@ namespace PLWPF
                             else
                             {
                                 MessageBox.Show("!!!אין לך הרשאת מנהל");
+                                pWindow?.Show();
                                 this.Close();
                             }
                             break;
@@ -160,12 +161,12 @@ namespace PLWPF
 
                 if (idTextBox.Text.Length == 9)
             {
-                if ((user == "manager" || user == "trainee") && bl.GetTraineeById(idTextBox.Text) != null)
+                if (user == "manager" || (user == "trainee" && bl.GetTraineeById(idTextBox.Text) != null))
                 {
                     PasswordBox.Visibility = Visibility.Visible;
                     passwordLabel.Visibility = Visibility.Visible;
                 }
-                if ((user == "manager" || user == "tester") && bl.GetTesterById(idTextBox.Text) != null)
+                if (user == "manager" || (user == "tester" && bl.GetTesterById(idTextBox.Text) != null))
                 {
                     PasswordBox.Visibility = Visibility.Visible;
                     passwordLabel.Visibility = Visibility.Visible;

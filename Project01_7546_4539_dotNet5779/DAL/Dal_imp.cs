@@ -15,13 +15,13 @@ namespace DAL
     public class Dal_imp : IDAL
     {
         #region Singleton
-        //protected static Dal_imp instance = null;
-        //public static IDAL GetDal()
-        //{
-        //     if (instance == null)
-        //        instance = new dal();
-        //     return instance;
-        //}
+        protected static Dal_imp instance = null;
+        public static IDAL GetDal()
+        {
+            if (instance == null)
+                instance = new Dal_imp();
+            return instance;
+        }
         protected Dal_imp()
         {
             #region help to insert

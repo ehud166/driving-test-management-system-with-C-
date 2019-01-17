@@ -24,7 +24,7 @@ namespace BL
     {
         private List<Manager> managerList;
         #region singleton
-        IDAL dal = Dal_XML_imp.GetDal();
+        IDAL dal = Dal_imp.GetDal();
         
         protected static Bl_imp instance = null;
         public static IBL GetBl()
