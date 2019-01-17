@@ -38,6 +38,8 @@ namespace PLWPF
                 this.TestsDataGrid.ItemsSource = bl.GetTestsList();
                 this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
                 this.TestersDataGrid.ItemsSource = bl.GetTestersList();
+
+                //this window sign for events from user controls to make him refresh his data
                 TraineeEditUserControl.TraineeEdited += TraineeEditUserControl_TraineeEdited;
                 TesterEditUserControl.TesterEdited += TesterEditUserControl_TesterEdited;
                 TestEditUserControl.TestEdited += TestEditUserControl_TestEdited;
@@ -55,7 +57,7 @@ namespace PLWPF
         {
             try
             {
-                this.TestersDataGrid.ItemsSource = bl.GetTestersList();
+                this.TestersDataGrid.ItemsSource = bl.GetTestersList(); //refresh
             }
             catch (Exception exception)
             {
@@ -69,7 +71,7 @@ namespace PLWPF
         {
             try
             {
-                this.TestsDataGrid.ItemsSource = bl.GetTestsList();
+                this.TestsDataGrid.ItemsSource = bl.GetTestsList();  //refresh
 
             }
             catch (Exception exception)
@@ -83,7 +85,7 @@ namespace PLWPF
         {
             try
             {
-                this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
+                this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();  //refresh
 
             }
             catch (Exception exception)
@@ -93,22 +95,44 @@ namespace PLWPF
             }
         }
 
-
+        /// <summary>
+        /// making the matching user control to present the specific test details on the user control
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TestsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (TestsDataGrid.SelectedItem != null)
+            try
             {
-                Test test = TestsDataGrid.SelectedItem as Test;
-                this.TestEditUserControl.DataContext = test;
+                  if (TestsDataGrid.SelectedItem != null)
+                  {
+                   Test test = TestsDataGrid.SelectedItem as Test;
+                   this.TestEditUserControl.DataContext = test;
+                  }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+                throw;
             }
         }
 
+
+
         private void TraineesDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (TraineesDataGrid.SelectedItem != null)
+            try
             {
+                if (TraineesDataGrid.SelectedItem != null)
+                {
                 Trainee trainee = TraineesDataGrid.SelectedItem as Trainee;
                 this.TraineeEditUserControl.DataContext = trainee;
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+                throw;
             }
         }
 
@@ -116,11 +140,19 @@ namespace PLWPF
 
         private void TestersDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (TestersDataGrid.SelectedItem != null)
+            try
             {
+                if (TestersDataGrid.SelectedItem != null)
+                {
                 Tester tester = TestersDataGrid.SelectedItem as Tester;
                 this.TesterEditUserControl.DataContext = tester;
                 this.TesterEditUserControl.mySchedule.Build = tester.Schedule;
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+                throw;
             }
         }
 
@@ -137,42 +169,84 @@ namespace PLWPF
             }
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void GroupTraineesByTeacher_Click(object sender, RoutedEventArgs e)
-        {
-            this.TraineesDataGrid.DataContext = bl.GroupTraineesByTeacher();
-        }
-
+        /// <summary>
+        /// group trainees by parameter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GroupTrainees_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //MessageBox.Show(GroupTrainees.SelectedIndex.ToString());
-            List<Trainee> list = new List<Trainee>();
-            TraineesDataGrid.ItemsSource = list;
-
-            switch (GroupTrainees.SelectedIndex)
+            try
             {
-                case 0:
-                    foreach (var item in bl.GroupTraineesByTeacher())
-                    {
-                        //GroupTraineesKey.Items.Add(variable.Key);
-                        foreach (var byTeacher in item)
+                this.TraineesDataGrid.ItemsSource = null;
+                this.TraineesDataGrid.Items.Clear();
+                //List<Trainee> list = new List<Trainee>();
+                //TraineesDataGrid.ItemsSource = list;
+
+                switch (GroupTrainees.SelectedIndex)
+                {
+                    case 0:
+                     
+                        foreach (var item in bl.GroupTraineesByTeacher())
                         {
-                            list.Add(byTeacher);
+                            foreach (var byTeacher in item)
+                            {
+                                TraineesDataGrid.Items.Add(byTeacher);
+                            }
+
+                            var split = new GridSplitter();
                         }
-                        var split = new GridSplitter();
-                        list.Add(new Trainee());
-                    }
-                    break;
+
+                        break;
+                    case 1:
+
+                        foreach (var item in bl.GroupTraineesBySchool())
+                        {
+                            foreach (var bySchool in item)
+                            {
+                                TraineesDataGrid.Items.Add(bySchool);
+                            }
+
+                            var split = new GridSplitter();
+                        }
+
+                        break;
+
+                    case 2:
+
+                        foreach (var item in bl.GroupTraineesByGender())
+                        {
+                            foreach (var byGender in item)
+                            {
+                                TraineesDataGrid.Items.Add(byGender);
+                            }
+
+                            var split = new GridSplitter();
+                        }
+
+                        break;
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
+        /// <summary>
+        /// making the test data grid refresh after we set a date for new test
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TabControl_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-                this.TestsDataGrid.ItemsSource = bl.GetTestsList();
+            try
+            {
+                this.TestsDataGrid.ItemsSource = bl.GetTestsList();  }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 

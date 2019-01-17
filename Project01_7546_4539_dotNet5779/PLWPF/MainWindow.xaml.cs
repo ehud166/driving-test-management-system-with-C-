@@ -28,7 +28,6 @@ namespace PLWPF
             {
                 InitializeComponent();
                 IBL bl = Bl_imp.GetBl();
-                //List<Tester> a = bl.GetListOfTestersAtTraineeArea(bl.GetTestersList(), "גולומב 3 ירושלים");
             }
             catch (Exception e)
             {
@@ -40,16 +39,15 @@ namespace PLWPF
         {
              try
             {
-            //this.Hide();
             LogInWindow logInWindow = new LogInWindow(this,"trainee");
             logInWindow.ShowDialog();
-                //  this.Close();
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         private void Tester_Click(object sender, RoutedEventArgs e)
         {
@@ -68,10 +66,8 @@ namespace PLWPF
 
         private void Manager_OnClick(object sender, RoutedEventArgs e)
         {
-            //this.Hide();
             LogInWindow logInWindow = new LogInWindow(this, "manager");
             logInWindow.ShowDialog();
-            //  this.Close();
 
         }
     }
@@ -109,7 +105,9 @@ namespace PLWPF
 
         private static void HandleBoundPasswordChanged(DependencyObject dp, DependencyPropertyChangedEventArgs e)
         {
-            var passwordBox = dp as PasswordBox;
+            try
+            {
+                var passwordBox = dp as PasswordBox;
             if (passwordBox == null)
                 return;
 
@@ -126,14 +124,26 @@ namespace PLWPF
             }
 
             passwordBox.Password = e.NewValue as string;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private static void HandlePasswordChanged(object sender, RoutedEventArgs e)
         {
-            var passwordBox = (PasswordBox)sender;
+            try
+            {
+                var passwordBox = (PasswordBox)sender;
             passwordBox.SetValue(SettingPasswordProperty, true);
             SetPassword(passwordBox, passwordBox.Password);
             passwordBox.SetValue(SettingPasswordProperty, false);
+            }
+            catch (Exception exception)
+            {
+            MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+}
     }
 }

@@ -46,13 +46,11 @@ namespace PLWPF
             {
 
                 id = idTextBox.Text;
-                //password = LogIn_ShowPassword.;
-                // MessageBox.Show(id + "\n" + birth.ToString("d"));
-                if (bl.CheckIdValidation(id))
+                if (bl.CheckIdValidation(id)) //if id is correct
                 {
                     this.Hide();
                     pWindow.Hide();
-                    switch (user)
+                    switch (user) //checks who is the user is the user 
                     {
                         case "manager":
                             Manager managerDetails = bl.GetManagerById(id);
@@ -126,7 +124,7 @@ namespace PLWPF
                     OkButton_Click(sender, e);
                 }
 
-                if ((e.Key < Key.D0 || e.Key > Key.D9) && (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) &&
+                if ((e.Key < Key.D0 || e.Key > Key.D9) && (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) &&  //not numbers
                     e.Key != Key.Tab) //to handled
                 {
                     idTextBox.BorderBrush = Brushes.Red;
@@ -154,10 +152,13 @@ namespace PLWPF
             }
         }
 
+
         private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            try
+            {
 
-            if (idTextBox.Text.Length == 9)
+                if (idTextBox.Text.Length == 9)
             {
                 if ((user == "manager" || user == "trainee") && bl.GetTraineeById(idTextBox.Text) != null)
                 {
@@ -169,22 +170,14 @@ namespace PLWPF
                     PasswordBox.Visibility = Visibility.Visible;
                     passwordLabel.Visibility = Visibility.Visible;
                 }
-            }
-        }
-
-        
-
-        private void LogInWindow_OnClosing(object sender, CancelEventArgs e)
-        {
-            try
-            {
-                //pWindow?.Show();
+                }
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+          
     }
 
 }

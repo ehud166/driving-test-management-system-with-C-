@@ -38,8 +38,8 @@ namespace PLWPF
             {
                 InitializeComponent();
                 bl = Bl_imp.GetBl();
-                LessonNumScrollBar.Maximum = 100;
-                LessonNumScrollBar.SmallChange = 1;
+                LessonNumScrollBar.Maximum = 100; //maximum 100 lessons per vehicle type for student
+                LessonNumScrollBar.SmallChange = 1; // lessons raise up by 1 (int)
             }
             catch (Exception e)
             {
@@ -49,62 +49,132 @@ namespace PLWPF
         }
         private void ValidationPasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (passwordBox.Password != validationPasswordBox.Password)
+            try
+            {
+                if (passwordBox.Password != validationPasswordBox.Password)
             {
                 MessageBox.Show("הסיסמאות אינן תואמות אחת לשניה, נסה שוב");
             }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+
+
         private void LessonNumScrollBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int a = (int)LessonNumScrollBar.Value;
+            try
+            {
+                int a = (int)LessonNumScrollBar.Value;
             LessonNumTextBox.Text = a.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
 
-
+        /// <summary>
+        /// making te LessonNumTextBox present the right lesson num for every car and gear types
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LicenseTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            some = existTrainee.LicenseType.Find(x =>
+            try
+            {
+                some = existTrainee.LicenseType.Find(x =>
                 x.Gear.ToString() == GearComboBox.SelectedValue?.ToString() && x.VehicleType.ToString() == VehcileTypeComboBox.SelectedValue?.ToString());
             if (some != null)
                 LessonNumTextBox.Text = some.LessonNum.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+
 
         private void LessonNumTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            var a = LessonNumTextBox.Text == null ? 0 : int.Parse(LessonNumTextBox.Text);
+            try
+            {
+                var a = LessonNumTextBox.Text == null ? 0 : int.Parse(LessonNumTextBox.Text);
             some.LessonNum = a;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         private void NumberValidationTextBox(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
+            try
+            {
+                Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+
 
         private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            if (!bl.IsValidEmailAddress(EmailTextBox?.Text))
+            try
             {
+                if (!bl.IsValidEmailAddress(EmailTextBox?.Text))
+                {
                 EmailTextBox.Clear();
                 EmailTextBox.BorderBrush = Brushes.Red;
-            }
-            else
+                }
+                else
                 EmailTextBox.BorderBrush = Brushes.LightBlue;
+                }
+           catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+
 
         private void phoneNumbersTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (phoneNumbersTextBox.Text.Length < 7)
+            try
+            {
+                if (phoneNumbersTextBox.Text.Length < 7)
                 phoneNumbersTextBox.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void AlphabeticValidation_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!bl.IsValidAlphabetic(e?.Text))
+            try
             {
+                if (!bl.IsValidAlphabetic(e?.Text))
+                {
                 e.Handled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -131,11 +201,20 @@ namespace PLWPF
 
         private void UpdateButtonClick_Click(object sender, RoutedEventArgs e)
         {
-            existTrainee = this.DataContext as Trainee;
+         try
+        {
+                existTrainee = this.DataContext as Trainee;
             bl.UpdateTrainee(existTrainee);
             MessageBox.Show(existTrainee.FirstName + " עודכן בהצלחה");
             TraineeEdited?.Invoke(this, new EventArgs());
+         }
+         catch (Exception exception)
+         {
+             MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+         }
         }
+
+
 
         private void TraineeeTestButtonClick_Click(object sender, RoutedEventArgs e)
         {
@@ -157,9 +236,19 @@ namespace PLWPF
 
         }
 
+
         private void TraineeEditUserControl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            existTrainee = this.DataContext as Trainee;
+            try
+            {
+                existTrainee = this.DataContext as Trainee;
+            }
+
+
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
     

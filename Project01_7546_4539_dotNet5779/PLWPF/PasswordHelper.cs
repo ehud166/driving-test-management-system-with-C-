@@ -7,7 +7,9 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace PLWPF
-{
+{/// <summary>
+/// security for password
+/// </summary>
     public static class PasswordHelper
     {
         public static readonly DependencyProperty PasswordProperty =

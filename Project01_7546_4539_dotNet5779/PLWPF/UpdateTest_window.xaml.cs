@@ -44,9 +44,17 @@ namespace PLWPF
 
         private void TestsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Test test = TestsDataGrid.SelectedItem as Test;
-            this.TestEditUserControl.DataContext = test;
-            this.TestEditUserControl.TestEditUserControl_OnDataContextChanged(sender,new DependencyPropertyChangedEventArgs());
+            try
+            {
+                Test test = TestsDataGrid.SelectedItem as Test;
+                this.TestEditUserControl.DataContext = test;
+                this.TestEditUserControl.TestEditUserControl_OnDataContextChanged(sender,new DependencyPropertyChangedEventArgs());
+            }
+
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
