@@ -13,7 +13,7 @@
     </Window.Resources>
     <Grid>
 
-        <TabControl x:Name="tabControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="{Binding Mode=OneWay}" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl x:Name="tabControl"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="{Binding Mode=OneWay}" >
 
             <TabItem x:Name="traineeHeader" Header="רשימת התלמידים">
                 <Grid >
@@ -26,8 +26,14 @@
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Button Grid.Row="1" x:Name="GroupTraineesByTeacher" Content="מיין תלמידים לפי מורה" Click="GroupTraineesByTeacher_Click"/>
-                            <DataGrid x:Name="TraineesDataGrid"   AutoGenerateColumns="False" IsReadOnly="True" EnableRowVirtualization="True" SelectionChanged="TraineesDataGrid_SelectionChanged">
+                        <StackPanel Grid.Row="1" >
+                        <ComboBox x:Name="GroupTrainees" SelectionChanged="GroupTrainees_OnSelectionChanged">
+                            <ComboBoxItem Content="לפי מורה"/>
+                            <ComboBoxItem Content="לפי בית ספר לנהיגה"/>
+                            <ComboBoxItem Content="לפי מין"/>
+                        </ComboBox>
+                        </StackPanel>
+                        <DataGrid x:Name="TraineesDataGrid"   AutoGenerateColumns="False" IsReadOnly="True" EnableRowVirtualization="True" SelectionChanged="TraineesDataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="firstNameColumn"  Header="שם פרטי" Width="*" Binding="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             <DataGridTextColumn x:Name="lastNameColumn" Header="שם משפחה" Binding="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="*"/>

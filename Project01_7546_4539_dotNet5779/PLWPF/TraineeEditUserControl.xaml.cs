@@ -109,8 +109,8 @@ namespace PLWPF
             {
                 bl.RemoveTrainee(this.idTextBox.Text);
                 MessageBox.Show(this.firstNameTextBox.Text+" "+ this.lastNameTextBox.Text+" "+"הוסר/ה מהמערכת בהצלחה");
-                Trainee trainee = new Trainee();
-                this.DataContext = trainee;
+                //Trainee trainee = new Trainee();
+                //this.DataContext = trainee;
                 TraineeEdited?.Invoke(this, new EventArgs());
             }
             catch (Exception exception)
