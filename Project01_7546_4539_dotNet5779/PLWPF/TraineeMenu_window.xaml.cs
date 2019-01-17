@@ -138,7 +138,14 @@ namespace PLWPF
 
         private void TraineeMenu_window_OnLoaded(object sender, RoutedEventArgs e)
         {
-            header_textBlock.Text = string.Format("שלום, " + existTrainee.FirstName);
+            try
+            {
+                header_textBlock.Text = string.Format("שלום, " + existTrainee.FirstName);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
     }

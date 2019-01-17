@@ -75,9 +75,12 @@ namespace PLWPF
             this.Close();
         }
 
+
         private void VehicleTypeComboBox_OnDropDownOpened(object sender, EventArgs e)
         {
-            VehicleTypeComboBox.Items.Clear();
+            try
+            {
+                VehicleTypeComboBox.Items.Clear();
             bool[] vehicleAvailable = new bool[4] { false, false, false, false };
             foreach (var licenseType in existTrainee.LicenseType)
             {
@@ -94,12 +97,21 @@ namespace PLWPF
                     VehicleTypeComboBox.Items.Add(VT2Hebrew((Vehicle)i));
                 }
             }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+
 
 
         private void VehicleTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            bool[] gearAvailable = new bool[2] { false, false};
+            try
+            {
+                bool[] gearAvailable = new bool[2] { false, false};
             if (Hebrew2VT(VehicleTypeComboBox.SelectedValue.ToString()) !=null)
             {
                 myTest.VehicleType = Hebrew2VT(VehicleTypeComboBox.SelectedValue.ToString());
@@ -120,12 +132,19 @@ namespace PLWPF
                     GearComboBox.IsEnabled = true;
                 }
             }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
         private void setBlackOutDates(DateTime start, DateTime end)
         {
-            testDatePicker.BlackoutDates.Clear();
+            try
+            {
+                testDatePicker.BlackoutDates.Clear();
             CalendarDateRange XForTheFirst2Days = new CalendarDateRange();
             XForTheFirst2Days.Start = DateTime.Today;
             XForTheFirst2Days.End = DateTime.Today.AddDays(1);
@@ -170,21 +189,37 @@ namespace PLWPF
                 }
                 i = i.AddDays(1);
             }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         private void DatePickerOpened(object sender, RoutedEventArgs e)
         {
-            myTest.TestAddress.StreetName = testAddressComboBox.Text.ToString();
-            testDatePicker.SelectedDate=null;
-            myTest.Gear = Hebrew2GT(GearComboBox.SelectedValue.ToString());
-            testDatePicker.DisplayDateStart = DateTime.Today;
-            testDatePicker.DisplayDateEnd = DateTime.Today.AddDays(32);
-            setBlackOutDates(DateTime.Today, DateTime.Today.AddDays(32));
+            try
+            {
+                myTest.TestAddress.StreetName = testAddressComboBox.Text.ToString();
+                testDatePicker.SelectedDate=null;
+                myTest.Gear = Hebrew2GT(GearComboBox.SelectedValue.ToString());
+                testDatePicker.DisplayDateStart = DateTime.Today;
+                testDatePicker.DisplayDateEnd = DateTime.Today.AddDays(32);
+                setBlackOutDates(DateTime.Today, DateTime.Today.AddDays(32));
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         private void testDatePicker_selectedChanged(object sender, SelectionChangedEventArgs e)
         {
-            myTest.TestDateAndTime = testDatePicker.SelectedDate.Value;
+            try
+            {
+                myTest.TestDateAndTime = testDatePicker.SelectedDate.Value;
             myRelevantTesters = bl.RelevantTesters(myTest);
             testHourComboBox.IsEnabled = true;
             bool[] hours = new bool[6];
@@ -208,7 +243,12 @@ namespace PLWPF
                 {
                     testHourComboBox.Items.Add(string.Format("{0}:00", i + 9));
                 }
-            } //then adding to combo
+            }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            } 
 
         }
 
@@ -216,15 +256,23 @@ namespace PLWPF
 
         private void testAddressComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            myTest.TestAddress.StreetName = testAddressComboBox.Text.ToString();
+            try
+            {
+                myTest.TestAddress.StreetName = testAddressComboBox.Text.ToString();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show(testHourComboBox.SelectedIndex.ToString());
-            //MessageBox.Show(testDatePicker.Text.ToString());
-            
-            DateTime newDateTime = DateTime.Parse(testDatePicker.Text).AddHours(testHourComboBox.SelectedIndex + 9);
+
+            try
+            {
+                DateTime newDateTime = DateTime.Parse(testDatePicker.Text).AddHours(testHourComboBox.SelectedIndex + 9);
             Test newTest = new Test(existTrainee.ID,newDateTime,myTest.TestAddress,myTest.VehicleType,myTest.Gear);
             Tester newTester = myRelevantTesters.Find(x => bl.FreeTester(x, newDateTime) == true);
             Address a = new Address(testAddressComboBox.Text);
@@ -238,6 +286,11 @@ namespace PLWPF
             //MessageBox.Show(newTestAdded.ToString());
             //MessageBox.Show(bl.GetTesterById(newTestAdded.TesterId).TesterTests.Find(x=>x.Equals(newTest)).ToString());
             this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 

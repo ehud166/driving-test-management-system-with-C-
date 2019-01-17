@@ -60,25 +60,35 @@ namespace PLWPF
 
         private void ScheduleToggenGrid_Checked(object sender, RoutedEventArgs e)
         {
+            try
+            {
 
-            ToggleButton btn = sender as ToggleButton;
+                ToggleButton btn = sender as ToggleButton;
             int x = (int)btn.GetValue(Grid.RowProperty) + 9;
             int y = 4 - (int)btn.GetValue(Grid.ColumnProperty);
             Build[(DayOfWeek)y][x] = true;
-            //MessageBox.Show("row" + x.ToString() + "column" + y.ToString() + "checked");
-            //MessageBox.Show(Build[(DayOfWeek)y][x].ToString());
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 
         private void ScheduleToggenGrid_Unchecked(object sender, RoutedEventArgs e)
         {
-            ToggleButton btn = sender as ToggleButton;
+            try
+            {
+                ToggleButton btn = sender as ToggleButton;
             int x = (int)btn.GetValue(Grid.RowProperty) + 9;
             int y = 4 - (int)btn.GetValue(Grid.ColumnProperty);
             Build[(DayOfWeek)y][x] = false;
-            //MessageBox.Show("row" + x.ToString() + "column" + y.ToString() + "unchecked");
-            //MessageBox.Show(Build[(DayOfWeek)y][x].ToString());
-
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+      
         }
 
 

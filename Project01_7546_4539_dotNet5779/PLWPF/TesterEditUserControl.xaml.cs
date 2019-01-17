@@ -36,11 +36,11 @@ namespace PLWPF
                 InitializeComponent();
                 bl = Bl_imp.GetBl();
                 existTester = new Tester();
-                SeniorityScrollBar.Maximum = 50;
+                SeniorityScrollBar.Maximum = 50;  //max 50 years
                 SeniorityScrollBar.SmallChange = 1;
-                maxDistanceScrollBar.Maximum = 300;
-                maxDistanceScrollBar.SmallChange = 1;
-                maxTestsForWeekScrollBar.Maximum = 30;
+                maxDistanceScrollBar.Maximum = 300; //max 300 km
+                maxDistanceScrollBar.SmallChange = 1; //change by int
+                maxTestsForWeekScrollBar.Maximum = 30; //max 5 days * 6 hours
                 maxTestsForWeekScrollBar.SmallChange = 1;
 
             }
@@ -50,59 +50,58 @@ namespace PLWPF
             }
 
         }
-        //private void AddOrUpdateButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        existTester.Schedule = mySchedule.Build;
-        //        if (exist)
-        //        {
-        //            bl.UpdateTester(existTester);
-        //            MessageBox.Show(existTester.FirstName + " עודכן בהצלחה");
-        //        }
-        //        else
-        //        {
-        //            bl.AddTester(existTester);
-        //            MessageBox.Show(existTester.FirstName + " נרשם בהצלחה");
-        //            pWindow = new TesterMenu(pWindow, existTester);
-        //        }
-
-        //        this.Close();
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-
-
-        //    }
-        //}
-
-
-
-
-       
+     
 
         private void SeniorityScrollBar_OnValueChangedScrollBar(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            SeniorityTextBox.Text = SeniorityScrollBar.Value.ToString();
+            try
+            {
+                SeniorityTextBox.Text = SeniorityScrollBar.Value.ToString();
             SeniorityScrollBar.Minimum = double.Parse(SeniorityTextBox.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
+
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-        private void phoneNumbersTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (phoneNumbersTextBox.Text.Length < 7)
+            try
             {
-                phoneNumbersTextBox.Clear();
+                Regex regex = new Regex("[^0-9]+"); //only numbers for all numbers textBox
+            e.Handled = regex.IsMatch(e.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
+        private void phoneNumbersTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (phoneNumbersTextBox.Text.Length < 7)
+                {
+                    phoneNumbersTextBox.Clear();//delete the field if is not right
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
         private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            bool result = bl.IsValidEmailAddress(EmailTextBox?.Text);
+            try
+            {
+                bool result = bl.IsValidEmailAddress(EmailTextBox?.Text);
 
             if (!result)
             {
@@ -111,16 +110,38 @@ namespace PLWPF
             }
             else
                 EmailTextBox.BorderBrush = Brushes.LightBlue;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+
 
         private void maxTestsForWeekScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            maxTestsForWeekTextBox.Text = maxTestsForWeekScrollBar.Value.ToString();
+            try
+            {
+                maxTestsForWeekTextBox.Text = maxTestsForWeekScrollBar.Value.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         private void maxDistanceScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            maxDistanceTextBox.Text = (maxDistanceScrollBar.Value).ToString();
+            try
+            {
+                maxDistanceTextBox.Text = (maxDistanceScrollBar.Value).ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void DeletButtonClick_Click(object sender, RoutedEventArgs e)
@@ -139,26 +160,51 @@ namespace PLWPF
             }
         }
 
+
         private void ValidationPasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (passwordBox.Password != validationPasswordBox.Password)
+            try
             {
+                if (passwordBox.Password != validationPasswordBox.Password)
+                {
                 MessageBox.Show("הסיסמאות אינן תואמות אחת לשניה, נסה שוב");
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
+
+
         private void UpdateButtonClick_Click(object sender, RoutedEventArgs e)
         {
-            existTester = this.DataContext as Tester;
+            try
+            {
+                existTester = this.DataContext as Tester;
             bl.UpdateTester(existTester);
             MessageBox.Show(existTester.FirstName + " עודכן בהצלחה");
-            TesterEdited?.Invoke(this, new EventArgs());
+            TesterEdited?.Invoke(this, new EventArgs()); //let the window know that the tester details need to refresh
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         private void TesterEditUserControl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            
+            try
+            {
+
                 existTester = this.DataContext as Tester;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

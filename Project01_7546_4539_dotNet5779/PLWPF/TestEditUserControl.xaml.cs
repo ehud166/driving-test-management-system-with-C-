@@ -45,20 +45,36 @@ namespace PLWPF
             }
         }
 
-        
 
+        /// <summary>
+        /// test results toggleButton event, if checked so the trainee succseed in this parameter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            var x = sender as ToggleButton;
-           // x.Foreground = Brushes.Green;
-            x.Content = "עבר";
+            try
+            {
+                var x = sender as ToggleButton;
+                x.Content = "עבר";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void toggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            var x = sender as ToggleButton;
-          //  x.Foreground = Brushes.Red;
+            try
+            {
+                var x = sender as ToggleButton;
             x.Content = "נכשל";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void UpdateTest_Button_Click(object sender, RoutedEventArgs e)
@@ -77,7 +93,7 @@ namespace PLWPF
                 #endregion
 
                 bl.UpdateTest(existTest);
-                TestEdited?.Invoke(this, new EventArgs());
+                TestEdited?.Invoke(this, new EventArgs()); //if update test so we need to tell the hosting window to refresh his tests list
             }
             catch (Exception exception)
             {
@@ -86,16 +102,28 @@ namespace PLWPF
            
         }
 
+        /// <summary>
+        /// every click on test results make them change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void TestEditUserControl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            try
+            {
                 existTest = this.DataContext as Test;
-                testDistance.IsChecked = Result2Bool(existTest.TestDistance);
+                testDistance.IsChecked = Result2Bool(existTest.TestDistance); //set the test togglebutton results by selected test results
                 testMerge.IsChecked = Result2Bool(existTest.TestMerge);
                 testMirrors.IsChecked = Result2Bool(existTest.TestMirrors);
                 testReverseParking.IsChecked = Result2Bool(existTest.TestReverseParking);
                 testVinker.IsChecked = Result2Bool(existTest.TestVinker);
                 testResult.IsChecked = Result2Bool(existTest.TestResult);
-                //testCommentTextBox.Text = existTest.TestComment;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        
         }
     }
 }
