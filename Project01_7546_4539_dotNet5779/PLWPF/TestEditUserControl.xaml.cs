@@ -65,9 +65,19 @@ namespace PLWPF
         {
             try
             {
-                existTest = this.DataContext as Test;
+                //existTest = this.DataContext as Test;
+
+                #region test update
+                existTest.TestDistance = string2result(testDistance.Content.ToString());
+                existTest.TestMerge = string2result(testMerge.Content.ToString());
+                existTest.TestMirrors = string2result(testMirrors.Content.ToString());
+                existTest.TestReverseParking = string2result(testReverseParking.Content.ToString());
+                existTest.TestVinker = string2result(testVinker.Content.ToString());
+                existTest.TestResult = string2result(testResult.Content.ToString());
+                #endregion
+
                 bl.UpdateTest(existTest);
-                MessageBox.Show(testDistance.Content.ToString());
+                MessageBox.Show(bl.GetTestsById(iD.Content.ToString()).ToString());
                 TestEdited?.Invoke(this, new EventArgs());
             }
             catch (Exception exception)
@@ -79,7 +89,14 @@ namespace PLWPF
 
         public void TestEditUserControl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            
+                existTest = this.DataContext as Test;
+                testDistance.IsChecked = Result2Bool(existTest.TestDistance);
+                testMerge.IsChecked = Result2Bool(existTest.TestMerge);
+                testMirrors.IsChecked = Result2Bool(existTest.TestMirrors);
+                testReverseParking.IsChecked = Result2Bool(existTest.TestReverseParking);
+                testVinker.IsChecked = Result2Bool(existTest.TestVinker);
+                testResult.IsChecked = Result2Bool(existTest.TestResult);
+                //testCommentTextBox.Text = existTest.TestComment;
         }
     }
 }

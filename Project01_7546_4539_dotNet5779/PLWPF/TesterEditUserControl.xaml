@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local1="clr-namespace:BE;assembly=BE"
              xmlns:local="clr-namespace:PLWPF"
+             xmlns:xaml="clr-namespace:PLWPF"
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="1100">
     <UserControl.Resources>
@@ -62,13 +63,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Label Content=":כתובת" Grid.Column="3" Grid.Row="5" />
-                <ComboBox x:Name="addressComboBox"   SelectedItem="{Binding Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5"  Grid.Column="2">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                <TextBox x:Name="addressComboBox"   Text="{Binding Address.StreetName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5"  Grid.Column="2"/>
                 <Label Content=":תאריך לידה" Grid.Column="3"  Grid.Row="3"/>
                 <DatePicker x:Name="birthdayDatePicker"  SelectedDate="{Binding Birthday, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Column="2" Grid.Row="3"/>
                 <Label Content=":שם פרטי" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center"/>
@@ -118,8 +113,8 @@
                 </StackPanel>
                 <Label x:Name="SeniorityLabel" Content=":ותק" Grid.Column="1" Grid.Row="4"/>
                 <StackPanel Grid.Row="4"   Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBox x:Name="SeniorityTextBox" IsEnabled="False"  Text="{Binding Seniority, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
-                    <ScrollBar x:Name="SeniorityScrollBar"   Height="40" BorderBrush="LightBlue"  HorizontalAlignment="Right" Minimum="{Binding Seniority, Mode=OneWay}" ValueChanged="SeniorityScrollBar_OnValueChangedScrollBar" RenderTransformOrigin="0.5,0.5" >
+                    <TextBox x:Name="SeniorityTextBox" IsEnabled="False"  Text="{Binding Seniority, Mode=TwoWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
+                    <ScrollBar x:Name="SeniorityScrollBar"   Height="40" BorderBrush="LightBlue" Value="{Binding Seniority, Mode=TwoWay}" HorizontalAlignment="Right" ValueChanged="SeniorityScrollBar_OnValueChangedScrollBar" RenderTransformOrigin="0.5,0.5" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -141,7 +136,7 @@
                 </ComboBox>
                 <StackPanel Grid.Row="2"   Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBox x:Name="maxDistanceTextBox" IsEnabled="False"  Text="{Binding MaxDistance, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
-                    <ScrollBar x:Name="maxDistanceScrollBar" Background="LightBlue"  Height="40" HorizontalAlignment="Right" Minimum="{Binding Seniority, Mode=OneWay}"  RenderTransformOrigin="0.5,0.5" ValueChanged="maxDistanceScrollBar_ValueChanged" >
+                    <ScrollBar x:Name="maxDistanceScrollBar" Background="LightBlue"  Height="40" HorizontalAlignment="Right" Value="{Binding MaxDistance, Mode=TwoWay}"  RenderTransformOrigin="0.5,0.5" ValueChanged="maxDistanceScrollBar_ValueChanged" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -153,8 +148,8 @@
                     </ScrollBar>
                 </StackPanel>
                 <StackPanel Grid.Row="3"   Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBox x:Name="maxTestsForWeekTextBox" IsEnabled="False"  Text="{Binding MaxTest, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
-                    <ScrollBar x:Name="maxTestsForWeekScrollBar" Height="40"   HorizontalAlignment="Right" Minimum="{Binding Seniority, Mode=OneWay}" RenderTransformOrigin="0.5,0.5" ValueChanged="maxTestsForWeekScrollBar_ValueChanged" >
+                    <TextBox x:Name="maxTestsForWeekTextBox" IsEnabled="False"  Text="{Binding MaxTestsForWeek, Mode=TwoWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
+                    <ScrollBar x:Name="maxTestsForWeekScrollBar" Height="40"   HorizontalAlignment="Right"  Value="{Binding MaxTestsForWeek, Mode=TwoWay}"  RenderTransformOrigin="0.5,0.5" ValueChanged="maxTestsForWeekScrollBar_ValueChanged" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -165,10 +160,10 @@
                         </ScrollBar.RenderTransform>
                     </ScrollBar>
                 </StackPanel>
-                <Label Content="סיסמא" Grid.Column="1" Grid.Row="5"/>
-                <Label Content="אימות סיסמא" Grid.Column="1" Grid.Row="6"/>
-                <PasswordBox x:Name="passwordBox" Grid.Row="5" />
-                <PasswordBox x:Name="validationPasswordBox" Grid.Row="6"/>
+                <Label Content="סיסמא" Grid.Column="1" Grid.Row="5"  />
+                <Label Content="אימות סיסמא" Grid.Column="1" Grid.Row="6" />
+                <PasswordBox x:Name="passwordBox" Grid.Row="5" xaml:SecurePassword.Password="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <PasswordBox x:Name="validationPasswordBox" Grid.Row="6" xaml:SecurePassword.Password="{Binding Password, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
             </Grid>
 
         </Grid>

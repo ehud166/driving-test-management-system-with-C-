@@ -149,7 +149,7 @@ namespace BL
         /// </summary>
         /// <param name="id"></param>
         /// <returns>the test with this id</returns>
-        List<Test> GetTestsById(string id);
+        Test GetTestsById(string id);
 
         /// <summary>
         /// find the test Trainee id and get the test

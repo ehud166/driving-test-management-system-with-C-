@@ -43,7 +43,6 @@ namespace PLWPF
                 maxTestsForWeekScrollBar.Maximum = 30;
                 maxTestsForWeekScrollBar.SmallChange = 1;
 
-
             }
             catch (Exception e)
             {
@@ -137,6 +136,14 @@ namespace PLWPF
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ValidationPasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (passwordBox.Password != validationPasswordBox.Password)
+            {
+                MessageBox.Show("הסיסמאות אינן תואמות אחת לשניה, נסה שוב");
             }
         }
 

@@ -151,7 +151,7 @@ namespace DAL
             updateTestXML();
         }
 
-        public void UpdateTestInfo(Test my_test)
+        public void UpdateTest(Test my_test)
         {
             Test s = testsList.FirstOrDefault(x => x.ID == my_test.ID);
             if (s == null)//if Test with the same id not found
@@ -202,7 +202,7 @@ namespace DAL
         }
 
 
-        public void UpdateTraineeInfo(Trainee my_trainee)
+        public void UpdateTrainee(Trainee my_trainee)
         {
             var v = traineesList.FirstOrDefault(x => x.ID == my_trainee.ID);
             if (v == null)//if Trainee with the same id not found
@@ -215,6 +215,8 @@ namespace DAL
 
         #endregion
 
+
+        //private void Schedule
         #region Tester
 
         public void AddTester(Tester my_tester)
@@ -235,19 +237,21 @@ namespace DAL
             XElement id = new XElement("id", my_tester.ID);
             XElement firstName = new XElement("firstName", my_tester.FirstName);
             XElement lastName = new XElement("lastName", my_tester.LastName);
-            XElement birthday = new XElement("lastName", my_tester.LastName);
-            XElement gender = new XElement("lastName", my_tester.LastName);
-            XElement phoneAreaCode = new XElement("lastName", my_tester.LastName);
-            XElement phoneNumber = new XElement("lastName", my_tester.LastName);
-            XElement address = new XElement("lastName", my_tester.LastName);
-            XElement email = new XElement("lastName", my_tester.LastName);
-            XElement password = new XElement("lastName", my_tester.LastName);
-            XElement vehicleType = new XElement("lastName", my_tester.LastName);
-            XElement seniority = new XElement("lastName", my_tester.LastName);
-            XElement maxTestsForWeek = new XElement("lastName", my_tester.LastName);
-            XElement maxDistance = new XElement("lastName", my_tester.LastName);
-            XElement schedule = new XElement("lastName", my_tester.LastName);
+            XElement birthday = new XElement("birthday", my_tester.Birthday);
+            XElement gender = new XElement("gender", my_tester.Gender);
+            XElement phoneAreaCode = new XElement("phoneAreaCode", my_tester.PhoneAreaCode);
+            XElement phoneNumber = new XElement("phoneNumber", my_tester.PhoneNumber);
+            XElement address = new XElement("address", my_tester.Address);
+            XElement email = new XElement("email", my_tester.Email);
+            XElement password = new XElement("password", my_tester.Password);
+            XElement vehicleType = new XElement("vehicleType", my_tester.VehicleType);
+            XElement seniority = new XElement("seniority", my_tester.Seniority);
+            XElement maxTestsForWeek = new XElement("maxTestsForWeek", my_tester.MaxTestsForWeek);
+            XElement maxDistance = new XElement("maxDistance", my_tester.MaxDistance);
+            XElement schedule = new XElement("schedule", my_tester.Schedule);
+
             //XElement testerTests = new XElement();
+            
             
             //foreach (var x in my_tester.TesterTests)
 
@@ -317,10 +321,7 @@ namespace DAL
             throw new NotImplementedException();
         }
 
-        public void UpdateTrainee(Trainee my_trainee)
-        {
-            throw new NotImplementedException();
-        }
+        
 
 
 

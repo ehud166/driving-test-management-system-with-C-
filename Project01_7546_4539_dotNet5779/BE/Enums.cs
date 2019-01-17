@@ -42,6 +42,42 @@ namespace BE
             [Description("נכשל")] failed
         }
 
+        public static bool? Result2Bool(Result? myResult)
+        {
+            bool? result = null;
+            switch (myResult)
+            {
+                case Result.failed:
+                    result = false;
+                    break;
+                case Result.noGrade:
+                    result = null;
+                    break;
+                case Result.pass:
+                    result = true;
+                    break;
+            }
+            return result;
+        }
+
+        public static Result? string2result(string mystring)
+        {
+            Result? result = null;
+            switch (mystring)
+            {
+                case "נכשל":
+                    result = Result.failed;
+                    break;
+                case "אין ציון":
+                    result = Result.noGrade;
+                    break;
+                case "עבר":
+                    result = Result.pass;
+                    break;
+            }
+            return result;
+        }
+
         public static string VT2Hebrew(Vehicle myVehicle)
         {
             if (myVehicle == Vehicle.privateCar)

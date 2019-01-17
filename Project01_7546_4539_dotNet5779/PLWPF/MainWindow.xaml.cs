@@ -28,7 +28,7 @@ namespace PLWPF
             {
                 InitializeComponent();
                 IBL bl = Bl_imp.GetBl();
-               
+                //List<Tester> a = bl.GetListOfTestersAtTraineeArea(bl.GetTestersList(), "גולומב 3 ירושלים");
             }
             catch (Exception e)
             {

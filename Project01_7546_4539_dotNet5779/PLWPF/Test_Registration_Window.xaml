@@ -7,7 +7,7 @@
          xmlns:local1="clr-namespace:BE;assembly=BE" 
          WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:PLWPF"
-        mc:Ignorable="d" Closed="Test_Registar_Window_OnClosed" Loaded="Test_Registar_Window_OnLoaded"
+        mc:Ignorable="d" Closed="Test_Registar_Window_OnClosed" 
         Title="Test_Registration_Window" MinHeight="450" MinWidth="450" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <local1:EnumDescriptionConverter x:Key="descConverter"/>
@@ -71,7 +71,7 @@
             <ComboBox x:Name="testHourComboBox" Grid.Row="4" IsEnabled="False"/>
 
 
-            <ComboBox x:Name="VehicleTypeComboBox" MinWidth="170" Width="auto"   SelectionChanged="VehicleTypeComboBox_OnSelectionChanged">
+            <ComboBox x:Name="VehicleTypeComboBox" MinWidth="170" Width="auto"   SelectionChanged="VehicleTypeComboBox_OnSelectionChanged" DropDownOpened="VehicleTypeComboBox_OnDropDownOpened">
                 
             </ComboBox>
             <ComboBox x:Name="GearComboBox" Grid.Row="1"   IsEnabled="False" >

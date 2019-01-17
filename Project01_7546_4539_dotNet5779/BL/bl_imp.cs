@@ -276,7 +276,7 @@ namespace BL
             //need to update the field num of test and func to check if tester fill all
             if (ResultMeetingCriteria(my_test) && TheTesterFillAll(my_test))
             {
-                dal.UpdateTestInfo(my_test);
+                dal.UpdateTest(my_test);
             }
         }
 
@@ -363,7 +363,7 @@ namespace BL
         /// </summary>
         /// <param name="id"></param>
         /// <returns>the test with this id</returns>
-        public List<Test> GetTestsById(string id) => dal.GetTestsList().FindAll(test => test.TraineeId == id);
+        public Test GetTestsById(string id) => dal.GetTestsList().Find(test => test.TraineeId == id);
 
 
 
@@ -485,9 +485,9 @@ namespace BL
             var v = (from item in GetTestsList()
                     where item.TraineeId == myTest.TraineeId &&  item.Gear == myTest.Gear && item.VehicleType == myTest.VehicleType && (myTest.TestDateAndTime - item.TestDateAndTime.AddMinutes(1)).Days < 7// adding minute to round the lossing miliseconds at running time
                     select item).FirstOrDefault();
-            return v == null ? true : false; 
-                //throw new Exception("ERROR:\n" +
-                  //                           "This Test are too early (haven't pass 7 days from this trainee last test\n");
+            return v == null ? true : //false; 
+                throw new Exception("ERROR:\n" +
+                                             "This Test are too early (haven't pass 7 days from this trainee last test\n");
         }
 
 
@@ -684,7 +684,7 @@ namespace BL
 
         #region Distance Calculation:
 
-        private int MapQuestAPIFunc(string origin = "גולומב 3 ירושלים", string destination = "ברוך דובדבני 40 ירושלים", string KEY = "ChaOUuCetMBgfIa1rbu6VBKs2KlKqUGo")
+        private int MapQuestAPIFunc(string origin = "גולומב 3 ירושלים", string destination = "ברוך דובדבני 40 ירושלים", string KEY = "UMfSGjPW5zSRsIIoUl26GdXDUCWYLuIg")
         {
             try
             {
@@ -747,7 +747,8 @@ namespace BL
         {
             try
             {
-            return relevantTesters.Where(item => MapQuestAPIFunc(item.Address.StreetName, testAddress) <= item.MaxDistance).ToList();
+                //MessageBox.Show(MapQuestAPIFunc().ToString());
+                return relevantTesters.Where(item => MapQuestAPIFunc(item.Address.StreetName, testAddress) <= item.MaxDistance).ToList();
             }
             catch (Exception e)
             {

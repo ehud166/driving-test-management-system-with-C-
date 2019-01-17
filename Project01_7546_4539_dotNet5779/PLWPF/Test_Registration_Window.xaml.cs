@@ -43,6 +43,7 @@ namespace PLWPF
             this.DataContext = existTrainee;
             myTest.TraineeId = newTrainee.ID;
             myTest.TestAddress.StreetName = existTrainee.Address.StreetName;
+            VehicleTypeComboBox.Items.Clear();
         }
 
 
@@ -74,34 +75,39 @@ namespace PLWPF
             this.Close();
         }
 
-        private void Test_Registar_Window_OnLoaded(object sender, RoutedEventArgs e)
+        private void VehicleTypeComboBox_OnDropDownOpened(object sender, EventArgs e)
         {
-            bool[] vehicleAvailable = new bool[4] {false, false, false, false};
+            VehicleTypeComboBox.Items.Clear();
+            bool[] vehicleAvailable = new bool[4] { false, false, false, false };
             foreach (var licenseType in existTrainee.LicenseType)
             {
-                
-                if (licenseType.LessonNum>= 20 && bl.TraineeConditionsForTest(existTrainee.ID,licenseType.VehicleType,licenseType.Gear))
+
+                if (licenseType.LessonNum >= 20 && bl.TraineeConditionsForTest(existTrainee.ID, licenseType.VehicleType, licenseType.Gear))
                 {
-                    vehicleAvailable[(int) licenseType.VehicleType] = true;
+                    vehicleAvailable[(int)licenseType.VehicleType] = true;
                 }
             }
             for (int i = 0; i < vehicleAvailable.Length; i++)
             {
                 if (vehicleAvailable[i])
                 {
-                    VehicleTypeComboBox.Items.Add(VT2Hebrew((Vehicle) i));
+                    VehicleTypeComboBox.Items.Add(VT2Hebrew((Vehicle)i));
                 }
             }
         }
 
+
         private void VehicleTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             bool[] gearAvailable = new bool[2] { false, false};
-            myTest.VehicleType = Hebrew2VT(VehicleTypeComboBox.SelectedValue.ToString());
+            if (Hebrew2VT(VehicleTypeComboBox.SelectedValue.ToString()) !=null)
+            {
+                myTest.VehicleType = Hebrew2VT(VehicleTypeComboBox.SelectedValue.ToString());
+            }
             GearComboBox.Items.Clear();
             foreach (var licenseType in existTrainee.LicenseType)
             {
-                if (licenseType.LessonNum >= 20 && bl.TraineeConditionsForTest(existTrainee.ID, licenseType.VehicleType, licenseType.Gear))
+                if (licenseType.LessonNum >= 20 && licenseType.VehicleType == myTest.VehicleType && bl.TraineeConditionsForTest(existTrainee.ID, licenseType.VehicleType, licenseType.Gear))
                 {
                     gearAvailable[(int)licenseType.Gear] = true;
                 }
@@ -159,7 +165,7 @@ namespace PLWPF
                                 Dispatcher.BeginInvoke(act);
                             }
                         });
-                        mapQuestThread.Start();
+                        //mapQuestThread.Start();
                     }
                 }
                 i = i.AddDays(1);
@@ -234,5 +240,7 @@ namespace PLWPF
             this.Close();
 
         }
+
+        
     }
 }

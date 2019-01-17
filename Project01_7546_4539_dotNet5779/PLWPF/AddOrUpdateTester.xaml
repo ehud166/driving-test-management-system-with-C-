@@ -112,7 +112,7 @@
                 <Label x:Name="SeniorityLabel" Content=":ותק" Grid.Column="1" Grid.Row="5"/>
                 <StackPanel Grid.Row="5"   Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBox x:Name="SeniorityTextBox" IsEnabled="False"  Text="{Binding Seniority, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
-                    <ScrollBar x:Name="SeniorityScrollBar"   Height="40" BorderBrush="LightBlue"  HorizontalAlignment="Right" Value="{Binding Seniority, Mode=OneWay}" ValueChanged="SeniorityScrollBar_OnValueChangedScrollBar" RenderTransformOrigin="0.5,0.5" >
+                    <ScrollBar x:Name="SeniorityScrollBar"   Height="40" BorderBrush="LightBlue"  HorizontalAlignment="Right" Value="{Binding Seniority, Mode=TwoWay}" ValueChanged="SeniorityScrollBar_OnValueChangedScrollBar" RenderTransformOrigin="0.5,0.5" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>

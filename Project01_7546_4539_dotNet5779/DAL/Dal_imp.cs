@@ -282,10 +282,7 @@ namespace DAL
             }
         }
 
-        public void UpdateTestInfo(Test my_test)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public void RemoveTest(Test my_test)
         {
