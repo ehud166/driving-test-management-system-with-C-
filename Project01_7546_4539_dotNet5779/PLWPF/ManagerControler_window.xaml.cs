@@ -53,44 +53,74 @@ namespace PLWPF
 
         private void TesterEditUserControl_TesterEdited(object sender, EventArgs e)
         {
-            this.TestersDataGrid.ItemsSource = bl.GetTestersList();
+            try
+            {
+                this.TestersDataGrid.ItemsSource = bl.GetTestersList();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+                throw;
+            }
         }
 
 
         private void TestEditUserControl_TestEdited(object sender, EventArgs e)
         {
-            this.TestsDataGrid.ItemsSource = bl.GetTestsList();
+            try
+            {
+                this.TestsDataGrid.ItemsSource = bl.GetTestsList();
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+                throw;
+            }
         }
 
         private void TraineeEditUserControl_TraineeEdited(object sender, EventArgs e)
         {
-            this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
+            try
+            {
+                this.TraineesDataGrid.ItemsSource = bl.GetTraineeList();
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+                throw;
+            }
         }
 
 
         private void TestsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-         
-            Test test = TestsDataGrid.SelectedItem as Test;
-            this.TestEditUserControl.DataContext = test;
+            if (TestsDataGrid.SelectedItem != null)
+            {
+                Test test = TestsDataGrid.SelectedItem as Test;
+                this.TestEditUserControl.DataContext = test;
+            }
         }
 
         private void TraineesDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Trainee trainee = TraineesDataGrid.SelectedItem as Trainee;
-            this.TraineeEditUserControl.DataContext = trainee;
+            if (TraineesDataGrid.SelectedItem != null)
+            {
+                Trainee trainee = TraineesDataGrid.SelectedItem as Trainee;
+                this.TraineeEditUserControl.DataContext = trainee;
+            }
         }
 
 
 
         private void TestersDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-         
-            Tester tester = TestersDataGrid.SelectedItem as Tester;
-            if (tester != null) { 
-           this.TesterEditUserControl.DataContext = tester;
-           this.TesterEditUserControl.mySchedule.Build = tester.Schedule;
-
+            if (TestersDataGrid.SelectedItem != null)
+            {
+                Tester tester = TestersDataGrid.SelectedItem as Tester;
+                this.TesterEditUserControl.DataContext = tester;
+                this.TesterEditUserControl.mySchedule.Build = tester.Schedule;
             }
         }
 
@@ -107,11 +137,37 @@ namespace PLWPF
             }
         }
 
-     
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
 
         private void GroupTraineesByTeacher_Click(object sender, RoutedEventArgs e)
         {
             this.TraineesDataGrid.DataContext = bl.GroupTraineesByTeacher();
+        }
+
+        private void GroupTrainees_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //MessageBox.Show(GroupTrainees.SelectedIndex.ToString());
+            List<Trainee> list = new List<Trainee>();
+            TraineesDataGrid.ItemsSource = list;
+
+            switch (GroupTrainees.SelectedIndex)
+            {
+                case 0:
+                    foreach (var item in bl.GroupTraineesByTeacher())
+                    {
+                        //GroupTraineesKey.Items.Add(variable.Key);
+                        foreach (var byTeacher in item)
+                        {
+                            list.Add(byTeacher);
+                        }
+                        var split = new GridSplitter();
+                        list.Add(new Trainee());
+                    }
+                    break;
+            }
         }
 
         private void TabControl_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
