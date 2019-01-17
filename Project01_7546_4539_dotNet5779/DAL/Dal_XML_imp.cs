@@ -7,14 +7,22 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using BE;
+using static BE.Enums;
 
 namespace DAL
 {
-    class Dal_XML_imp : IDAL
+    public class Dal_XML_imp : IDAL
     {
+        protected static Dal_XML_imp instance = null;
+        public static IDAL GetDal()
+        {
+            if (instance == null)
+                instance = new Dal_XML_imp();
+            return instance;
+        }
+
+
         public static int Courent_test_id { get; set; }
-
-
 
 
         //list Path
@@ -33,8 +41,9 @@ namespace DAL
         XmlSerializer TraineesSerializer = new XmlSerializer(typeof(List<Trainee>));
         XmlSerializer TestsSerializer = new XmlSerializer(typeof(List<Test>));
 
-        public Dal_XML_imp()
+        protected Dal_XML_imp()
         {
+           
             try
             {
                 if (!File.Exists(testPath) || !File.Exists(testerPath) || !File.Exists(traineePath) || !File.Exists(configPath))
@@ -215,6 +224,169 @@ namespace DAL
 
         #endregion
 
+        #region help2XML
+        private Dictionary<DayOfWeek, HoursPerDay> XML2Schedule( string schedule)
+        {
+            Dictionary<DayOfWeek, HoursPerDay> scheduleFromXML = new Dictionary<DayOfWeek, HoursPerDay>();
+            if (schedule != null && schedule.Length > 0)
+            {
+                string[] values = schedule.Split(',');
+                int sizeA = int.Parse(values[0]);
+                int sizeB = int.Parse(values[1]);
+                int index = 2;
+                for (int i = 0; i < sizeA; i++)
+                    for (int j = 0; j < sizeB; j++)
+                        scheduleFromXML[(DayOfWeek)i][j] = bool.Parse(values[index++]);
+            }
+            return scheduleFromXML;
+        }
+        private Address XML2Address( XElement address)
+        {
+            Address fromXML;
+            try
+            {
+                fromXML = new Address()
+                {
+                    StreetName = address.Element("StreetName").Value,
+                    BuildingNumber = int.Parse(address.Element("BuildingNumber").Value),
+                    City = address.Element("StreetName").Value
+
+                };
+            }
+            catch
+            {
+                throw new Exception("בעיה בפענוח המסמך");
+                //fromXML = null;
+            }
+            return fromXML;
+        }
+        private Test XML2Test( XElement test)
+        {
+            Test fromXML;
+            try
+            {
+                fromXML = new Test()
+                {
+                    ID = test.Element("ID").Value,
+                    TesterId = test.Element("TesterId").Value,
+                    TraineeId = test.Element("TraineeId").Value,
+                    TestDateAndTime = Convert.ToDateTime(test.Element("TestDateAndTime").Value),
+                    TestAddress = new Address(test.Element("Address").Element("StreetName").Value,
+                        int.Parse(test.Element("Address").Element("BuildingNumber").Value),
+                        test.Element("Address").Element("City").Value),
+                    VehicleType = (from type in (Vehicle[]) Enum.GetValues(typeof(Vehicle))
+                        where type.ToString() == test.Element("Vehicle").Value
+                        select type).FirstOrDefault(),
+                    Gear = (from type in (Gear[]) Enum.GetValues(typeof(Gear))
+                        where type.ToString() == test.Element("Gear").Value
+                        select type).FirstOrDefault(),
+                    TestDistance = (from type in (Result[]) Enum.GetValues(typeof(Result))
+                        where type.ToString() == test.Element("Result").Value
+                        select type).FirstOrDefault(),
+                    TestReverseParking = (from type in (Result[]) Enum.GetValues(typeof(Result))
+                        where type.ToString() == test.Element("Result").Value
+                        select type).FirstOrDefault(),
+                    TestMirrors = (from type in (Result[]) Enum.GetValues(typeof(Result))
+                        where type.ToString() == test.Element("Result").Value
+                        select type).FirstOrDefault(),
+                    TestVinker = (from type in (Result[]) Enum.GetValues(typeof(Result))
+                        where type.ToString() == test.Element("Result").Value
+                        select type).FirstOrDefault(),
+                    TestMerge = (from type in (Result[]) Enum.GetValues(typeof(Result))
+                        where type.ToString() == test.Element("Result").Value
+                        select type).FirstOrDefault(),
+                    TestResult = (from type in (Result[]) Enum.GetValues(typeof(Result))
+                        where type.ToString() == test.Element("Result").Value
+                        select type).FirstOrDefault(),
+                    TestComment = test.Element("TestComment").Value
+                };
+
+            }
+            catch
+            {
+                throw new Exception("בעיה בפענוח המסמך טסט");
+                //fromXML = null;
+            }
+            return fromXML;
+        
+
+        }
+        private List<Test> XML2TestList(XElement testList)
+        {
+            List<Test> fromXML = new List<Test>();
+            try
+            {
+                foreach (var test in testList.Elements())
+                {
+                    fromXML.Add(XML2Test(test));
+                }
+            }
+            catch
+            {
+                throw new Exception("בעיה בפענוח הרשימ טסטים של טסטר");
+                //fromXML = null;
+            }
+
+            return fromXML;
+        }
+
+
+        private string Schedule2XML( Dictionary<DayOfWeek, HoursPerDay> schedule)
+        {
+            if (schedule == null)
+                return null;
+            string result = "";
+            if (schedule != null)
+            {
+                int sizeA = 5;
+                int sizeB = 6;
+                result += "" + sizeA + "," + sizeB;
+                for (int i = 0; i < sizeA; i++)
+                for (int j = 0; j < sizeB; j++)
+                    result += "," + schedule[(DayOfWeek)i][j];
+            }
+            return result;
+        }
+        private XElement Test2XML( Test test)
+        {
+            XElement traineeId = new XElement("TraineeId", test.TraineeId);
+            XElement TestDateAndTime = new XElement("TestDateAndTime", test.TestDateAndTime);
+            XElement Address = new XElement("Address", Address2XML(test.TestAddress));
+            XElement VehicleType = new XElement("Vehicle", test.VehicleType);
+            XElement Gear = new XElement("Gear", test.Gear);
+            XElement TestComment = new XElement("TestComment", test.TestComment);
+            XElement TestDistance = new XElement("TestDistance", test.TestDistance);
+            XElement TestReverseParking = new XElement("TestReverseParking", test.TestReverseParking);
+            XElement TestMirrors = new XElement("TestMirrors", test.TestMirrors);
+            XElement TestMerge = new XElement("TestMerge", test.TestMerge);
+            XElement TestVinker = new XElement("TestVinker", test.TestVinker);
+            XElement TestResult = new XElement("TestResult", test.TestResult);
+            XElement TesterId = new XElement("TesterId", test.TesterId);
+            XElement ID = new XElement("ID", test.ID);
+            return new XElement("Test", traineeId, TestDateAndTime, Address, VehicleType, Gear, TestComment,
+                TestDistance, TestReverseParking, TestMirrors, TestMerge, TestVinker, TestResult, TesterId, ID);
+
+        }
+        private XElement Address2XML( Address address)
+        {
+            XElement streetName = new XElement("StreetName", address.StreetName);
+            XElement buildingNumber = new XElement("BuildingNumber", address.BuildingNumber);
+            XElement city = new XElement("City", address.City);
+            return new XElement("Address", streetName, buildingNumber, city);
+
+
+        }
+        private XElement TestList2XML(List<Test> testList)
+        {
+            XElement listToAdd = new XElement("TesterTests");
+            foreach (var test in testList)
+            {
+                listToAdd.Add(Test2XML(test));
+            }
+
+            return listToAdd;
+        }
+        #endregion
 
         //private void Schedule
         #region Tester
@@ -225,7 +397,7 @@ namespace DAL
             try
             {
                 testerToAdd = (from p in testerRoot.Elements()
-                    where p.Element("id").Value == my_tester.ID
+                    where p.Element("Id").Value == my_tester.ID
                     select p).FirstOrDefault();
             }
             catch (Exception e)
@@ -233,98 +405,128 @@ namespace DAL
                 testerToAdd = null;
             }
             if (testerToAdd != null) //duplicate id's are not permitted
-                throw new Exception("child  with the same ID already exists...");
-            XElement id = new XElement("id", my_tester.ID);
-            XElement firstName = new XElement("firstName", my_tester.FirstName);
-            XElement lastName = new XElement("lastName", my_tester.LastName);
-            XElement birthday = new XElement("birthday", my_tester.Birthday);
-            XElement gender = new XElement("gender", my_tester.Gender);
-            XElement phoneAreaCode = new XElement("phoneAreaCode", my_tester.PhoneAreaCode);
-            XElement phoneNumber = new XElement("phoneNumber", my_tester.PhoneNumber);
-            XElement address = new XElement("address", my_tester.Address);
-            XElement email = new XElement("email", my_tester.Email);
-            XElement password = new XElement("password", my_tester.Password);
-            XElement vehicleType = new XElement("vehicleType", my_tester.VehicleType);
-            XElement seniority = new XElement("seniority", my_tester.Seniority);
-            XElement maxTestsForWeek = new XElement("maxTestsForWeek", my_tester.MaxTestsForWeek);
-            XElement maxDistance = new XElement("maxDistance", my_tester.MaxDistance);
-            XElement schedule = new XElement("schedule", my_tester.Schedule);
+                throw new Exception("טסטר קיים");
+            XElement id = new XElement("Id", my_tester.ID);
+            XElement firstName = new XElement("FirstName", my_tester.FirstName);
+            XElement lastName = new XElement("LastName", my_tester.LastName);
+            XElement birthday = new XElement("Birthday", my_tester.Birthday);
+            XElement gender = new XElement("Gender", my_tester.Gender);
+            XElement phoneAreaCode = new XElement("PhoneAreaCode", my_tester.PhoneAreaCode);
+            XElement phoneNumber = new XElement("PhoneNumber", my_tester.PhoneNumber);
+            XElement address = new XElement("Address", Address2XML(my_tester.Address));
+            XElement email = new XElement("Email", my_tester.Email);
+            XElement password = new XElement("Password", my_tester.Password);
+            XElement vehicleType = new XElement("VehicleType", my_tester.VehicleType);
+            XElement seniority = new XElement("Seniority", my_tester.Seniority);
+            XElement maxTestsForWeek = new XElement("MaxTestsForWeek", my_tester.MaxTestsForWeek);
+            XElement maxDistance = new XElement("MaxDistance", my_tester.MaxDistance);
+            XElement schedule = new XElement("Schedule", Schedule2XML(my_tester.Schedule.WeekDays));
+            XElement testerTests = new XElement("TesterTests", TestList2XML(my_tester.TesterTests));
 
-            //XElement testerTests = new XElement();
-            
-            
-            //foreach (var x in my_tester.TesterTests)
-
-            //{
-            //    testerTests.Add(x.);
-            //}
-
-            //XElement newTester = new XElement("tester",id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, email, password,
-            //vehicleType, seniority, maxTestsForWeek, maxDistance, schedule, List<Test> testerTests)
-
-            //List<Tester> copyTesters = new List<Tester>();
-            //copyTesters = Testers.Select(x => new Tester(x.ID, x.FirstName, x.LastName, x.Birthday, x.Gender,
-            //        x.PhoneAreaCode, x.PhoneNumber,
-            //        new Address(x.Address.StreetName, x.Address.BuildingNumber, x.Address.City), x.Email, x.Password,
-            //        x.VehicleType,
-            //        x.Seniority, x.MaxTestsForWeek, x.MaxDistance, x.Schedule, new List<Test>(x?.TesterTests.Select(y =>
-            //            new Test(y.TraineeId, y.TestDateAndTime,
-            //                new Address(y.TestAddress.StreetName, y.TestAddress.BuildingNumber, y.TestAddress.City),
-            //                y.VehicleType,
-            //                y.Gear, y.TestComment, y.TestDistance,
-            //                y.TestReverseParking, y.TestMirrors, y.TestMerge, y.TestVinker, y.TestResult, y.TesterId,
-            //                y.ID)).ToList())))
-            //    .ToList();
-            //return copyTesters;
-            //testerRoot.Add(newTester);
-            //testerRoot.Save(testerPath);
-
-
-
-
+            XElement newTester = new XElement("Tester",id,firstName,lastName,birthday,gender,phoneAreaCode,phoneNumber,address,email,password,vehicleType,seniority,
+            maxTestsForWeek, maxDistance, schedule, testerTests);
+            testerRoot.Add(newTester);
+            testerRoot.Save(testerPath);
         }
-
-
         public void RemoveTester(string id)
         {
-            throw new NotImplementedException();
+            var toRemove = (from tester in testerRoot.Elements()
+                where tester.Element("id").Value == id
+                select tester).FirstOrDefault();
+            toRemove.Remove();
+            testerRoot.Save(testerPath);
         }
-
-
         public void UpdateTester(Tester my_tester)
         {
-            throw new NotImplementedException();
-        }
+            XElement testerToUpdate;
+            try
+            {
+                testerToUpdate = (from p in testerRoot.Elements()
+                               where p.Element("Id").Value == my_tester.ID
+                               select p).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                testerToUpdate = null;
+            }
+            if (testerToUpdate != null) //duplicate id's are not permitted
+                throw new Exception("טסטר קיים");
+            XElement id = new XElement("Id", my_tester.ID);
+            XElement firstName = new XElement("FirstName", my_tester.FirstName);
+            XElement lastName = new XElement("LastName", my_tester.LastName);
+            XElement birthday = new XElement("Birthday", my_tester.Birthday);
+            XElement gender = new XElement("Gender", my_tester.Gender);
+            XElement phoneAreaCode = new XElement("PhoneAreaCode", my_tester.PhoneAreaCode);
+            XElement phoneNumber = new XElement("PhoneNumber", my_tester.PhoneNumber);
+            XElement address = new XElement("Address", Address2XML(my_tester.Address));
+            XElement email = new XElement("Email", my_tester.Email);
+            XElement password = new XElement("Password", my_tester.Password);
+            XElement vehicleType = new XElement("VehicleType", my_tester.VehicleType);
+            XElement seniority = new XElement("Seniority", my_tester.Seniority);
+            XElement maxTestsForWeek = new XElement("MaxTestsForWeek", my_tester.MaxTestsForWeek);
+            XElement maxDistance = new XElement("MaxDistance", my_tester.MaxDistance);
+            XElement schedule = new XElement("Schedule", Schedule2XML(my_tester.Schedule.WeekDays));
+            XElement testerTests = new XElement("TesterTests", TestList2XML(my_tester.TesterTests));
 
+            XElement newTester = new XElement("Tester", id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, email, password, vehicleType, seniority,
+            maxTestsForWeek, maxDistance, schedule, testerTests);
+            testerRoot.Save(testerPath);
+        }
         #endregion
 
 
         #region geterrs
-
-
-       
-
         public List<Test> GetTestsList()
         {
             return testsList;
         }
-
         public List<Trainee> GetTraineeList()
         {
             return traineesList;
         }
-
-
-
         public List<Tester> GetTestersList()
         {
-            throw new NotImplementedException();
+            List<Tester> testerList = new List<Tester>();
+            LoadData();
+            try
+            {
+                foreach (XElement my_tester in testerRoot.Elements())
+                {
+                    Tester t = new Tester();
+
+                    t.ID = my_tester.Element("ID").Value;
+                    t.FirstName = my_tester.Element("FirstName").Value;
+                    t.LastName = my_tester.Element("LastName").Value;
+                    t.Birthday = DateTime.Parse(my_tester.Element("Birthday").Value);
+                    t.Gender = (from type in (Gender[]) Enum.GetValues(typeof(Gender))
+                        where type.ToString() == my_tester.Element("Gender").Value
+                        select type).FirstOrDefault();
+                    t.PhoneAreaCode = my_tester.Element("PhoneAreaCode").Value;
+                    t.PhoneNumber = my_tester.Element("PhoneNumber").Value;
+                    t.Address = new Address(my_tester.Element("Address").Element("StreetName").Value,
+                        int.Parse(my_tester.Element("Address").Element("BuildingNumber").Value),
+                        my_tester.Element("Address").Element("City").Value);
+                    t.Email = my_tester.Element("Email").Value;
+                    t.Password = my_tester.Element("Password").Value;
+                    t.VehicleType = (from type in (Vehicle[]) Enum.GetValues(typeof(Vehicle))
+                        where type.ToString() == my_tester.Element("Vehicle").Value
+                        select type).FirstOrDefault();
+                    t.Seniority = int.Parse(my_tester.Element("Seniority").Value);
+                    t.MaxTestsForWeek = int.Parse(my_tester.Element("MaxTestsForWeek").Value);
+                    t.MaxDistance = int.Parse(my_tester.Element("MaxDistance").Value);
+                    t.Schedule = new Schedule();
+                    t.Schedule.WeekDays = XML2Schedule(my_tester.Element("Schedule").Value);
+                    t.TesterTests = new List<Test>();
+                    t.TesterTests = XML2TestList(my_tester.Element("TesterTests"));
+                    testerList.Add(t);
+                }
+            }
+            catch
+            {
+                testerList = null;
+            }
+            return testerList;
         }
-
-        
-
-
-
         #endregion
 
 

@@ -235,6 +235,7 @@ namespace PLWPF
             Test newTestAdded = bl.GetTestsList().Find(x => x.Equals(newTest));
             newTester.TesterTests.Add(newTestAdded);
             bl.UpdateTester(newTester);
+
             //MessageBox.Show(newTestAdded.ToString());
             //MessageBox.Show(bl.GetTesterById(newTestAdded.TesterId).TesterTests.Find(x=>x.Equals(newTest)).ToString());
             this.Close();

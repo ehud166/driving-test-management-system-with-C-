@@ -15,6 +15,8 @@ using System.Net;
 using System.Xml;
 using System.Windows;
 using System.IO;
+using System.Net.Mail;
+using System.Threading;
 
 namespace BL
 {
@@ -22,7 +24,7 @@ namespace BL
     {
         private List<Manager> managerList;
         #region singleton
-        IDAL dal = Dal_imp.GetDal();
+        IDAL dal = Dal_XML_imp.GetDal();
         
         protected static Bl_imp instance = null;
         public static IBL GetBl()
@@ -60,6 +62,7 @@ namespace BL
         {
             try
             {
+
                 if (CheckTraineeAge(my_trainee) && CheckIdValidation(my_trainee.ID))
                 {
                     dal.AddTrainee(my_trainee);
@@ -684,10 +687,13 @@ namespace BL
 
         #region Distance Calculation:
 
-        private int MapQuestAPIFunc(string origin = "גולומב 3 ירושלים", string destination = "ברוך דובדבני 40 ירושלים", string KEY = "UMfSGjPW5zSRsIIoUl26GdXDUCWYLuIg")
+        private int MapQuestAPIFunc(string origin = "גולומב 3 ירושלים", string destination = "ברוך דובדבני 40 ירושלים")
         {
+            //UMfSGjPW5zSRsIIoUl26GdXDUCWYLuIg
+            //xFdAUGGj5faNqCt7LbMsHqEaSv26ikUb
             try
             {
+                string KEY = @"UMfSGjPW5zSRsIIoUl26GdXDUCWYLuIg";
                 //MessageBox.Show(origin + "\n" + destination);
                 double distInMiles = -1;
                 string url = @"https://www.mapquestapi.com/directions/v2/route" +
@@ -699,6 +705,7 @@ namespace BL
                              @"&enhancedNarrative=false&avoidTimedConditions=false";
                 //request from MapQuest service the distance between the 2 addresses
                 HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
+                request.UseDefaultCredentials = true;
                 WebResponse response = request.GetResponse();
                 Stream dataStream = response.GetResponseStream();
                 StreamReader sreader = new StreamReader(dataStream);
@@ -733,7 +740,10 @@ namespace BL
             }
             catch
             {
-                throw;
+                Random x = new Random();
+                return x.Next(200);
+
+                //throw;
             }
         }
 
@@ -755,8 +765,10 @@ namespace BL
                 throw;
             }
         }
-       
+
         #endregion
+
+     
 
     }
 
