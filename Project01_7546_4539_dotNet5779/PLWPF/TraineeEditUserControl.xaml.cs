@@ -130,23 +130,7 @@ namespace PLWPF
 
 
 
-        private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (!bl.IsValidEmailAddress(EmailTextBox?.Text))
-                {
-                EmailTextBox.Clear();
-                EmailTextBox.BorderBrush = Brushes.Red;
-                }
-                else
-                EmailTextBox.BorderBrush = Brushes.LightBlue;
-                }
-           catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+
 
 
 
@@ -156,6 +140,25 @@ namespace PLWPF
             {
                 if (phoneNumbersTextBox.Text.Length < 7)
                 phoneNumbersTextBox.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (!bl.IsValidEmailAddress(EmailTextBox?.Text))
+                {
+                    EmailTextBox.Clear();
+                    EmailTextBox.BorderBrush = Brushes.Red;
+                }
+                else
+                    EmailTextBox.BorderBrush = Brushes.LightBlue;
             }
             catch (Exception ex)
             {

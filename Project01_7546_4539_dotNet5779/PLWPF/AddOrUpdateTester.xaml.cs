@@ -93,7 +93,40 @@ namespace PLWPF
             }
         }
 
-       
+        private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (!bl.IsValidEmailAddress(EmailTextBox?.Text))
+                {
+                    EmailTextBox.Clear();
+                    EmailTextBox.BorderBrush = Brushes.Red;
+                }
+                else
+                    EmailTextBox.BorderBrush = Brushes.LightBlue;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        private void AlphabeticValidation_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+                if (!bl.IsValidAlphabetic(e?.Text))
+                {
+                    e.Handled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
 
 
         private void AddOrUpdateTester_OnClosing(object sender, CancelEventArgs e)
@@ -121,18 +154,7 @@ namespace PLWPF
                 phoneNumbersTextBox.Clear();
             }
         }
-        private void EmailTextBox_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            bool result = bl.IsValidEmailAddress(EmailTextBox?.Text);
-
-            if (!result)
-            {
-                EmailTextBox.Clear();
-                EmailTextBox.BorderBrush = Brushes.Red;
-            }
-            else
-                EmailTextBox.BorderBrush = Brushes.LightBlue;
-        }
+      
         private void SeniorityScrollBar_OnValueChangedScrollBar(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             SeniorityTextBox.Text = SeniorityScrollBar.Value.ToString();
