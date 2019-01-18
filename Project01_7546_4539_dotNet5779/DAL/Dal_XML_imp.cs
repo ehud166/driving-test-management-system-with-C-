@@ -104,7 +104,7 @@ namespace DAL
                 if (File.Exists(testerPath))
                 {
                     testerRoot = XElement.Load(testerPath);
-                }
+                } 
 
                 if (File.Exists(traineePath))
                 {
