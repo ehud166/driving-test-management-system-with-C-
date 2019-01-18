@@ -10,6 +10,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using static BE.Enums;
+using static BE.Configuration;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Xml;
@@ -40,6 +41,7 @@ namespace BL
             managerList = new List<Manager>();
             managerList.Add(new Manager("314784539","אהוד","1234"));
             managerList.Add(new Manager("032577546","ישי","1234"));
+            managerList.Add(new Manager("000000000","מנהל","1234"));
         }
         #endregion
 
@@ -92,11 +94,11 @@ namespace BL
         {
             DateTime dateTime = new DateTime();
             dateTime = my_test.TestDateAndTime;
-            int[] hours = new int[6];
-            for (int i = 0; i < 6; i++)
+            int[] hours = new int[WorkHours];
+            for (int i = 0; i < WorkHours; i++)
             {
 
-                hours[i] = 9 + i;
+                hours[i] = StartHour + i;
             }
 
             var finalList = new List<Tester>();
@@ -136,7 +138,7 @@ namespace BL
         {
             DateTime tempAge = new DateTime();
             tempAge = my_tester.Birthday;//to calculate the tester`s age i added 40 years and compare to Now
-            tempAge = tempAge.AddYears(40);
+            tempAge = tempAge.AddYears(TesterMinAge);
             if (tempAge <= DateTime.Now)
                 return true;
             else
@@ -179,11 +181,11 @@ namespace BL
         {
             #region parameter to restart time
 
-            DateTime restartDate = DateTime.Today.AddDays(3).AddHours(9);//DateTime is a value type
+            DateTime restartDate = DateTime.Today.AddDays(3).AddHours(StartHour);//DateTime is a value type
             //restart hour for the next round hour
             #endregion
 
-            while (restartDate.Hour < 9 || restartDate.Hour > 14 || restartDate <= DateTime.Now)//if the date earlier from now or not in the hour of testing
+            while (restartDate.Hour < StartHour || restartDate.Hour > EndHour || restartDate <= DateTime.Now)//if the date earlier from now or not in the hour of testing
             {
                 restartDate = restartDate.AddHours(1);
             }
@@ -191,7 +193,7 @@ namespace BL
             foreach (var tester in testersCondition)
             {
                 courrent = restartDate;
-                while (courrent.Day - DateTime.Now.Day <= 14)//offer newe date for the trainee maximum two weeks from now
+                while (courrent.Day - DateTime.Now.Day <= EndHour)//offer newe date for the trainee maximum two weeks from now
                 {
                     while (courrent.DayOfWeek == DayOfWeek.Friday || courrent.DayOfWeek == DayOfWeek.Saturday)
                     {
@@ -461,10 +463,10 @@ namespace BL
         /// </summary>
         /// <param name="my_test"></param>
         /// <returns>true if trainee filling the condition</returns>
-        public bool TraineeHave20Lessons(String id)
+        public bool TraineeHaveMinLessons(String id)
         {
             var v = (from item in GetTraineeList()
-                where item.ID == id && item.LicenseType.Any(x => x.LessonNum >= 20)
+                where item.ID == id && item.LicenseType.Any(x => x.LessonNum >= MinLessons)
                 select item).FirstOrDefault();
             return v != null ? true : throw new Exception("ERROR:\n" +
                                                           "This trainee have not study 20 lesson yet for ANY vehicle type and gear or he does NOT exist\n");
@@ -476,10 +478,10 @@ namespace BL
         /// </summary>
         /// <param name="my_test"></param>
         /// <returns>true if trainee filling the condition</returns>
-        private bool TraineeHave20LessonsForSpecificLicense(String id,Vehicle vehicle,Gear gear)
+        private bool TraineeHaveMinLessonsForSpecificLicense(String id,Vehicle vehicle,Gear gear)
         {
             var v = (from item in GetTraineeList()
-                where item.ID == id && item.LicenseType.Any(x => vehicle == x.VehicleType && gear == x.Gear && x.LessonNum >= 20)
+                where item.ID == id && item.LicenseType.Any(x => vehicle == x.VehicleType && gear == x.Gear && x.LessonNum >= MinLessons)
                 select item).FirstOrDefault();
             return v != null ? true : throw new Exception("ERROR:\n" +
                                                           "This trainee have not study 20 lesson yet for this vehicle type and gear or he does NOT exist\n");
@@ -488,15 +490,15 @@ namespace BL
 
 
         /// <summary>
-        /// check if the trainee hasn`t sign or tested in 7 days
+        /// check if the trainee hasn`t sign or tested in MinDaysBetweenTests days
         /// </summary>
         /// <param name="my_test"></param>
         /// <returns>true if not</returns>
-        public bool NotExistTestIn7Days(Test myTest)
+        public bool NotExistTestInMinDaysBetweenTestsDays(Test myTest)
         {
             var v = (from item in GetTestsList()
-                    where item.TraineeId == myTest.TraineeId &&  item.Gear == myTest.Gear && item.VehicleType == myTest.VehicleType && (myTest.TestDateAndTime - item.TestDateAndTime.AddMinutes(1)).Days < 7// adding minute to round the lossing miliseconds at running time
-                    select item).FirstOrDefault();
+                    where item.TraineeId == myTest.TraineeId &&  item.Gear == myTest.Gear && item.VehicleType == myTest.VehicleType && (myTest.TestDateAndTime - item.TestDateAndTime.AddMinutes(1)).Days < MinDaysBetweenTests// adding minute to round the lossing miliseconds at running time
+                     select item).FirstOrDefault();
             return v == null ? true : //false; 
                 throw new Exception("ERROR:\n" +
                                              "This Test are too early (haven't pass 7 days from this trainee last test\n");

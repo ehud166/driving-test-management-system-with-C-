@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BE.Configuration;
 
 namespace BE
 {
@@ -18,7 +19,7 @@ namespace BE
         {
              WeekDays = new Dictionary<DayOfWeek, HoursPerDay>();
             //initialize false`s array to each day
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < WorkDays; i++)
             {
                 WeekDays.Add((DayOfWeek)i, new HoursPerDay());
             }

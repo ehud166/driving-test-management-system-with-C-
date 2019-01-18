@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static BE.Configuration;
 using static BE.Enums;
 
 namespace PLWPF
@@ -85,7 +86,7 @@ namespace PLWPF
             foreach (var licenseType in existTrainee.LicenseType)
             {
 
-                if (licenseType.LessonNum >= 20 && bl.TraineeConditionsForTest(existTrainee.ID, licenseType.VehicleType, licenseType.Gear))
+                if (licenseType.LessonNum >= MinLessons && bl.TraineeConditionsForTest(existTrainee.ID, licenseType.VehicleType, licenseType.Gear))
                 {
                     vehicleAvailable[(int)licenseType.VehicleType] = true;
                 }
@@ -119,7 +120,7 @@ namespace PLWPF
             GearComboBox.Items.Clear();
             foreach (var licenseType in existTrainee.LicenseType)
             {
-                if (licenseType.LessonNum >= 20 && licenseType.VehicleType == myTest.VehicleType && bl.TraineeConditionsForTest(existTrainee.ID, licenseType.VehicleType, licenseType.Gear))
+                if (licenseType.LessonNum >= MinLessons && licenseType.VehicleType == myTest.VehicleType && bl.TraineeConditionsForTest(existTrainee.ID, licenseType.VehicleType, licenseType.Gear))
                 {
                     gearAvailable[(int)licenseType.Gear] = true;
                 }
@@ -158,7 +159,7 @@ namespace PLWPF
                 else
                 {
                     myTest.TestDateAndTime = i;
-                    if (bl.NotExistTestIn7Days(myTest))//check every iteration maybe on the next day the trainee will fill the condition
+                    if (bl.NotExistTestInMinDaysBetweenTestsDays(myTest))//check every iteration maybe on the next day the trainee will fill the condition
                     {
                         myRelevantTesters = bl.RelevantTesters(myTest);
                         Thread mapQuestThread = new Thread(() =>
@@ -222,13 +223,13 @@ namespace PLWPF
                 myTest.TestDateAndTime = testDatePicker.SelectedDate.Value;
             myRelevantTesters = bl.RelevantTesters(myTest);
             testHourComboBox.IsEnabled = true;
-            bool[] hours = new bool[6];
+            bool[] hours = new bool[WorkHours];
             DateTime dateTime = new DateTime();
             dateTime = myTest.TestDateAndTime;
             testHourComboBox.Items.Clear();
             foreach (var item in myRelevantTesters)
             {
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < WorkHours; i++)
                 {
                     if (bl.FreeTester(item, myTest.TestDateAndTime.AddHours(i + 9)))
                     {
@@ -237,11 +238,11 @@ namespace PLWPF
                 }
             } //after filter the relevant tester we are filter the relevant hours
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < WorkHours; i++)
             {
                 if (hours[i] == true)
                 {
-                    testHourComboBox.Items.Add(string.Format("{0}:00", i + 9));
+                    testHourComboBox.Items.Add(string.Format("{0}:00", i + StartHour));
                 }
             }
             }

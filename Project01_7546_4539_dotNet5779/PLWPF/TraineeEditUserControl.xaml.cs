@@ -223,7 +223,7 @@ namespace PLWPF
         {
             try
             {
-                if (bl.TraineeHave20Lessons(existTrainee.ID))
+                if (bl.TraineeHaveMinLessons(existTrainee.ID))
                 {
                    
                     Test_Registar_Window test_Registar_Window = new Test_Registar_Window(null, existTrainee);

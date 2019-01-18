@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using BE;
 using static BE.Enums;
+using static BE.Configuration;
 
 namespace DAL
 {
@@ -342,12 +343,10 @@ namespace DAL
                 string result = "";
                 if (schedule != null)
                 {
-                    int sizeA = 5;
-                    int sizeB = 6;
-                    result += "" + sizeA + "," + sizeB;
-                    for (int i = 0; i < sizeA; i++)
-                    for (int j = 0; j < sizeB; j++)
-                        result += "," + (schedule[(DayOfWeek) i][j + 9]?"1":"0");
+                    result += "" + WorkDays + "," + WorkHours;
+                    for (int i = 0; i < WorkDays; i++)
+                    for (int j = 0; j < WorkHours; j++)
+                        result += "," + (schedule[(DayOfWeek) i][j + StartHour] ?"1":"0");
                 }
                 return result;
             }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BE.Configuration;
 
 namespace BE
 {
@@ -17,8 +18,8 @@ namespace BE
         //c-tor
         public HoursPerDay()
         {
-            HoursOfWork = new bool[6];
-            for (int i = 0; i < 6; i++)
+            HoursOfWork = new bool[WorkHours];
+            for (int i = 0; i < WorkHours; i++)
             {
                 HoursOfWork[i] = true;
             }
@@ -32,15 +33,15 @@ namespace BE
         {
             get
             {
-                if (x<9||x>14)
+                if (x< StartHour || x> EndHour)
                 {
                     throw new Exception("ERROR: the hour you set does NOT at hours range of test ");
                 }
-                return HoursOfWork[x - 9];
+                return HoursOfWork[x - StartHour];
             }
             set
             {
-                 HoursOfWork[x - 9] = value;
+                 HoursOfWork[x - StartHour] = value;
             }
         }
     }

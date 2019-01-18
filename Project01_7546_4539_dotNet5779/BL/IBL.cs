@@ -183,8 +183,8 @@ namespace BL
         bool IsValidEmailAddress(string s);
         bool IsValidNumber(string s);
         bool IsValidAlphabetic(string s);
-        bool TraineeHave20Lessons(String id);
-        bool NotExistTestIn7Days(Test myTest);
+        bool TraineeHaveMinLessons(String id);
+        bool NotExistTestInMinDaysBetweenTestsDays(Test myTest);
         bool TraineeConditionsForTest(string id, Vehicle vehicle, Gear gear);
         List<Tester> RelevantTesters(Test my_test);
         bool FreeTester(Tester optionalTester, DateTime checkDateTime);
