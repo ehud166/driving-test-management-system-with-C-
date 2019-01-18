@@ -92,7 +92,7 @@
                 <Label  Grid.Row="2" Grid.Column="1" Content=  "סיסמא"/>
                 <Label  Grid.Row="3" Grid.Column="1" Content=  "אימות סיסמא"/>
                 <PasswordBox x:Name="passwordBox" Grid.Row="2"  xaml:SecurePassword.Password="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
-                <PasswordBox x:Name="validationPasswordBox"  Grid.Row="3"  xaml:SecurePassword.Password="{Binding Password, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
+                <PasswordBox x:Name="validationPasswordBox"  Grid.Row="3"  xaml:SecurePassword.Password="{Binding Password, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged" Margin="0,8,4.667,0" VerticalAlignment="Top"/>
 
                 <ComboBox x:Name="GearComboBox"  Grid.Row="5" Visibility="Collapsed"  ItemsSource="{Binding Source={StaticResource enmGear}}"  SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
                     <ComboBox.ItemTemplate>

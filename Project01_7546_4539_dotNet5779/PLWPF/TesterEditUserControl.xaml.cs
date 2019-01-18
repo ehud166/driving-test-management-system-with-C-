@@ -193,6 +193,26 @@ namespace PLWPF
             }
         }
 
+      
+
+
+
+        private void AlphabeticValidation_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+                if (!bl.IsValidAlphabetic(e?.Text))
+                {
+                    e.Handled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
 
         private void TesterEditUserControl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
