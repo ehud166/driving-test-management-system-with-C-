@@ -97,9 +97,9 @@
                 <Grid >
                     <DataGrid x:Name="TestsDataGrid"  AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="testResultColumn" FontWeight="Bold" Binding="{Binding TestResult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="תוצאות הטסט" Width="*"/>
-                            <DataGridTextColumn x:Name="gearColumn" Width="*" Binding="{Binding Gear}" Header="גיר" />
-                            <DataGridTextColumn x:Name="vehicleTypeColumn" Binding="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="סוג הרכב" Width="*"/>
+                            <DataGridTextColumn x:Name="testResultColumn" FontWeight="Bold" Binding="{Binding TestResult, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, Converter={StaticResource descConverter}}" Header="תוצאות הטסט" Width="*"/>
+                            <DataGridTextColumn x:Name="gearColumn" Width="*" Binding="{Binding Gear, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, Converter={StaticResource descConverter}}" Header="גיר" />
+                            <DataGridTextColumn x:Name="vehicleTypeColumn" Binding="{Binding VehicleType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, Converter={StaticResource descConverter}}" Header="סוג הרכב" Width="*"/>
                             <DataGridTextColumn x:Name="testDateAndTimeColumn"  Header="תאריך ושעה" Width="*" Binding="{Binding TestDateAndTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             <DataGridTextColumn x:Name="iDColumn" Width="*" Binding="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="מספר מבחן" />
                         </DataGrid.Columns>

@@ -24,7 +24,7 @@ namespace BL
     {
         private List<Manager> managerList;
         #region singleton
-        IDAL dal = Dal_imp.GetDal();
+        IDAL dal = Dal_XML_imp.GetDal();
         
         protected static Bl_imp instance = null;
         public static IBL GetBl()
@@ -99,15 +99,24 @@ namespace BL
                 hours[i] = 9 + i;
             }
 
-            var relevantTesters = (from tester in dal.GetTestersList()
-                    let listOfRelevantTesters = GetListByVehicleType(my_test) //get a list of tester match the condition to test 
-                    from item in listOfRelevantTesters //testers fills the pre condition
-                    from someHour in hours//check for every hour in this day maybe the tester will free at the next hour
-                    where FreeTester(item, my_test.TestDateAndTime.AddHours(someHour)) &&
-                          FreeTesterAtThisWeek(item, my_test.TestDateAndTime.AddHours(someHour)) //now find free tester
-                    select item
-                ).ToList();
-            return relevantTesters;
+            var finalList = new List<Tester>();
+            for (int i = 0; i < hours.Length; i++)
+            {
+                var relevantTesters = (from tester in dal.GetTestersList()
+                        let listOfRelevantTesters = GetListByVehicleType(my_test) //get a list of tester match the condition to test 
+                        from item in listOfRelevantTesters //testers fills the pre condition
+                        where FreeTester(item, my_test.TestDateAndTime.AddHours(hours[i])) &&
+                              FreeTesterAtThisWeek(item, my_test.TestDateAndTime.AddHours(hours[i])) //now find free tester
+                        select item
+                    ).ToList();
+               
+                foreach (var tester in relevantTesters)
+                {
+                    if (!finalList.Contains(tester))
+                        finalList.Add(tester);
+                }
+            }
+            return finalList;
         }
 
         public bool TraineeConditionsForTest(string id, Vehicle vehicle, Gear gear)
@@ -691,9 +700,10 @@ namespace BL
         {
             //UMfSGjPW5zSRsIIoUl26GdXDUCWYLuIg
             //xFdAUGGj5faNqCt7LbMsHqEaSv26ikUb
+            //
             try
             {
-                string KEY = @"UMfSGjPW5zSRsIIoUl26GdXDUCWYLuIg";
+                string KEY = @"8p4iUHOOoJ5CPm6P3G36a3GvbuZyhgfr";
                 //MessageBox.Show(origin + "\n" + destination);
                 double distInMiles = -1;
                 string url = @"https://www.mapquestapi.com/directions/v2/route" +

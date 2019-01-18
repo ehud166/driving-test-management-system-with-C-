@@ -225,9 +225,9 @@ namespace DAL
         #endregion
 
         #region help2XML
-        private Dictionary<DayOfWeek, HoursPerDay> XML2Schedule( string schedule)
+        private Schedule XML2Schedule( string schedule)
         {
-            Dictionary<DayOfWeek, HoursPerDay> scheduleFromXML = new Dictionary<DayOfWeek, HoursPerDay>();
+            Schedule scheduleFromXML = new Schedule();
             if (schedule != null && schedule.Length > 0)
             {
                 string[] values = schedule.Split(',');
@@ -235,8 +235,9 @@ namespace DAL
                 int sizeB = int.Parse(values[1]);
                 int index = 2;
                 for (int i = 0; i < sizeA; i++)
-                    for (int j = 0; j < sizeB; j++)
-                        scheduleFromXML[(DayOfWeek)i][j] = bool.Parse(values[index++]);
+                for (int j = 0; j < sizeB; j++)
+                    scheduleFromXML[(DayOfWeek) i][j + 9] = values[index++] =="1"?true:false;
+
             }
             return scheduleFromXML;
         }
@@ -331,21 +332,29 @@ namespace DAL
         }
 
 
-        private string Schedule2XML( Dictionary<DayOfWeek, HoursPerDay> schedule)
+        private string Schedule2XML( Schedule schedule)
         {
-            if (schedule == null)
-                return null;
-            string result = "";
-            if (schedule != null)
+            try
             {
-                int sizeA = 5;
-                int sizeB = 6;
-                result += "" + sizeA + "," + sizeB;
-                for (int i = 0; i < sizeA; i++)
-                for (int j = 0; j < sizeB; j++)
-                    result += "," + schedule[(DayOfWeek)i][j];
+
+                if (schedule == null)
+                    return null;
+                string result = "";
+                if (schedule != null)
+                {
+                    int sizeA = 5;
+                    int sizeB = 6;
+                    result += "" + sizeA + "," + sizeB;
+                    for (int i = 0; i < sizeA; i++)
+                    for (int j = 0; j < sizeB; j++)
+                        result += "," + (schedule[(DayOfWeek) i][j + 9]?"1":"0");
+                }
+                return result;
             }
-            return result;
+            catch (Exception e)
+            {
+                throw;
+            }
         }
         private XElement Test2XML( Test test)
         {
@@ -397,7 +406,7 @@ namespace DAL
             try
             {
                 testerToAdd = (from p in testerRoot.Elements()
-                    where p.Element("Id").Value == my_tester.ID
+                    where p.Element("ID").Value == my_tester.ID
                     select p).FirstOrDefault();
             }
             catch (Exception e)
@@ -406,22 +415,22 @@ namespace DAL
             }
             if (testerToAdd != null) //duplicate id's are not permitted
                 throw new Exception("טסטר קיים");
-            XElement id = new XElement("Id", my_tester.ID);
+            XElement id = new XElement("ID", my_tester.ID);
             XElement firstName = new XElement("FirstName", my_tester.FirstName);
             XElement lastName = new XElement("LastName", my_tester.LastName);
             XElement birthday = new XElement("Birthday", my_tester.Birthday);
             XElement gender = new XElement("Gender", my_tester.Gender);
             XElement phoneAreaCode = new XElement("PhoneAreaCode", my_tester.PhoneAreaCode);
             XElement phoneNumber = new XElement("PhoneNumber", my_tester.PhoneNumber);
-            XElement address = new XElement("Address", Address2XML(my_tester.Address));
+            XElement address = Address2XML(my_tester.Address);
             XElement email = new XElement("Email", my_tester.Email);
             XElement password = new XElement("Password", my_tester.Password);
-            XElement vehicleType = new XElement("VehicleType", my_tester.VehicleType);
+            XElement vehicleType = new XElement("Vehicle", my_tester.VehicleType);
             XElement seniority = new XElement("Seniority", my_tester.Seniority);
             XElement maxTestsForWeek = new XElement("MaxTestsForWeek", my_tester.MaxTestsForWeek);
             XElement maxDistance = new XElement("MaxDistance", my_tester.MaxDistance);
-            XElement schedule = new XElement("Schedule", Schedule2XML(my_tester.Schedule.WeekDays));
-            XElement testerTests = new XElement("TesterTests", TestList2XML(my_tester.TesterTests));
+            XElement schedule = new XElement("Schedule", Schedule2XML(my_tester.Schedule));
+            XElement testerTests = TestList2XML(my_tester.TesterTests);
 
             XElement newTester = new XElement("Tester",id,firstName,lastName,birthday,gender,phoneAreaCode,phoneNumber,address,email,password,vehicleType,seniority,
             maxTestsForWeek, maxDistance, schedule, testerTests);
@@ -431,7 +440,7 @@ namespace DAL
         public void RemoveTester(string id)
         {
             var toRemove = (from tester in testerRoot.Elements()
-                where tester.Element("id").Value == id
+                where tester.Element("ID").Value == id
                 select tester).FirstOrDefault();
             toRemove.Remove();
             testerRoot.Save(testerPath);
@@ -442,16 +451,16 @@ namespace DAL
             try
             {
                 testerToUpdate = (from p in testerRoot.Elements()
-                               where p.Element("Id").Value == my_tester.ID
+                               where p.Element("ID").Value == my_tester.ID
                                select p).FirstOrDefault();
             }
             catch (Exception e)
             {
                 testerToUpdate = null;
             }
-            if (testerToUpdate != null) //duplicate id's are not permitted
-                throw new Exception("טסטר קיים");
-            XElement id = new XElement("Id", my_tester.ID);
+            if (testerToUpdate == null) //duplicate id's are not permitted
+                throw new Exception("טסטר אינו קיים");
+            XElement id = new XElement("ID", my_tester.ID);
             XElement firstName = new XElement("FirstName", my_tester.FirstName);
             XElement lastName = new XElement("LastName", my_tester.LastName);
             XElement birthday = new XElement("Birthday", my_tester.Birthday);
@@ -461,11 +470,11 @@ namespace DAL
             XElement address = new XElement("Address", Address2XML(my_tester.Address));
             XElement email = new XElement("Email", my_tester.Email);
             XElement password = new XElement("Password", my_tester.Password);
-            XElement vehicleType = new XElement("VehicleType", my_tester.VehicleType);
+            XElement vehicleType = new XElement("Vehicle", my_tester.VehicleType);
             XElement seniority = new XElement("Seniority", my_tester.Seniority);
             XElement maxTestsForWeek = new XElement("MaxTestsForWeek", my_tester.MaxTestsForWeek);
             XElement maxDistance = new XElement("MaxDistance", my_tester.MaxDistance);
-            XElement schedule = new XElement("Schedule", Schedule2XML(my_tester.Schedule.WeekDays));
+            XElement schedule = new XElement("Schedule", Schedule2XML(my_tester.Schedule));
             XElement testerTests = new XElement("TesterTests", TestList2XML(my_tester.TesterTests));
 
             XElement newTester = new XElement("Tester", id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, email, password, vehicleType, seniority,
@@ -515,7 +524,7 @@ namespace DAL
                     t.MaxTestsForWeek = int.Parse(my_tester.Element("MaxTestsForWeek").Value);
                     t.MaxDistance = int.Parse(my_tester.Element("MaxDistance").Value);
                     t.Schedule = new Schedule();
-                    t.Schedule.WeekDays = XML2Schedule(my_tester.Element("Schedule").Value);
+                    t.Schedule = XML2Schedule(my_tester.Element("Schedule").Value);
                     t.TesterTests = new List<Test>();
                     t.TesterTests = XML2TestList(my_tester.Element("TesterTests"));
                     testerList.Add(t);

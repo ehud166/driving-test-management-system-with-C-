@@ -37,11 +37,15 @@ namespace BE
         public Tester()
         {
             Address = new Address();
+            Schedule = new Schedule();
+            TesterTests = new List<Test>();
         }
 
         public Tester(string id) : base(id)
         {
             Address = new Address();
+            Schedule = new Schedule();
+            TesterTests = new List<Test>();
         }
 
         //properties

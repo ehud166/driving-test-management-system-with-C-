@@ -103,6 +103,7 @@
     <Compile Include="ScheduleUserControl.xaml.cs">
       <DependentUpon>ScheduleUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SecurePassword.cs" />
     <Compile Include="TestEditUserControl.xaml.cs">
       <DependentUpon>TestEditUserControl.xaml</DependentUpon>
     </Compile>
