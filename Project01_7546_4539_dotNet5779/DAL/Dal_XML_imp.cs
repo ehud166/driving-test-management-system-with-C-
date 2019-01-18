@@ -130,6 +130,7 @@ namespace DAL
 
         private void updateConfigXML()
         {
+            LoadData();
             configRoot = new XElement("config");
             configRoot.Add(new XElement("testNumber", Courent_test_id));
             configRoot.Save(configPath);
@@ -152,6 +153,7 @@ namespace DAL
 
         public void AddTest(Test my_test)
         {
+            LoadData();
             if ((testsList.FirstOrDefault(m => m.ID == my_test.ID)) != null)  //if Test with the same id already exists
                 throw new Exception("test with the same id already exists...");
             my_test.ID = Courent_test_id.ToString().PadLeft(9 - Courent_test_id.ToString().Length, '0');
@@ -163,6 +165,7 @@ namespace DAL
 
         public void UpdateTest(Test my_test)
         {
+            LoadData();
             Test s = testsList.FirstOrDefault(x => x.ID == my_test.ID);
             if (s == null)//if Test with the same id not found
                 throw new Exception("test with the same id not found...");
@@ -173,6 +176,7 @@ namespace DAL
 
         public void RemoveTest(Test my_test)
         {
+            LoadData();
             if ((testsList.FirstOrDefault(s => s.ID == my_test.ID)) == null)//if Test with the same id not found
                 throw new Exception("mother with the same id not found...");
             testsList.Remove(my_test);
@@ -196,6 +200,7 @@ namespace DAL
 
         public void AddTrainee(Trainee my_trainee)
         {
+            LoadData();
             if ((traineesList.FirstOrDefault(x => x.ID == my_trainee.ID)) != null)//if Trainee with the same id already exists 
                 throw new Exception("Trainee with the same id already exists...");
             traineesList.Add(my_trainee);
@@ -204,6 +209,7 @@ namespace DAL
 
         public void RemoveTrainee(string id)
         {
+            LoadData();
             var v = (traineesList.FirstOrDefault(x => x.ID == id));
             if (v == null)//if Trainee with the same id not found
                 throw new Exception("Trainee with the same id not found...");
@@ -214,6 +220,7 @@ namespace DAL
 
         public void UpdateTrainee(Trainee my_trainee)
         {
+            LoadData();
             var v = traineesList.FirstOrDefault(x => x.ID == my_trainee.ID);
             if (v == null)//if Trainee with the same id not found
                 throw new Exception("Trainee with the same id not found...");
@@ -401,6 +408,7 @@ namespace DAL
 
         public void AddTester(Tester my_tester)
         {
+            LoadData();
             XElement testerToAdd;
             try
             {
@@ -438,46 +446,52 @@ namespace DAL
         }
         public void RemoveTester(string id)
         {
+            LoadData();
             var toRemove = (from tester in testerRoot.Elements()
                 where tester.Element("ID").Value == id
                 select tester).FirstOrDefault();
             toRemove.Remove();
             testerRoot.Save(testerPath);
         }
-        public void UpdateTester(Tester my_tester)
+        public void UpdateTester(Tester t)
         {
-            XElement testerToUpdate;
+            LoadData();
+            XElement my_tester;
             try
             {
-                testerToUpdate = (from p in testerRoot.Elements()
-                               where p.Element("ID").Value == my_tester.ID
+                my_tester = (from p in testerRoot.Elements()
+                               where p.Element("ID").Value == t.ID
                                select p).FirstOrDefault();
             }
             catch (Exception e)
             {
-                testerToUpdate = null;
+                my_tester = null;
             }
-            if (testerToUpdate == null) //duplicate id's are not permitted
+            if (my_tester == null) //duplicate id's are not permitted
                 throw new Exception("טסטר אינו קיים");
-            XElement id = new XElement("ID", my_tester.ID);
-            XElement firstName = new XElement("FirstName", my_tester.FirstName);
-            XElement lastName = new XElement("LastName", my_tester.LastName);
-            XElement birthday = new XElement("Birthday", my_tester.Birthday);
-            XElement gender = new XElement("Gender", my_tester.Gender);
-            XElement phoneAreaCode = new XElement("PhoneAreaCode", my_tester.PhoneAreaCode);
-            XElement phoneNumber = new XElement("PhoneNumber", my_tester.PhoneNumber);
-            XElement address = new XElement("Address", Address2XML(my_tester.Address));
-            XElement email = new XElement("Email", my_tester.Email);
-            XElement password = new XElement("Password", my_tester.Password);
-            XElement vehicleType = new XElement("Vehicle", my_tester.VehicleType);
-            XElement seniority = new XElement("Seniority", my_tester.Seniority);
-            XElement maxTestsForWeek = new XElement("MaxTestsForWeek", my_tester.MaxTestsForWeek);
-            XElement maxDistance = new XElement("MaxDistance", my_tester.MaxDistance);
-            XElement schedule = new XElement("Schedule", Schedule2XML(my_tester.Schedule));
-            XElement testerTests = new XElement("TesterTests", TestList2XML(my_tester.TesterTests));
 
-            XElement newTester = new XElement("Tester", id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, email, password, vehicleType, seniority,
-            maxTestsForWeek, maxDistance, schedule, testerTests);
+            my_tester.Element("ID").Value = t.ID;
+            my_tester.Element("FirstName").Value = t.FirstName;
+            my_tester.Element("LastName").Value = t.LastName;
+            my_tester.Element("Birthday").Value = t.Birthday.ToString();
+            my_tester.Element("Gender").Value = t.Gender.ToString();
+            my_tester.Element("PhoneAreaCode").Value = t.PhoneAreaCode;
+            my_tester.Element("PhoneNumber").Value = t.PhoneNumber;
+            my_tester.Element("Address").Element("StreetName").Value = t.Address.StreetName;
+            my_tester.Element("Address").Element("BuildingNumber").Value = t.Address.BuildingNumber.ToString();
+            my_tester.Element("Address").Element("City").Value = t.Address.City;
+            my_tester.Element("Email").Value = t.Email;
+            my_tester.Element("Password").Value = t.Password;
+            my_tester.Element("Vehicle").Value = t.VehicleType.ToString();
+            my_tester.Element("Seniority").Value = t.Seniority.ToString();
+            my_tester.Element("MaxTestsForWeek").Value = t.MaxTestsForWeek.ToString();
+            my_tester.Element("MaxDistance").Value = t.MaxDistance.ToString();
+            //t.Schedule = new Schedule();
+            my_tester.Element("Schedule").Value = Schedule2XML(t.Schedule);
+            //t.TesterTests = new List<Test>();
+            my_tester.Element("TesterTests").Value = TestList2XML(t.TesterTests).Value;
+            //XElement newTester = new XElement("Tester", id, firstName, lastName, birthday, gender, phoneAreaCode, phoneNumber, address, email, password, vehicleType, seniority,
+            //maxTestsForWeek, maxDistance, schedule, testerTests);
             testerRoot.Save(testerPath);
         }
         #endregion
@@ -494,8 +508,8 @@ namespace DAL
         }
         public List<Tester> GetTestersList()
         {
-            List<Tester> testerList = new List<Tester>();
             LoadData();
+            List<Tester> testerList = new List<Tester>();
             try
             {
                 foreach (XElement my_tester in testerRoot.Elements())
