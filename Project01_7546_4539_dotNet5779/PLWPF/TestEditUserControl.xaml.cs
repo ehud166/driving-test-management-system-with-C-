@@ -92,6 +92,7 @@ namespace PLWPF
                 existTest.TestResult = string2result(testResult.Content.ToString());
                 #endregion
 
+                MessageBox.Show("הציון עודכן בהצלחה");
                 bl.UpdateTest(existTest);
                 TestEdited?.Invoke(this, new EventArgs()); //if update test so we need to tell the hosting window to refresh his tests list
             }
