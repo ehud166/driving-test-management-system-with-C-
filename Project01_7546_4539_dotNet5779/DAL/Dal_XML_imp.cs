@@ -132,7 +132,7 @@ namespace DAL
         {
             LoadData();
             configRoot = new XElement("config");
-            configRoot.Add(new XElement("testNumber", Courent_test_id));
+            configRoot.Add(new XElement("testNumber", ++Courent_test_id));
             configRoot.Save(configPath);
         }
 
@@ -157,7 +157,6 @@ namespace DAL
             if ((testsList.FirstOrDefault(m => m.ID == my_test.ID)) != null)  //if Test with the same id already exists
                 throw new Exception("test with the same id already exists...");
             my_test.ID = Courent_test_id.ToString().PadLeft(9 - Courent_test_id.ToString().Length, '0');
-            Courent_test_id++;
             updateConfigXML();//update to running number in xml config file
             testsList.Add(my_test);
             updateTestXML();
