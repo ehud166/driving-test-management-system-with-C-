@@ -51,7 +51,7 @@ namespace PLWPF
         {
             try
             {
-                if (passwordBox.Password != validationPasswordBox.Password)
+                if (passwordBox.Password != validationPasswordBox.Password && passwordBox.Password.Length == validationPasswordBox.Password.Length)
             {
                 MessageBox.Show("הסיסמאות אינן תואמות אחת לשניה, נסה שוב");
             }

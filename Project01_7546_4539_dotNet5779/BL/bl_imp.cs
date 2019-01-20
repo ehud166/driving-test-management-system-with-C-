@@ -747,7 +747,7 @@ namespace BL
                 {
                     throw new Exception("We have'nt got an answer, maybe the net is busy...");
                 }
-                MessageBox.Show("Distance In KM: " + distInMiles * 1.609344);
+                //MessageBox.Show("Distance In KM: " + distInMiles * 1.609344);
                 return distInMiles == -1 ? 100000 : (int) (distInMiles * 1.609344);
             }
             catch

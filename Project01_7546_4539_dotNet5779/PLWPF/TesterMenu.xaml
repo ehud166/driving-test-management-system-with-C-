@@ -43,10 +43,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="עדכון תוצאות טסט" Grid.Row="0" Grid.Column="1" Click="Button_Click" />
+            <Button Content="עדכון תוצאות טסט" Grid.Row="0" Grid.Column="1" Click="Update_Test_Button_Click" />
             <Button Content=" עדכון פרטים אישיים" Grid.Row="0" Grid.Column="0" Click="AddOrUpdateButtonClick" />
-            <Button Content="צא מהמאגר" Grid.Row="1" Grid.Column="0" Click="Button_Click_1"/>
-            <Button Content="מידע" Grid.Row="1" Grid.Column="1"/>
+            <Button Content="צא מהמאגר" Grid.Row="1" Grid.Column="0" Click="Remove_Button_Click"/>
+            <Button Content="מידע" Grid.Row="1" Grid.Column="1" Click="Info_Button_Click"/>
         </Grid>
 
     </Grid>

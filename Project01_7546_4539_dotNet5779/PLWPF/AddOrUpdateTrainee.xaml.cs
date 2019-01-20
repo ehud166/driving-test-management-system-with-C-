@@ -79,11 +79,7 @@ namespace PLWPF
                 }
                 else
                 {
-                    //LicenseType a = new LicenseType(Enums.Vehicle.motorcycle, Enums.Gear.manual, 30);
-                    //existTrainee.LicenseType = new List<LicenseType>();
-                    //existTrainee.LicenseType.Add(a);ex
-                    //Address b = new Address("yu", 5, "gerusalem");
-                    //existTrainee.Address = b;
+                   
                     bl.AddTrainee(existTrainee);
                     MessageBox.Show(existTrainee.FirstName + " נרשם בהצלחה");
                     pWindow = new TraineeMenu_window(pWindow, existTrainee);
@@ -131,7 +127,7 @@ namespace PLWPF
 
         private void ValidationPasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (passwordBox.Password != validationPasswordBox.Password)
+            if (passwordBox.Password != validationPasswordBox.Password && passwordBox.Password.Length == validationPasswordBox.Password.Length)
             {
                 MessageBox.Show("הסיסמאות אינן תואמות אחת לשניה, נסה שוב");
             }

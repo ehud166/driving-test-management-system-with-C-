@@ -185,8 +185,8 @@ namespace PLWPF
                                 Dispatcher.BeginInvoke(act);
                             }
                         });
-                        //mapQuestThread.Start();
-                    }
+                            mapQuestThread.Start();
+                        }
                 }
                 i = i.AddDays(1);
             }
@@ -268,7 +268,7 @@ namespace PLWPF
         }
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void registeration_ok_button(object sender, RoutedEventArgs e)
         {
 
             try
@@ -281,13 +281,14 @@ namespace PLWPF
             newTest.TesterId = newTester.ID;
             newTest.TestComment = "!!!בהצלחה";
             bl.AddTest(newTest);
-            Test newTestAdded = bl.GetTestsList().Find(x => x.Equals(newTest));
+            Test newTestAdded = bl.GetTestsList().Find(x => x.Equals(newTest));//
             newTester.TesterTests.Add(newTestAdded);
             bl.UpdateTester(newTester);
+            MessageBox.Show(existTrainee.FirstName + " עודכן בהצלחה");
 
-            //MessageBox.Show(newTestAdded.ToString());
-            //MessageBox.Show(bl.GetTesterById(newTestAdded.TesterId).TesterTests.Find(x=>x.Equals(newTest)).ToString());
-            this.Close();
+                //MessageBox.Show(newTestAdded.ToString());
+                //MessageBox.Show(bl.GetTesterById(newTestAdded.TesterId).TesterTests.Find(x=>x.Equals(newTest)).ToString());
+                this.Close();
             }
             catch (Exception exception)
             {

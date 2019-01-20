@@ -85,7 +85,7 @@
 
         </Grid>
         <Label Content="הרשם לטסט" Grid.Row="3" HorizontalAlignment="Center"/>
-        <Button Content="אישור" Grid.Row="2" Margin="15,0,15.333,15" FontSize="36" FontWeight="Heavy" Click="Button_Click" Height="57" VerticalAlignment="Bottom">
+        <Button x:Name="ok_button" Content="אישור" Grid.Row="2" Margin="15,0,15.333,15" FontSize="36" FontWeight="Heavy" Click="registeration_ok_button" Height="57" VerticalAlignment="Bottom">
             <!--<Button.Style>
                 <Style>
                     <Style.Triggers>

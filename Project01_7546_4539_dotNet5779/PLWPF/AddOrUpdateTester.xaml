@@ -39,10 +39,10 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Label Content="סיסמא" Grid.Column="1"/>
-                    <Label Content="אימות סיסמא" Grid.Column="1" Grid.Row="1"/>
+                    <Label x:Name="passwordBox_label" Content="סיסמא" Grid.Column="1"/>
+                    <Label x:Name="validationPasswordBox_label" Content="אימות סיסמא" Grid.Column="1" Grid.Row="1"/>
                     <PasswordBox x:Name="passwordBox" xaml:SecurePassword.Password="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
-                    <PasswordBox x:Name="validationPasswordBox" Grid.Row="1" xaml:SecurePassword.Password="{Binding Password, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
+                    <PasswordBox x:Name="validationPasswordBox" Grid.Row="1" xaml:SecurePassword.Password="{Binding Password, Mode=OneTime, NotifyOnValidationError=true, ValidatesOnExceptions=true}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
                 </Grid>
             </Grid>
             <Grid x:Name="grid1" Grid.Column="1"  >
@@ -88,7 +88,7 @@
                     <ComboBoxItem Content="1"></ComboBoxItem>
                 </ComboBox>-->
                 <Label  Grid.Row="1" Grid.Column="1" Content=":דואר אלקטרוני "/>
-                <TextBox x:Name="EmailTextBox"  SelectedText="user@global.com"  Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true ,TargetNullValue=user@global.com}" Grid.Row="1"  LostFocus="EmailTextBox_OnLostFocus"/>
+                <TextBox x:Name="EmailTextBox"  SelectedText="user@example.com"  Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true ,TargetNullValue=user@example.com}" Grid.Row="1"  LostFocus="EmailTextBox_OnLostFocus"/>
                 <Label Content=":מס' טלפון" Grid.Column="1" />
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
                     <ComboBox x:Name="prefixPhoneComboBox" SelectedIndex="0"  HorizontalAlignment="Right"  MinWidth="65" Margin="0,9,0,0" Width="auto"  Text="{Binding PhoneAreaCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true  ,TargetNullValue=052}" VerticalAlignment="Top" >
@@ -133,7 +133,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <StackPanel Grid.Row="3"   Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBox x:Name="maxDistanceTextBox" IsEnabled="False"  Text="{Binding MaxDistance, Mode=TwoWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
+                    <TextBox x:Name="maxDistanceTextBox"  Text="{Binding MaxDistance, Mode=TwoWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
                     <ScrollBar x:Name="maxDistanceScrollBar" Background="LightBlue"  Height="40" HorizontalAlignment="Right" Value="{Binding MaxDistance, Mode=TwoWay}"  RenderTransformOrigin="0.5,0.5" ValueChanged="maxDistanceScrollBar_ValueChanged" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>
@@ -146,7 +146,7 @@
                     </ScrollBar>
                 </StackPanel>
                 <StackPanel Grid.Row="4"   Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBox x:Name="maxTestsForWeekTextBox" IsEnabled="False"  Text="{Binding MaxTestsForWeek, Mode=TwoWay}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
+                    <TextBox x:Name="maxTestsForWeekTextBox"   Text="{Binding MaxTestsForWeek, Mode=TwoWay}"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="150" Margin="3,0,3,9"/>
                     <ScrollBar x:Name="maxTestsForWeekScrollBar" Height="40"   HorizontalAlignment="Right" Value="{Binding MaxTestsForWeek, Mode=TwoWay}" RenderTransformOrigin="0.5,0.5" ValueChanged="maxTestsForWeekScrollBar_ValueChanged" >
                         <ScrollBar.RenderTransform>
                             <TransformGroup>

@@ -95,7 +95,7 @@ namespace PLWPF
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Update_Test_Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace PLWPF
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Remove_Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -122,6 +122,34 @@ namespace PLWPF
             {
                 MessageBox.Show(exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Info_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            AddOrUpdateTester addOrUpdateTester = new AddOrUpdateTester(this, existTester);
+            #region changesForInfo
+            addOrUpdateTester.AddOrUpdateButtonClick.Visibility = Visibility.Collapsed;
+            addOrUpdateTester.passwordBox.Visibility = Visibility.Collapsed;
+            addOrUpdateTester.passwordBox_label.Visibility = Visibility.Collapsed;
+            addOrUpdateTester.validationPasswordBox.Visibility = Visibility.Collapsed;
+            addOrUpdateTester.validationPasswordBox_label.Visibility = Visibility.Collapsed;
+            addOrUpdateTester.idTextBox.IsEnabled = false;
+            addOrUpdateTester.lastNameTextBox.IsEnabled = false;
+            addOrUpdateTester.firstNameTextBox.IsEnabled = false;
+            addOrUpdateTester.birthdayDatePicker.IsEnabled = false;
+            addOrUpdateTester.genderComboBox.IsEnabled = false;
+            addOrUpdateTester.addressComboBox.IsEnabled = false;
+            addOrUpdateTester.prefixPhoneComboBox.IsEnabled = false;
+            addOrUpdateTester.phoneNumbersTextBox.IsEnabled = false;
+            addOrUpdateTester.EmailTextBox.IsEnabled = false;
+            addOrUpdateTester.VehcileTypeComboBox.IsEnabled = false;
+            addOrUpdateTester.maxDistanceTextBox.IsEnabled = false;
+            addOrUpdateTester.maxTestsForWeekTextBox.IsEnabled = false;
+            addOrUpdateTester.SeniorityTextBox.IsEnabled = false;
+            addOrUpdateTester.mySchedule.Visibility = Visibility.Collapsed;
+            #endregion
+            addOrUpdateTester.ShowDialog();
         }
     }
 }

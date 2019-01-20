@@ -88,7 +88,7 @@
                 <Label  Grid.Row="2" Grid.Column="1" Content=  "סיסמא"/>
                 <Label  Grid.Row="3" Grid.Column="1" Content=  "אימות סיסמא"/>
                 <PasswordBox x:Name="passwordBox"  Grid.Row="2"  xaml:SecurePassword.Password="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
-                <PasswordBox x:Name="validationPasswordBox"  Grid.Row="3"  xaml:SecurePassword.Password="{Binding Password, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
+                <PasswordBox x:Name="validationPasswordBox"  Grid.Row="3"  xaml:SecurePassword.Password="{Binding Password, Mode=OneTime, NotifyOnValidationError=true, ValidatesOnExceptions=true}" PasswordChanged="ValidationPasswordBox_OnPasswordChanged"/>
 
                 <ComboBox x:Name="GearComboBox"  Grid.Row="5"  ItemsSource="{Binding Source={StaticResource enmGear}}"  SelectionChanged="LicenseTypeComboBox_OnSelectionChanged" >
                     <ComboBox.ItemTemplate>
@@ -113,7 +113,7 @@
                 </StackPanel>
                 <TextBox x:Name="SchoolTextBox"  Text="{Binding DrivingSchool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" />
                 <TextBox x:Name="TeacherNameTextBox" Text="{Binding TeacherName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1"/>
-                <TextBox x:Name="EmailTextBox" MinWidth="170" Width="auto" SelectedText="user@global.com" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, TargetNullValue=user@global.com}"  Grid.Row="7" Grid.Column="2" LostFocus="EmailTextBox_OnLostFocus"/>
+            <TextBox x:Name="EmailTextBox" MinWidth="170" Width="auto" SelectedText="user@example.com" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, TargetNullValue=user@example.com}"  Grid.Row="7" Grid.Column="2" LostFocus="EmailTextBox_OnLostFocus"/>
         </Grid>
         <Grid  Grid.Row="1" >
             <Grid.ColumnDefinitions>
