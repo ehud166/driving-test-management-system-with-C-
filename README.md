@@ -13,5 +13,5 @@ The system will be run transparently so that a student will receive a grade on t
   - **OOP**
   - **SOC**
   - **Global trigger style**
-  - **factory**
-  - **singleton**
+  - **Factory**
+  - **Singleton**
